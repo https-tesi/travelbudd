@@ -15,6 +15,7 @@ const DestinationCard = ({ destination }: DestinationCardProps) => {
   const navigate = useNavigate();
   const [imageError, setImageError] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [imageSrc, setImageSrc] = useState(destination.imageUrl);
   
   useEffect(() => {
     // Check if destination is in favorites
@@ -112,6 +113,23 @@ const DestinationCard = ({ destination }: DestinationCardProps) => {
         "https://images.unsplash.com/photo-1573108724029-4c46571d6490?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
         "https://images.unsplash.com/photo-1578950114438-32f65548e817?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
         "https://images.unsplash.com/photo-1588763295700-a9daedbbd965?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+      ],
+      
+      // Additional fallbacks for problematic cities
+      "Dubrovnik": [
+        "https://images.unsplash.com/photo-1555990538-1468f35a7676?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+        "https://images.unsplash.com/photo-1522748906645-95d8adfd52c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+        "https://images.unsplash.com/photo-1414862625453-d87604a607e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+      ],
+      "Vienna": [
+        "https://images.unsplash.com/photo-1516550893885-985c836c68d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", 
+        "https://images.unsplash.com/photo-1573599852326-2d4da0bbe613?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+        "https://images.unsplash.com/photo-1585900801693-31482399066f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+      ],
+      "Mexico City": [
+        "https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+        "https://images.unsplash.com/photo-1574836800700-993daf5eda8e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+        "https://images.unsplash.com/photo-1631215583473-4710df684df1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
       ]
     };
     
@@ -126,22 +144,26 @@ const DestinationCard = ({ destination }: DestinationCardProps) => {
     let fallbackImages = defaultFallbackImages;
     const cityName = destination.name.split(',')[0].trim();
     
-    Object.keys(cityFallbackImages).forEach(city => {
-      if (cityName.includes(city)) {
-        fallbackImages = cityFallbackImages[city];
-      }
-    });
+    // First check exact matches
+    if (cityFallbackImages[cityName]) {
+      fallbackImages = cityFallbackImages[cityName];
+    } else {
+      // Then check partial matches
+      Object.keys(cityFallbackImages).forEach(city => {
+        if (cityName.includes(city) || city.includes(cityName)) {
+          fallbackImages = cityFallbackImages[city];
+        }
+      });
+    }
     
     // Generate a consistent index based on the destination name to get a predictable fallback
     const nameHash = destination.name.split('').reduce(
       (acc, char) => acc + char.charCodeAt(0), 0
     );
     
-    // Set the image src element directly to avoid re-triggering the error
-    const imgElement = document.querySelector(`[data-destination-id="${destination.id}"]`) as HTMLImageElement;
-    if (imgElement) {
-      imgElement.src = fallbackImages[nameHash % fallbackImages.length];
-    }
+    // Set the fallback image directly to component state
+    const fallbackImage = fallbackImages[nameHash % fallbackImages.length];
+    setImageSrc(fallbackImage);
   };
   
   const toggleFavorite = (e: React.MouseEvent) => {
@@ -171,7 +193,7 @@ const DestinationCard = ({ destination }: DestinationCardProps) => {
       <div className="relative h-48 overflow-hidden">
         {!imageError ? (
           <img 
-            src={destination.imageUrl} 
+            src={imageSrc} 
             alt={destination.name}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             onError={handleImageError}
