@@ -8,6 +8,7 @@ interface SearchParamsType {
   destination: string;
   when: string;
   budget: string;
+  departureAirport?: string;
 }
 
 interface DestinationResultsProps {
@@ -26,7 +27,7 @@ const DestinationResults = ({
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
       {/* Show search parameters if they exist */}
-      {(searchParams.destination || searchParams.when || searchParams.budget) && (
+      {(searchParams.destination || searchParams.when || searchParams.budget || searchParams.departureAirport) && (
         <div className="col-span-full bg-blue-50 p-4 rounded-lg mb-4">
           <h3 className="font-semibold mb-1">Your search:</h3>
           <div className="flex flex-wrap gap-2">
@@ -43,6 +44,11 @@ const DestinationResults = ({
             {searchParams.budget && (
               <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
                 Budget: {searchParams.budget}
+              </span>
+            )}
+            {searchParams.departureAirport && (
+              <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
+                From: {searchParams.departureAirport}
               </span>
             )}
           </div>

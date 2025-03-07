@@ -5,10 +5,12 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Calendar, MapPin, DollarSign, Clock, Thermometer, Globe, Utensils, Camera, Hotel, Bookmark, Share, AlertCircle } from "lucide-react";
+import { Calendar, MapPin, DollarSign, Clock, Thermometer, Globe, Utensils, Camera, Hotel, Bookmark, Share, AlertCircle, Plane } from "lucide-react";
 import { sampleDestinations } from "@/data/sampleDestinations";
 import { Destination } from "@/types/destination";
+import { toast } from "sonner";
 
 const DestinationDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -16,6 +18,11 @@ const DestinationDetails = () => {
   const [activeImage, setActiveImage] = useState("");
   const [destination, setDestination] = useState<Destination | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showFlightSearch, setShowFlightSearch] = useState(false);
+  const [userLocation, setUserLocation] = useState<string | null>(null);
+  const [nearestAirport, setNearestAirport] = useState<string | null>(null);
+  const [departureDate, setDepartureDate] = useState("");
+  const [returnDate, setReturnDate] = useState("");
   
   // Fetch the destination data based on the ID
   useEffect(() => {
@@ -33,6 +40,95 @@ const DestinationDetails = () => {
     
     setLoading(false);
   }, [id]);
+
+  // Get user location
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          try {
+            // Use reverse geocoding to get location name
+            const response = await fetch(
+              `https://nominatim.openstreetmap.org/reverse?format=json&lat=${position.coords.latitude}&lon=${position.coords.longitude}`
+            );
+            const data = await response.json();
+            
+            // Extract country or city from the response
+            const country = data.address?.country;
+            const city = data.address?.city || data.address?.town || data.address?.village;
+            
+            setUserLocation(city ? `${city}, ${country}` : country);
+            
+            // Find nearest airport (mock implementation)
+            const mockAirports: Record<string, string> = {
+              "Albania": "TIA",
+              "Italy": "FCO",
+              "United Kingdom": "LHR",
+              "France": "CDG",
+              "Germany": "FRA",
+              "Spain": "MAD",
+              "United States": "JFK",
+              "Japan": "HND",
+              "Greece": "ATH"
+            };
+            
+            setNearestAirport(mockAirports[country as keyof typeof mockAirports] || "Unknown");
+          } catch (error) {
+            console.error("Error fetching location:", error);
+            setUserLocation("Location not found");
+          }
+        },
+        (error) => {
+          console.error("Error getting geolocation:", error);
+          setUserLocation("Location access denied");
+        }
+      );
+    } else {
+      setUserLocation("Geolocation not supported");
+    }
+  }, []);
+
+  const handleFlightSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!departureDate) {
+      toast.error("Please select a departure date");
+      return;
+    }
+    
+    // Get destination airport code based on destination name
+    const destinationName = destination?.name.split(',')[0] || "";
+    
+    // Simple mapping of cities to airport codes (mock)
+    const airportCodes: Record<string, string> = {
+      "Kyoto": "KIX",
+      "Paris": "CDG",
+      "Rome": "FCO",
+      "Barcelona": "BCN",
+      "Santorini": "JTR",
+      "New York": "JFK",
+      "London": "LHR",
+      "Tokyo": "HND",
+      "Bali": "DPS",
+      "Sydney": "SYD"
+    };
+    
+    const destinationCode = airportCodes[destinationName] || destinationName.substring(0, 3).toUpperCase();
+    
+    // Simulate flight search API call
+    toast.info(`Searching flights from ${nearestAirport || "your location"} to ${destinationCode}`);
+    
+    // In a real app, we would call an actual flight API like:
+    // const flightResults = await searchFlights(nearestAirport, destinationCode, departureDate, returnDate);
+    
+    // Redirect to flight booking site as a fallback solution
+    setTimeout(() => {
+      const url = `https://www.wizzair.com/#/booking/select-flight/${nearestAirport || ""}/${destinationCode}/${departureDate}/${returnDate || departureDate}`;
+      window.open(url, '_blank');
+      
+      toast.success("Redirecting to flight booking...");
+    }, 1500);
+  };
 
   // If destination not found, show error state
   if (!loading && !destination) {
@@ -136,6 +232,72 @@ const DestinationDetails = () => {
               );
             })}
           </div>
+          
+          {/* Flight search card */}
+          <Card className="mb-6">
+            <CardContent className="p-4">
+              <div className="flex justify-between items-center mb-3">
+                <h3 className="text-lg font-semibold flex items-center">
+                  <Plane className="h-5 w-5 mr-2 text-blue-500" />
+                  Find Flights to {destination.name.split(',')[0]}
+                </h3>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowFlightSearch(!showFlightSearch)}
+                >
+                  {showFlightSearch ? "Hide" : "Show"}
+                </Button>
+              </div>
+
+              {showFlightSearch && (
+                <form onSubmit={handleFlightSearch} className="mt-4">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="space-y-1">
+                      <label htmlFor="departure" className="text-sm font-medium text-gray-700">From</label>
+                      <Input 
+                        id="departure"
+                        value={nearestAirport || ""}
+                        className="bg-gray-50"
+                        placeholder="Departure airport"
+                        disabled
+                      />
+                      {userLocation && (
+                        <p className="text-xs text-gray-500 mt-1">Based on your location: {userLocation}</p>
+                      )}
+                    </div>
+                    
+                    <div className="space-y-1">
+                      <label htmlFor="departureDate" className="text-sm font-medium text-gray-700">Departure</label>
+                      <Input 
+                        id="departureDate"
+                        type="date"
+                        value={departureDate}
+                        onChange={(e) => setDepartureDate(e.target.value)}
+                        min={new Date().toISOString().split('T')[0]}
+                        required
+                      />
+                    </div>
+                    
+                    <div className="space-y-1">
+                      <label htmlFor="returnDate" className="text-sm font-medium text-gray-700">Return (optional)</label>
+                      <Input 
+                        id="returnDate"
+                        type="date"
+                        value={returnDate}
+                        onChange={(e) => setReturnDate(e.target.value)}
+                        min={departureDate || new Date().toISOString().split('T')[0]}
+                      />
+                    </div>
+                  </div>
+                  
+                  <Button type="submit" className="mt-4 w-full">
+                    <Plane className="h-4 w-4 mr-2" /> Find Flights to {destination.name.split(',')[0]}
+                  </Button>
+                </form>
+              )}
+            </CardContent>
+          </Card>
           
           {/* Content */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
@@ -402,4 +564,3 @@ const DestinationDetails = () => {
 };
 
 export default DestinationDetails;
-
