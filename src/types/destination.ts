@@ -24,5 +24,8 @@ export interface Destination {
     name: string;
     description: string;
     type: string;
+    pricePerNight?: number;
+    amenities?: string[];
+    rating?: number;
   }[];
 }

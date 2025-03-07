@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
@@ -7,10 +6,35 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Calendar, MapPin, DollarSign, Clock, Thermometer, Globe, Utensils, Camera, Hotel, Bookmark, Share, AlertCircle, Plane, ImageOff } from "lucide-react";
+import { 
+  Calendar, 
+  MapPin, 
+  DollarSign, 
+  Clock, 
+  Thermometer, 
+  Globe, 
+  Utensils, 
+  Camera, 
+  Hotel, 
+  Bookmark, 
+  Share, 
+  AlertCircle, 
+  Plane, 
+  ImageOff,
+  CalendarDays,
+  Users,
+  X,
+  CheckCircle2
+} from "lucide-react";
 import { sampleDestinations } from "@/data/sampleDestinations";
 import { Destination } from "@/types/destination";
 import { toast } from "sonner";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { format } from "date-fns";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const STATIC_FALLBACK_IMAGES = {
   "Kyoto, Japan": [
@@ -59,7 +83,7 @@ const STATIC_FALLBACK_IMAGES = {
     "https://images.unsplash.com/photo-1516550893885-985c836c68d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80",
     "https://images.unsplash.com/photo-1592906209472-a36b1f3782ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
     "https://images.unsplash.com/photo-1573599852326-2d4da0bbe613?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-    "https://images.unsplash.com/photo-1585900801693-31482399066f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+    "https://images.unsplash.com/photo-1585900801693-31482399066f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
   ]
 };
 
@@ -183,6 +207,19 @@ const DestinationDetails = () => {
   const [destinationTemp, setDestinationTemp] = useState<number | undefined>(undefined);
   const [costEstimate, setCostEstimate] = useState<string | undefined>(undefined);
   
+  // Booking related states
+  const [bookingModalOpen, setBookingModalOpen] = useState(false);
+  const [selectedAccommodation, setSelectedAccommodation] = useState<{
+    name: string;
+    description: string;
+    type: string;
+  } | null>(null);
+  const [checkInDate, setCheckInDate] = useState<Date | undefined>(undefined);
+  const [checkOutDate, setCheckOutDate] = useState<Date | undefined>(undefined);
+  const [guestCount, setGuestCount] = useState("2");
+  const [bookingSuccess, setBookingSuccess] = useState(false);
+  const [isBookingLoading, setIsBookingLoading] = useState(false);
+  
   const getDestinationFallbackImages = (destinationName: string): string[] => {
     for (const [key, images] of Object.entries(STATIC_FALLBACK_IMAGES)) {
       if (destinationName.includes(key.split(',')[0])) {
@@ -284,6 +321,28 @@ const DestinationDetails = () => {
     }
   }, []);
 
+  const handleAccommodationBooking = (accommodation: { name: string; description: string; type: string }) => {
+    setSelectedAccommodation(accommodation);
+    setBookingModalOpen(true);
+    setBookingSuccess(false);
+  };
+
+  const handleBookNow = () => {
+    if (!checkInDate || !checkOutDate) {
+      toast.error("Please select check-in and check-out dates");
+      return;
+    }
+
+    setIsBookingLoading(true);
+    
+    // Simulate booking process
+    setTimeout(() => {
+      setIsBookingLoading(false);
+      setBookingSuccess(true);
+      toast.success(`Booking at ${selectedAccommodation?.name} confirmed!`);
+    }, 1500);
+  };
+
   const handleFlightSearch = (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -322,6 +381,7 @@ const DestinationDetails = () => {
     }, 1500);
   };
 
+  // Loading and not found states remain the same
   if (!loading && !destination) {
     return (
       <div className="min-h-screen bg-gray-50">
@@ -343,265 +403,4 @@ const DestinationDetails = () => {
     return (
       <div className="min-h-screen bg-gray-50">
         <Navbar />
-        <div className="container mx-auto px-4 py-20 text-center">
-          <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mx-auto mb-6"></div>
-          <p className="text-lg text-gray-600">Loading destination details...</p>
-        </div>
-        <Footer />
-      </div>
-    );
-  }
-
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
-      
-      <main className="pb-16">
-        <div className="h-[40vh] md:h-[60vh] relative overflow-hidden">
-          <img 
-            src={activeImage} 
-            alt={destination.name}
-            className="w-full h-full object-cover"
-            onError={() => {
-              if (destination) {
-                setActiveImage(destination.imageUrl);
-              }
-            }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-          <div className="absolute bottom-0 left-0 w-full p-6 md:p-10 text-white">
-            <div className="container mx-auto">
-              <div className="flex items-center gap-2 text-sm mb-2 opacity-90">
-                <MapPin className="h-4 w-4" />
-                <span>{destination.name.includes(',') ? destination.name.split(',')[1]?.trim() : 'Destination'}</span>
-              </div>
-              <h1 className="text-3xl md:text-5xl font-bold mb-2">{destination.name}</h1>
-              <div className="flex flex-wrap items-center gap-3 md:gap-6">
-                <div className="flex items-center gap-1 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">
-                  <Thermometer className="h-4 w-4" />
-                  <span>Weather: {destinationTemp}°C</span>
-                </div>
-                <div className="flex items-center gap-1 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">
-                  <DollarSign className="h-4 w-4" />
-                  <span>Cost: {costEstimate}</span>
-                </div>
-                {destination.tags && destination.tags.map((tag, index) => (
-                  <div key={index} className="flex items-center gap-1 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">
-                    <span>{tag}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div className="container mx-auto px-4 md:px-6 py-8">
-          <div className="flex flex-col lg:flex-row gap-8">
-            <div className="lg:w-3/4">
-              <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
-                <h2 className="text-2xl font-semibold mb-4">About {destination.name}</h2>
-                <p className="text-gray-700 mb-6">{destination.description}</p>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                  <div className="flex items-start gap-3">
-                    <Globe className="h-5 w-5 text-blue-500 mt-0.5" />
-                    <div>
-                      <h3 className="font-medium">Language</h3>
-                      <p className="text-gray-600 text-sm">{getDestinationInfo(destination.name).language}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <DollarSign className="h-5 w-5 text-blue-500 mt-0.5" />
-                    <div>
-                      <h3 className="font-medium">Currency</h3>
-                      <p className="text-gray-600 text-sm">{getDestinationInfo(destination.name).currency}</p>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-2">
-                  {galleryImages.map((image, index) => (
-                    <div 
-                      key={index}
-                      className={`aspect-square rounded-lg overflow-hidden border-2 cursor-pointer transition-all ${
-                        activeImage === image ? 'border-blue-500 scale-[1.02]' : 'border-transparent hover:border-gray-300'
-                      }`}
-                      onClick={() => setActiveImage(image)}
-                    >
-                      <img 
-                        src={image} 
-                        alt={`Gallery image ${index + 1}`}
-                        className="w-full h-full object-cover"
-                        onError={() => handleImageError(index)}
-                      />
-                    </div>
-                  ))}
-                </div>
-                
-                {imageError && (
-                  <div className="flex items-center gap-2 text-amber-600 mt-2 text-sm">
-                    <ImageOff className="h-4 w-4" />
-                    <span>Some images couldn't be loaded. Showing alternative images.</span>
-                  </div>
-                )}
-              </div>
-              
-              <Tabs defaultValue="attractions" className="mb-8">
-                <TabsList className="grid w-full grid-cols-3">
-                  <TabsTrigger value="attractions">
-                    <Camera className="h-4 w-4 mr-2" />
-                    Attractions
-                  </TabsTrigger>
-                  <TabsTrigger value="restaurants">
-                    <Utensils className="h-4 w-4 mr-2" />
-                    Restaurants
-                  </TabsTrigger>
-                  <TabsTrigger value="accommodations">
-                    <Hotel className="h-4 w-4 mr-2" />
-                    Stay
-                  </TabsTrigger>
-                </TabsList>
-                <TabsContent value="attractions" className="mt-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {destination.attractions && destination.attractions.map((attraction, index) => (
-                      <Card key={index}>
-                        <CardContent className="p-4">
-                          <h3 className="font-semibold text-lg">{attraction.name}</h3>
-                          <div className="text-sm text-blue-600 mb-2">{attraction.type}</div>
-                          <p className="text-gray-600 text-sm">{attraction.description}</p>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                </TabsContent>
-                <TabsContent value="restaurants" className="mt-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {destination.restaurants && destination.restaurants.length > 0 ? (
-                      destination.restaurants.map((restaurant, index) => (
-                        <Card key={index}>
-                          <CardContent className="p-4">
-                            <h3 className="font-semibold text-lg">{restaurant.name}</h3>
-                            <div className="text-sm text-blue-600 mb-2">
-                              {restaurant.cuisine ? `${restaurant.type} • ${restaurant.cuisine}` : restaurant.type}
-                            </div>
-                            <p className="text-gray-600 text-sm">{restaurant.description}</p>
-                          </CardContent>
-                        </Card>
-                      ))
-                    ) : (
-                      <div className="col-span-2 text-center py-10">
-                        <p className="text-gray-500">No restaurant information available for this destination.</p>
-                      </div>
-                    )}
-                  </div>
-                </TabsContent>
-                <TabsContent value="accommodations" className="mt-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {destination.accommodations && destination.accommodations.length > 0 ? (
-                      destination.accommodations.map((accommodation, index) => (
-                        <Card key={index}>
-                          <CardContent className="p-4">
-                            <h3 className="font-semibold text-lg">{accommodation.name}</h3>
-                            <div className="text-sm text-blue-600 mb-2">{accommodation.type}</div>
-                            <p className="text-gray-600 text-sm">{accommodation.description}</p>
-                          </CardContent>
-                        </Card>
-                      ))
-                    ) : (
-                      <div className="col-span-2 text-center py-10">
-                        <p className="text-gray-500">No accommodation information available for this destination.</p>
-                      </div>
-                    )}
-                  </div>
-                </TabsContent>
-              </Tabs>
-            </div>
-            
-            <div className="lg:w-1/4">
-              <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-                <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-lg font-semibold">Plan Your Trip</h2>
-                  <button 
-                    onClick={() => setShowFlightSearch(!showFlightSearch)}
-                    className="text-blue-600 hover:text-blue-800 text-sm flex items-center gap-1"
-                  >
-                    <Plane className="h-4 w-4" />
-                    Find Flights
-                  </button>
-                </div>
-                
-                {showFlightSearch && (
-                  <form onSubmit={handleFlightSearch} className="mb-4">
-                    <div className="mb-3">
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Your Location</label>
-                      <div className="flex items-center gap-2 border rounded-md px-3 py-2 bg-gray-50">
-                        <MapPin className="h-4 w-4 text-gray-400" />
-                        <span className="text-sm">{userLocation || "Loading location..."}</span>
-                      </div>
-                    </div>
-                    
-                    <div className="mb-3">
-                      <label htmlFor="departure-date" className="block text-sm font-medium text-gray-700 mb-1">Departure Date</label>
-                      <Input
-                        id="departure-date"
-                        type="date"
-                        value={departureDate}
-                        onChange={(e) => setDepartureDate(e.target.value)}
-                        className="w-full"
-                      />
-                    </div>
-                    
-                    <div className="mb-4">
-                      <label htmlFor="return-date" className="block text-sm font-medium text-gray-700 mb-1">Return Date (Optional)</label>
-                      <Input
-                        id="return-date"
-                        type="date"
-                        value={returnDate}
-                        onChange={(e) => setReturnDate(e.target.value)}
-                        className="w-full"
-                      />
-                    </div>
-                    
-                    <Button type="submit" className="w-full">
-                      <Plane className="h-4 w-4 mr-2" />
-                      Search Flights
-                    </Button>
-                  </form>
-                )}
-                
-                <div className="border-t border-gray-100 pt-4">
-                  <h3 className="font-medium text-sm mb-3">Travel Tips</h3>
-                  <ul className="space-y-2 text-sm text-gray-600">
-                    <li className="flex items-start gap-2">
-                      <Calendar className="h-4 w-4 text-blue-500 mt-0.5 shrink-0" />
-                      <span>Best time to visit: {destination.name.includes("Japan") ? "Spring (March-May) for cherry blossoms" : "Check local seasons before booking"}</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <Clock className="h-4 w-4 text-blue-500 mt-0.5 shrink-0" />
-                      <span>Recommended stay: 3-5 days to explore main attractions</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              
-              <div className="flex gap-2">
-                <Button variant="outline" className="flex-1">
-                  <Bookmark className="h-4 w-4 mr-2" />
-                  Save
-                </Button>
-                <Button variant="outline" className="flex-1">
-                  <Share className="h-4 w-4 mr-2" />
-                  Share
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
-      
-      <Footer />
-    </div>
-  );
-};
-
-export default DestinationDetails;
+        <div className="container mx-auto px-4 py
