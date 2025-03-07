@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
@@ -27,7 +28,7 @@ import {
   CheckCircle2,
   ExternalLink
 } from "lucide-react";
-import { sampleDestinations } from "@/data/sampleDestinations";
+import { sampleDestinations } from "@/data/destinations";
 import { Destination } from "@/types/destination";
 import { toast } from "sonner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "@/components/ui/dialog";
@@ -124,7 +125,14 @@ const DESTINATION_INFO = {
   
   "Australia": { language: "English", currency: "Australian Dollar (AUD)" },
   
-  "Maldives": { language: "Dhivehi", currency: "Maldivian Rufiyaa (MVR)" }
+  "Maldives": { language: "Dhivehi", currency: "Maldivian Rufiyaa (MVR)" },
+  
+  // Added new countries
+  "Germany": { language: "German", currency: "Euro (EUR)" },
+  "Belgium": { language: "Dutch, French, German", currency: "Euro (EUR)" },
+  "Switzerland": { language: "German, French, Italian, Romansh", currency: "Swiss Franc (CHF)" },
+  "Russia": { language: "Russian", currency: "Russian Ruble (RUB)" },
+  "Mexico": { language: "Spanish", currency: "Mexican Peso (MXN)" }
 };
 
 const getDestinationInfo = (destinationName: string) => {
@@ -132,13 +140,14 @@ const getDestinationInfo = (destinationName: string) => {
   let country = nameParts[1]?.trim();
   
   if (destinationName.includes("Kyoto") || destinationName.includes("Tokyo")) country = "Japan";
-  if (destinationName.includes("Rome") || destinationName.includes("Venice") || destinationName.includes("Florence")) country = "Italy";
+  if (destinationName.includes("Rome") || destinationName.includes("Venice") || destinationName.includes("Florence") || 
+      destinationName.includes("Milan") || destinationName.includes("Naples") || destinationName.includes("Palermo")) country = "Italy";
   if (destinationName.includes("Santorini")) country = "Greece";
   if (destinationName.includes("Paris")) country = "France";
   if (destinationName.includes("Barcelona")) country = "Spain";
   if (destinationName.includes("New York") || destinationName.includes("NYC")) country = "USA";
   if (destinationName.includes("London")) country = "United Kingdom";
-  if (destinationName.includes("Amsterdam")) country = "Netherlands";
+  if (destinationName.includes("Amsterdam") || destinationName.includes("Rotterdam")) country = "Netherlands";
   if (destinationName.includes("Prague")) country = "Czech Republic";
   if (destinationName.includes("Dubrovnik")) country = "Croatia";
   if (destinationName.includes("Vienna")) country = "Austria";
@@ -152,6 +161,13 @@ const getDestinationInfo = (destinationName: string) => {
   if (destinationName.includes("Marrakech")) country = "Morocco";
   if (destinationName.includes("Cape Town")) country = "South Africa";
   if (destinationName === "Maldives") country = "Maldives";
+  
+  // Added mappings for new cities
+  if (destinationName.includes("Berlin") || destinationName.includes("Munich")) country = "Germany";
+  if (destinationName.includes("Brussels") || destinationName.includes("Bruges")) country = "Belgium";
+  if (destinationName.includes("Zurich") || destinationName.includes("Geneva")) country = "Switzerland";
+  if (destinationName.includes("Moscow") || destinationName.includes("St. Petersburg")) country = "Russia";
+  if (destinationName.includes("Mexico City")) country = "Mexico";
   
   return DESTINATION_INFO[country as keyof typeof DESTINATION_INFO] || { 
     language: "Local language", 

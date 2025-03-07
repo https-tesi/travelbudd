@@ -1,3 +1,4 @@
+
 import { Destination } from "@/types/destination";
 import { asiaDestinations } from "./asia";
 import { europeDestinations } from "./europe";
@@ -32,17 +33,91 @@ const addCostEstimates = (destinations: Destination[]): Destination[] => {
     "Machu Picchu, Peru": "$1400-$2700",
     "Mexico City, Mexico": "$900-$1800",
     "Dubai, UAE": "$1600-$3000",
-    "Maldives": "$2500-$5000"
+    "Maldives": "$2500-$5000",
+    
+    // Added cost estimates for new destinations
+    "Berlin, Germany": "$1200-$2400",
+    "Munich, Germany": "$1300-$2500",
+    "Brussels, Belgium": "$1100-$2300",
+    "Bruges, Belgium": "$1000-$2100",
+    "Rotterdam, Netherlands": "$1200-$2300",
+    "Zurich, Switzerland": "$1500-$3000",
+    "Geneva, Switzerland": "$1600-$3100",
+    "Moscow, Russia": "$1100-$2400",
+    "St. Petersburg, Russia": "$1000-$2200",
+    "Milan, Italy": "$1300-$2600",
+    "Naples, Italy": "$1000-$2000",
+    "Palermo, Italy": "$900-$1900"
+  };
+
+  // Apply temperature estimates for destinations that don't have them
+  const tempEstimates: Record<string, number> = {
+    // Asian cities
+    "Kyoto, Japan": 15,
+    "Tokyo, Japan": 16,
+    "Bangkok, Thailand": 28,
+    "Bali, Indonesia": 27,
+    
+    // European cities
+    "Paris, France": 12,
+    "Rome, Italy": 17,
+    "Barcelona, Spain": 18,
+    "Venice, Italy": 14,
+    "Florence, Italy": 15,
+    "Santorini, Greece": 18,
+    "London, UK": 11,
+    "Amsterdam, Netherlands": 10,
+    "Prague, Czech Republic": 9,
+    "Vienna, Austria": 11,
+    "Dubrovnik, Croatia": 16,
+    "Istanbul, Turkey": 14,
+    
+    // Americas
+    "New York City, USA": 12,
+    "Rio de Janeiro, Brazil": 25,
+    "Machu Picchu, Peru": 12,
+    "Mexico City, Mexico": 17,
+    
+    // Middle East & Africa
+    "Dubai, UAE": 29,
+    "Marrakech, Morocco": 19,
+    "Cape Town, South Africa": 17,
+    
+    // Oceania
+    "Sydney, Australia": 18,
+    "Maldives": 28,
+    
+    // New cities
+    "Berlin, Germany": 10,
+    "Munich, Germany": 9,
+    "Brussels, Belgium": 11,
+    "Bruges, Belgium": 11,
+    "Rotterdam, Netherlands": 10,
+    "Zurich, Switzerland": 8,
+    "Geneva, Switzerland": 9,
+    "Moscow, Russia": 5,
+    "St. Petersburg, Russia": 4,
+    "Milan, Italy": 13,
+    "Naples, Italy": 16,
+    "Palermo, Italy": 17
   };
 
   return destinations.map(dest => {
-    if (!dest.costEstimate) {
-      return {
-        ...dest,
-        costEstimate: costEstimates[dest.name] || "$1000-$2500"
-      };
+    const updatedDest = { ...dest };
+    
+    // Add cost estimate if missing
+    if (!updatedDest.costEstimate) {
+      updatedDest.costEstimate = costEstimates[dest.name] || "$1000-$2500";
     }
-    return dest;
+    
+    // Add temperature if missing
+    if (updatedDest.averageTemp === undefined) {
+      updatedDest.averageTemp = tempEstimates[dest.name] !== undefined 
+        ? tempEstimates[dest.name] 
+        : 20; // Default temperature
+    }
+    
+    return updatedDest;
   });
 };
 
