@@ -2,6 +2,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MapPin, Star, ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface Destination {
   id: number;
@@ -17,6 +18,13 @@ interface DestinationCardProps {
 }
 
 const DestinationCard = ({ destination }: DestinationCardProps) => {
+  const navigate = useNavigate();
+  
+  const handleExplore = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent the parent onClick from firing
+    navigate(`/destination/${destination.id}`);
+  };
+  
   return (
     <Card className="overflow-hidden group hover:shadow-md transition-all">
       <div className="relative h-48 overflow-hidden">
@@ -51,7 +59,7 @@ const DestinationCard = ({ destination }: DestinationCardProps) => {
             </span>
           ))}
         </div>
-        <Button className="w-full" variant="outline">
+        <Button className="w-full" variant="outline" onClick={handleExplore}>
           <span>Explore</span>
           <ArrowRight className="ml-2 h-4 w-4" />
         </Button>

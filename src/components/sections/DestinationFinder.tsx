@@ -3,9 +3,10 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { Search, MapPin, Sparkles } from "lucide-react";
+import { Search, MapPin, Sparkles, Info } from "lucide-react";
 import DestinationCard from "@/components/ui/DestinationCard";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 
 // Sample destinations data (would come from API in real app)
 const sampleDestinations = [
@@ -80,6 +81,8 @@ const DestinationFinder = () => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [filteredDestinations, setFilteredDestinations] = useState(sampleDestinations.slice(0, 3));
   const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const { toast } = useToast();
   const navigate = useNavigate();
   
   // Filter destinations based on search query
@@ -98,6 +101,13 @@ const DestinationFinder = () => {
         .filter(d => d.name.toLowerCase().includes(lowercaseQuery))
         .map(d => d.name)
         .slice(0, 5);
+
+      // Add Italy-specific suggestions if "ital" is in the query
+      if (lowercaseQuery.includes("ital") && !suggestionsList.some(s => s.includes("Rome"))) {
+        suggestionsList.push("Rome, Italy");
+        suggestionsList.push("Venice, Italy");
+        suggestionsList.push("Florence, Italy");
+      }
         
       setSuggestions(suggestionsList);
       setShowSuggestions(suggestionsList.length > 0);
@@ -110,8 +120,59 @@ const DestinationFinder = () => {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     setShowSuggestions(false);
-    // In a real app, this would trigger an API call
-    console.log("Searching for:", searchQuery);
+    
+    if (!searchQuery.trim()) {
+      toast({
+        title: "Please enter a destination or interest",
+        description: "Try entering a location or activity you're interested in",
+        variant: "default",
+      });
+      return;
+    }
+    
+    // Simulate AI-powered search
+    setIsGenerating(true);
+    
+    setTimeout(() => {
+      const lowercaseQuery = searchQuery.toLowerCase();
+      let filtered;
+      
+      // Simulate AI understanding of natural language queries
+      if (lowercaseQuery.includes("nature") || lowercaseQuery.includes("scenic")) {
+        filtered = sampleDestinations.filter(d => 
+          d.tags.some(tag => ["Nature", "Scenic"].includes(tag))
+        );
+      } else if (lowercaseQuery.includes("food") || lowercaseQuery.includes("cuisine")) {
+        filtered = sampleDestinations.filter(d => 
+          d.tags.some(tag => ["Food"].includes(tag))
+        );
+      } else if (lowercaseQuery.includes("history") || lowercaseQuery.includes("historical")) {
+        filtered = sampleDestinations.filter(d => 
+          d.tags.some(tag => ["Historical"].includes(tag))
+        );
+      } else if (lowercaseQuery.includes("europe")) {
+        filtered = sampleDestinations.filter(d => 
+          d.name.toLowerCase().includes("italy") || 
+          d.name.toLowerCase().includes("greece") || 
+          d.name.toLowerCase().includes("france")
+        );
+      } else {
+        filtered = sampleDestinations.filter(destination => 
+          destination.name.toLowerCase().includes(lowercaseQuery) ||
+          destination.description.toLowerCase().includes(lowercaseQuery) ||
+          destination.tags.some(tag => tag.toLowerCase().includes(lowercaseQuery))
+        );
+      }
+      
+      setFilteredDestinations(filtered.length > 0 ? filtered : []);
+      setIsGenerating(false);
+      
+      toast({
+        title: `Found ${filtered.length} destinations for you`,
+        description: "Browse the results or refine your search for more options",
+        variant: "default",
+      });
+    }, 1500);
   };
 
   const handleSuggestionClick = (suggestion: string) => {
@@ -121,11 +182,27 @@ const DestinationFinder = () => {
 
   const handleCategoryClick = (category: string) => {
     setSearchQuery(category);
-    // Automatically search when clicking a category
-    const filtered = sampleDestinations.filter(destination =>
-      destination.tags.some(tag => tag.toLowerCase() === category.toLowerCase())
-    );
-    setFilteredDestinations(filtered.length > 0 ? filtered : sampleDestinations.slice(0, 3));
+    setIsGenerating(true);
+    
+    // Simulate AI-powered category search
+    setTimeout(() => {
+      // Automatically search when clicking a category
+      const filtered = sampleDestinations.filter(destination =>
+        destination.tags.some(tag => tag.toLowerCase() === category.toLowerCase())
+      );
+      setFilteredDestinations(filtered.length > 0 ? filtered : sampleDestinations.slice(0, 3));
+      setIsGenerating(false);
+      
+      toast({
+        title: `Exploring ${category} destinations`,
+        description: `Found ${filtered.length} places for your ${category.toLowerCase()} adventure`,
+        variant: "default",
+      });
+    }, 1000);
+  };
+
+  const handleCardClick = (destinationId: number) => {
+    navigate(`/destination/${destinationId}`);
   };
 
   return (
@@ -148,7 +225,7 @@ const DestinationFinder = () => {
                       placeholder="Try 'historical sites in Europe' or 'tropical beaches'"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      onFocus={() => searchQuery && setSuggestions.length > 0 && setShowSuggestions(true)}
+                      onFocus={() => searchQuery && suggestions.length > 0 && setShowSuggestions(true)}
                       onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
                     />
                     
@@ -161,15 +238,31 @@ const DestinationFinder = () => {
                             className="px-4 py-2 hover:bg-blue-50 cursor-pointer text-left"
                             onClick={() => handleSuggestionClick(suggestion)}
                           >
-                            {suggestion}
+                            <div className="flex items-center">
+                              <MapPin className="h-4 w-4 mr-2 text-blue-500" />
+                              {suggestion}
+                            </div>
                           </div>
                         ))}
                       </div>
                     )}
                   </div>
-                  <Button type="submit" className="flex gap-2">
-                    <Sparkles className="h-5 w-5" />
-                    Find Destinations
+                  <Button 
+                    type="submit" 
+                    className="flex gap-2"
+                    disabled={isGenerating}
+                  >
+                    {isGenerating ? (
+                      <>
+                        <div className="h-5 w-5 animate-spin rounded-full border-b-2 border-white"></div>
+                        Searching...
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles className="h-5 w-5" />
+                        Find Destinations
+                      </>
+                    )}
                   </Button>
                 </div>
               </form>
@@ -221,14 +314,26 @@ const DestinationFinder = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-          {filteredDestinations.length > 0 ? (
+          {isGenerating && (
+            <div className="col-span-3 flex flex-col items-center justify-center py-12">
+              <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mb-4"></div>
+              <p className="text-lg text-gray-600">Our AI is finding perfect destinations for you...</p>
+            </div>
+          )}
+          
+          {!isGenerating && filteredDestinations.length > 0 ? (
             filteredDestinations.map((destination) => (
-              <DestinationCard key={destination.id} destination={destination} />
+              <div key={destination.id} onClick={() => handleCardClick(destination.id)} className="cursor-pointer">
+                <DestinationCard destination={destination} />
+              </div>
             ))
           ) : (
-            <div className="col-span-3 text-center py-10">
-              <p className="text-lg text-gray-500">No destinations found matching your search. Try a different query or browse our popular categories.</p>
-            </div>
+            !isGenerating && (
+              <div className="col-span-3 text-center py-10">
+                <Info className="mx-auto h-12 w-12 text-blue-400 mb-4" />
+                <p className="text-lg text-gray-500">No destinations found matching your search. Try a different query or browse our popular categories.</p>
+              </div>
+            )
           )}
         </div>
         
@@ -236,9 +341,20 @@ const DestinationFinder = () => {
           <Button 
             variant="outline" 
             className="rounded-full"
-            onClick={() => setFilteredDestinations(sampleDestinations)}
+            onClick={() => {
+              setIsGenerating(true);
+              setTimeout(() => {
+                setFilteredDestinations(sampleDestinations);
+                setIsGenerating(false);
+                toast({
+                  title: "Showing all destinations",
+                  description: "Browse our complete catalog of amazing places",
+                  variant: "default",
+                });
+              }, 800);
+            }}
           >
-            Show More Destinations
+            Show All Destinations
           </Button>
         </div>
       </div>
