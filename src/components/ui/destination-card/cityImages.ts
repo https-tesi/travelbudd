@@ -1,4 +1,4 @@
-
+<lov-code>
 // City-specific primary images organized by city
 export const citySpecificImages: Record<string, string[]> = {
   // Germany
@@ -49,36 +49,36 @@ export const citySpecificImages: Record<string, string[]> = {
     "https://images.unsplash.com/photo-1563155853-4286f13ddf36?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"  // Church on Spilled Blood
   ],
   
-  // Italy
+  // Italy - Updated with new, distinct images
   "Milan": [
-    "https://images.unsplash.com/photo-1603122630570-cecebca18090?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Milan Cathedral
-    "https://images.unsplash.com/photo-1574401843589-5c890f04a7c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Galleria Vittorio Emanuele II
+    "https://images.unsplash.com/photo-1512231471294-3c2c22488ccd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Milan Cathedral at sunset
+    "https://images.unsplash.com/photo-1610016302534-6f67f1c968d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Galleria Vittorio Emanuele II
     "https://images.unsplash.com/photo-1595846406905-33e428b5d4ed?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"  // Milan cityscape
   ],
   "Naples": [
-    "https://images.unsplash.com/photo-1695712531230-c75c139f9af1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Naples with Vesuvius
-    "https://images.unsplash.com/photo-1615279113922-6b94b6a24a28?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Naples street
-    "https://images.unsplash.com/photo-1661503399056-0430e99112ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"  // Naples bay
+    "https://images.unsplash.com/photo-1552832230-c0197dd311b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Naples with Vesuvius
+    "https://images.unsplash.com/photo-1563116213-27685bfbc7bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Colorful Naples buildings
+    "https://images.unsplash.com/photo-1662502711735-4e0117049a40?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"  // Naples coastline
   ],
   "Palermo": [
-    "https://images.unsplash.com/photo-1633321088355-d0f81134ca3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Palermo Cathedral
-    "https://images.unsplash.com/photo-1694631031371-e7a2f05d49b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Palermo street
-    "https://images.unsplash.com/photo-1676126147840-9b236397cd54?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"  // Palermo architecture
+    "https://images.unsplash.com/photo-1610016302744-b6ca38a6ec31?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Palermo Cathedral
+    "https://images.unsplash.com/photo-1600111765672-045f35cc19af?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Palermo street with food vendors
+    "https://images.unsplash.com/photo-1642792370920-983525ee8c64?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"  // Palermo harbor
   ],
   "Rome": [
-    "https://images.unsplash.com/photo-1552832230-c0197dd311b5?q=80&w=1470&auto=format&fit=crop", // Colosseum
-    "https://images.unsplash.com/photo-1525874684015-58379d421a52?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Trevi Fountain
-    "https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"  // Roman Forum
+    "https://images.unsplash.com/photo-1552832230-c0197dd311b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Colosseum 
+    "https://images.unsplash.com/photo-1529900748604-07564a03e7a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Vatican City and St. Peter's
+    "https://images.unsplash.com/photo-1525874684015-58379d421a52?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"  // Trevi Fountain
   ],
   "Florence": [
-    "https://images.unsplash.com/photo-1534359265607-b2e5c7c244c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Florence Duomo
-    "https://images.unsplash.com/photo-1560361586-8242b1917847?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Florence skyline
-    "https://images.unsplash.com/photo-1592402399257-e24ea180f8e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"  // Ponte Vecchio
+    "https://images.unsplash.com/photo-1534459580661-6517dd89ad54?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Florence Duomo
+    "https://images.unsplash.com/photo-1534359265607-b2e5c7c244c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Florence skyline with bridge
+    "https://images.unsplash.com/photo-1541370976301-9ad15474d258?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"  // Streets of Florence
   ],
   "Venice": [
-    "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?q=80&w=1470&auto=format&fit=crop", // Grand Canal
-    "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?ixlib=rb-4.0.3&auto=format&fit=crop&w=1472&q=80", // Venice canals with gondolas
-    "https://images.unsplash.com/photo-1529154036614-a60975f5c760?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"  // Rialto Bridge
+    "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Grand Canal
+    "https://images.unsplash.com/photo-1514890547357-a9ee288728e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Venice canals with gondolas
+    "https://images.unsplash.com/photo-1533676802871-eca1ae998cd5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"  // Colorful Burano island
   ],
   
   // Switzerland
@@ -192,6 +192,4 @@ export const citySpecificImages: Record<string, string[]> = {
   "Dubai": [
     "https://images.unsplash.com/photo-1518684079-3c830dcef090?ixlib=rb-4.0.3&auto=format&fit=crop&w=1527&q=80", // Burj Khalifa
     "https://images.unsplash.com/photo-1526495124232-a04e1849168c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1374&q=80", // Palm Jumeirah
-    "https://images.unsplash.com/photo-1577471488278-16eec37ffcc2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"  // Dubai skyline
-  ]
-};
+    "https://images.unsplash.com/photo-157747148827
