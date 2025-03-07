@@ -48,7 +48,11 @@ export const ImageDisplay = ({ destination, isFavorite, setIsFavorite }: ImageDi
     
     if (newAttemptCount >= maxAttempts.current) {
       console.log(`Maximum fallback attempts reached for ${destination.name}. Using final fallback.`);
-      // Use a guaranteed working image as final fallback
+      // Use a guaranteed working image as final fallback - using a different one for Naples
+      if (cityName === 'Naples') {
+        setImageSrc("https://images.pexels.com/photos/10902904/pexels-photo-10902904.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
+        return;
+      }
       setImageSrc("https://images.unsplash.com/photo-1500835556837-99ac94a94552?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1173&q=80");
       return;
     }
@@ -67,6 +71,19 @@ export const ImageDisplay = ({ destination, isFavorite, setIsFavorite }: ImageDi
       "https://images.unsplash.com/photo-1488085061387-422e29b40080?ixlib=rb-4.0.3&auto=format&fit=crop&w=1031&q=80",
       "https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
     ];
+    
+    // Special case for Naples - use specific guaranteed fallbacks
+    if (cityName === 'Naples') {
+      const naplesFallbacks = [
+        "https://images.pexels.com/photos/10902904/pexels-photo-10902904.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        "https://images.pexels.com/photos/7031744/pexels-photo-7031744.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        "https://images.pexels.com/photos/4179480/pexels-photo-4179480.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+      ];
+      const fallbackIndex = Math.min(newAttemptCount - (citySpecificImages[cityName]?.length || 0), naplesFallbacks.length - 1);
+      console.log(`Using Naples-specific fallback image #${fallbackIndex} for ${destination.name}`);
+      setImageSrc(naplesFallbacks[fallbackIndex]);
+      return;
+    }
     
     // Use a deterministic approach to pick a fallback image
     const fallbackIndex = Math.min(newAttemptCount - (citySpecificImages[cityName]?.length || 0), defaultFallbackImages.length - 1);

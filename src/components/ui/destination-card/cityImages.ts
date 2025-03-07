@@ -1,3 +1,4 @@
+
 // City-specific primary images organized by city
 export const citySpecificImages: Record<string, string[]> = {
   // Germany
@@ -55,9 +56,9 @@ export const citySpecificImages: Record<string, string[]> = {
     "https://images.unsplash.com/photo-1595846406905-33e428b5d4ed?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"  // Milan cityscape
   ],
   "Naples": [
-    "https://images.unsplash.com/photo-1559044201-57515f6a2c2d?q=80&w=1470&auto=format&fit=crop", // Naples with Mount Vesuvius
-    "https://images.unsplash.com/photo-1533671040543-c9e2e2e6a8fb?q=80&w=1470&auto=format&fit=crop", // Naples harbor with castle
-    "https://images.unsplash.com/photo-1593277237987-b1a89ef90395?q=80&w=1470&auto=format&fit=crop"  // Naples street view
+    "https://images.pexels.com/photos/5169594/pexels-photo-5169594.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", // Naples with Vesuvius view
+    "https://images.pexels.com/photos/13380864/pexels-photo-13380864.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", // Naples harbor view
+    "https://images.pexels.com/photos/14647999/pexels-photo-14647999.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"  // Naples street view
   ],
   "Palermo": [
     "https://images.unsplash.com/photo-1523365280197-f1783db9bbf7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Palermo Cathedral
