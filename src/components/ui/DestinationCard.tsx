@@ -1,10 +1,11 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MapPin, Star, ArrowRight, ImageOff } from "lucide-react";
+import { MapPin, Star, ArrowRight, ImageOff, Heart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Destination } from "@/types/destination";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { toast } from "sonner";
 
 interface DestinationCardProps {
   destination: Destination;
@@ -13,7 +14,17 @@ interface DestinationCardProps {
 const DestinationCard = ({ destination }: DestinationCardProps) => {
   const navigate = useNavigate();
   const [imageError, setImageError] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
   
+  useEffect(() => {
+    // Check if destination is in favorites
+    const savedFavorites = localStorage.getItem("favorites");
+    if (savedFavorites) {
+      const favList: Destination[] = JSON.parse(savedFavorites);
+      setIsFavorite(favList.some(fav => fav.id === destination.id));
+    }
+  }, [destination.id]);
+
   const handleExplore = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent the parent onClick from firing
     navigate(`/destination/${destination.id}`);
@@ -22,6 +33,28 @@ const DestinationCard = ({ destination }: DestinationCardProps) => {
   const handleImageError = () => {
     setImageError(true);
     console.log(`Image failed to load for ${destination.name}`);
+  };
+  
+  const toggleFavorite = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent the parent onClick from firing
+    
+    // Get existing favorites
+    const savedFavorites = localStorage.getItem("favorites");
+    let favList: Destination[] = savedFavorites ? JSON.parse(savedFavorites) : [];
+    
+    if (isFavorite) {
+      // Remove from favorites
+      favList = favList.filter(fav => fav.id !== destination.id);
+      toast.success(`${destination.name} removed from favorites`);
+    } else {
+      // Add to favorites
+      favList.push(destination);
+      toast.success(`${destination.name} added to favorites`);
+    }
+    
+    // Save to localStorage
+    localStorage.setItem("favorites", JSON.stringify(favList));
+    setIsFavorite(!isFavorite);
   };
   
   return (
@@ -46,6 +79,14 @@ const DestinationCard = ({ destination }: DestinationCardProps) => {
           <Star className="h-3 w-3 text-yellow-500 fill-yellow-500" />
           <span className="text-xs font-medium">{destination.score}%</span>
         </div>
+        <button 
+          onClick={toggleFavorite}
+          className="absolute top-3 left-3 bg-white p-2 rounded-full shadow-sm hover:bg-gray-50 transition-colors"
+        >
+          <Heart 
+            className={`h-4 w-4 ${isFavorite ? 'text-red-500 fill-red-500' : 'text-gray-400'}`} 
+          />
+        </button>
       </div>
       <CardContent className="p-5">
         <div className="flex items-start justify-between mb-2">

@@ -2,7 +2,6 @@
 import { Button } from "@/components/ui/button";
 import TravelHero from "@/components/sections/TravelHero";
 import DestinationFinder from "@/components/sections/DestinationFinder";
-import HowItWorks from "@/components/sections/HowItWorks";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Toaster } from "@/components/ui/sonner";
@@ -16,7 +15,6 @@ const Index = () => {
         <div id="destination-finder">
           <DestinationFinder />
         </div>
-        <HowItWorks />
       </main>
       <Footer />
       <Toaster position="bottom-right" />

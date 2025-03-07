@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Globe, Menu, X } from "lucide-react";
+import { Globe, Menu, X, Heart } from "lucide-react";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,14 +20,8 @@ const Navbar = () => {
           <Link to="/" className="text-sm font-medium hover:text-primary transition-colors">
             Home
           </Link>
-          <Link to="/destinations" className="text-sm font-medium hover:text-primary transition-colors">
-            Destinations
-          </Link>
-          <Link to="/how-it-works" className="text-sm font-medium hover:text-primary transition-colors">
-            How It Works
-          </Link>
-          <Link to="/pricing" className="text-sm font-medium hover:text-primary transition-colors">
-            Pricing
+          <Link to="/favorites" className="text-sm font-medium hover:text-primary transition-colors flex items-center gap-1">
+            <Heart className="h-4 w-4" /> Favorites
           </Link>
         </div>
 
@@ -52,14 +46,8 @@ const Navbar = () => {
             <Link to="/" className="text-sm font-medium hover:text-primary transition-colors">
               Home
             </Link>
-            <Link to="/destinations" className="text-sm font-medium hover:text-primary transition-colors">
-              Destinations
-            </Link>
-            <Link to="/how-it-works" className="text-sm font-medium hover:text-primary transition-colors">
-              How It Works
-            </Link>
-            <Link to="/pricing" className="text-sm font-medium hover:text-primary transition-colors">
-              Pricing
+            <Link to="/favorites" className="text-sm font-medium hover:text-primary transition-colors flex items-center gap-1">
+              <Heart className="h-4 w-4" /> Favorites
             </Link>
             <div className="flex flex-col gap-2 pt-2">
               <Button variant="outline" size="sm" className="w-full">Sign In</Button>
