@@ -34,9 +34,14 @@ export const useFlightSearch = (destination: string | undefined, nearestAirport:
       "Milan": "MXP",
       "Istanbul": "IST",
       "Cape Town": "CPT",
-      "Marrakech": "RAK"
+      "Marrakech": "RAK",
+      "Naples": "NAP",
+      "Palermo": "PMO",
+      "Florence": "FLR",
+      "Venice": "VCE"
     };
     
+    // Get destination code, falling back to first 3 letters of destination if not found
     const destinationCode = airportCodes[destinationName] || destinationName.substring(0, 3).toUpperCase();
     
     toast.info(`Searching flights from ${nearestAirport || "your location"} to ${destinationCode}`);
