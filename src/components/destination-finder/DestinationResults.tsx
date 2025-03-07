@@ -24,6 +24,18 @@ const DestinationResults = ({
   handleCardClick,
   searchParams = { destination: "", when: "", budget: "" }
 }: DestinationResultsProps) => {
+  // Add fallback images for destinations with broken image links
+  const getValidImageUrl = (destination: Destination) => {
+    // Check if the image exists
+    const fallbackImages: Record<string, string> = {
+      "Santorini, Greece": "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1035&q=80",
+      "Amsterdam, Netherlands": "https://images.unsplash.com/photo-1512470876302-972faa2aa9a4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+      "Barcelona, Spain": "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+    };
+    
+    return fallbackImages[destination.name] || destination.imageUrl;
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
       {/* Show search parameters if they exist */}
@@ -65,7 +77,10 @@ const DestinationResults = ({
       {!isGenerating && filteredDestinations.length > 0 ? (
         filteredDestinations.map((destination) => (
           <div key={destination.id} onClick={() => handleCardClick(destination.id)} className="cursor-pointer">
-            <DestinationCard destination={destination} />
+            <DestinationCard destination={{
+              ...destination,
+              imageUrl: getValidImageUrl(destination)
+            }} />
           </div>
         ))
       ) : (
