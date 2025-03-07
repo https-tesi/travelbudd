@@ -1,3 +1,4 @@
+
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Search, Calendar, DollarSign } from "lucide-react";
@@ -94,6 +95,73 @@ const TravelHero = () => {
           <p className="text-lg md:text-xl text-blue-100 mb-8">
             Discover personalized travel recommendations, stunning visuals, and smart itineraries powered by artificial intelligence.
           </p>
+
+          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mb-8 border border-white/20">
+            <Button 
+              className="w-full py-6 text-lg font-semibold bg-blue-500 hover:bg-blue-600 mb-4" 
+              onClick={handleSearch}
+            >
+              <Search className="h-5 w-5 mr-2" /> Search for Travel Deals
+            </Button>
+              
+            <div className="flex flex-col lg:flex-row gap-4">
+              <div className="flex-1 relative">
+                <div className="flex items-center border border-white/30 bg-white/5 rounded-lg p-3 focus-within:border-white">
+                  <Search className="h-5 w-5 text-white mr-2" />
+                  <Input 
+                    type="text" 
+                    placeholder="Where do you want to go?" 
+                    className="w-full outline-none text-white border-0 p-0 focus-visible:ring-0 bg-transparent placeholder:text-white/70"
+                    value={destination}
+                    onChange={handleDestinationChange}
+                    onFocus={() => destination && suggestions.length > 0 && setShowSuggestions(true)}
+                    onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+                  />
+                </div>
+                
+                {/* Suggestions dropdown - Fixed z-index and improved visibility */}
+                {showSuggestions && (
+                  <div className="absolute z-[100] bg-white border border-gray-200 shadow-lg rounded-md w-full mt-1 max-h-60 overflow-auto">
+                    {suggestions.map((suggestion, index) => (
+                      <div 
+                        key={index}
+                        className="px-4 py-2 hover:bg-blue-50 cursor-pointer text-left text-gray-700"
+                        onMouseDown={() => handleSuggestionClick(suggestion)}
+                      >
+                        <div className="flex items-center">
+                          <MapPin className="h-4 w-4 mr-2 text-blue-500" />
+                          {suggestion}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex items-center border border-white/30 bg-white/5 rounded-lg p-3 focus-within:border-white">
+                  <Calendar className="h-5 w-5 text-white mr-2" />
+                  <Input 
+                    type="text" 
+                    placeholder="When?" 
+                    className="w-full outline-none text-white border-0 p-0 focus-visible:ring-0 bg-transparent placeholder:text-white/70"
+                    value={when}
+                    onChange={(e) => setWhen(e.target.value)}
+                  />
+                </div>
+                <div className="flex items-center border border-white/30 bg-white/5 rounded-lg p-3 focus-within:border-white">
+                  <DollarSign className="h-5 w-5 text-white mr-2" />
+                  <Input 
+                    type="text" 
+                    placeholder="Budget" 
+                    className="w-full outline-none text-white border-0 p-0 focus-visible:ring-0 bg-transparent placeholder:text-white/70"
+                    value={budget}
+                    onChange={(e) => setBudget(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Button size="lg" className="bg-white text-blue-600 hover:bg-blue-50" onClick={handleSearch}>
               Plan Your Trip <ArrowRight className="ml-2 h-5 w-5" />
@@ -106,72 +174,6 @@ const TravelHero = () => {
             >
               Explore Destinations
             </Button>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-xl shadow-xl max-w-4xl mx-auto overflow-hidden transform translate-y-12 relative z-20">
-          <div className="p-6">
-            <div className="flex flex-col space-y-4">
-              <Button 
-                className="w-full py-6 text-lg font-semibold bg-blue-600 hover:bg-blue-700" 
-                onClick={handleSearch}
-              >
-                <Search className="h-5 w-5 mr-2" /> Search for Travel Deals
-              </Button>
-              
-              <div className="flex flex-col lg:flex-row gap-4">
-                <div className="flex-1 relative">
-                  <div className="flex items-center border border-gray-200 rounded-lg p-3 focus-within:border-primary">
-                    <Search className="h-5 w-5 text-gray-400 mr-2" />
-                    <Input 
-                      type="text" 
-                      placeholder="Where do you want to go?" 
-                      className="w-full outline-none text-gray-700 border-0 p-0 focus-visible:ring-0"
-                      value={destination}
-                      onChange={handleDestinationChange}
-                      onFocus={() => destination && suggestions.length > 0 && setShowSuggestions(true)}
-                      onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-                    />
-                  </div>
-                  
-                  {showSuggestions && (
-                    <div className="absolute z-50 bg-white border border-gray-200 shadow-lg rounded-md w-full mt-1 max-h-60 overflow-auto">
-                      {suggestions.map((suggestion, index) => (
-                        <div 
-                          key={index}
-                          className="px-4 py-2 hover:bg-blue-50 cursor-pointer text-left text-gray-700"
-                          onMouseDown={() => handleSuggestionClick(suggestion)}
-                        >
-                          {suggestion}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <div className="flex items-center border border-gray-200 rounded-lg p-3 focus-within:border-primary">
-                    <Calendar className="h-5 w-5 text-gray-400 mr-2" />
-                    <Input 
-                      type="text" 
-                      placeholder="When? (Any format: Jun, 2023, Summer...)" 
-                      className="w-full outline-none text-gray-700 border-0 p-0 focus-visible:ring-0"
-                      value={when}
-                      onChange={(e) => setWhen(e.target.value)}
-                    />
-                  </div>
-                  <div className="flex items-center border border-gray-200 rounded-lg p-3 focus-within:border-primary">
-                    <DollarSign className="h-5 w-5 text-gray-400 mr-2" />
-                    <Input 
-                      type="text" 
-                      placeholder="Budget" 
-                      className="w-full outline-none text-gray-700 border-0 p-0 focus-visible:ring-0"
-                      value={budget}
-                      onChange={(e) => setBudget(e.target.value)}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>

@@ -64,5 +64,133 @@ export const sampleDestinations = [
     imageUrl: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=1473&auto=format&fit=crop",
     score: 97,
     tags: ["Romantic", "Cultural", "Food"]
+  },
+  {
+    id: 9,
+    name: "Barcelona, Spain",
+    description: "Vibrant coastal city with stunning architecture, beautiful beaches, and incredible food.",
+    imageUrl: "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?q=80&w=1470&auto=format&fit=crop",
+    score: 94,
+    tags: ["Beach", "Cultural", "Food"]
+  },
+  {
+    id: 10,
+    name: "Tokyo, Japan",
+    description: "Ultra-modern metropolis with traditional charm, cutting-edge technology, and amazing food.",
+    imageUrl: "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=80&w=1374&auto=format&fit=crop",
+    score: 96,
+    tags: ["Urban", "Food", "Shopping"]
+  },
+  {
+    id: 11,
+    name: "New York City, USA",
+    description: "The Big Apple offers world-class entertainment, diverse cuisine, and iconic landmarks.",
+    imageUrl: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?q=80&w=1470&auto=format&fit=crop",
+    score: 95,
+    tags: ["Urban", "Entertainment", "Shopping"]
+  },
+  {
+    id: 12,
+    name: "London, UK",
+    description: "Historic city with royal heritage, world-famous museums, and diverse cultural scenes.",
+    imageUrl: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?q=80&w=1470&auto=format&fit=crop",
+    score: 94,
+    tags: ["Historical", "Cultural", "Urban"]
+  },
+  {
+    id: 13,
+    name: "Sydney, Australia",
+    description: "Stunning harbor city with iconic opera house, beautiful beaches, and laid-back lifestyle.",
+    imageUrl: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?q=80&w=1470&auto=format&fit=crop",
+    score: 93,
+    tags: ["Beach", "Urban", "Scenic"]
+  },
+  {
+    id: 14,
+    name: "Maldives",
+    description: "Paradise of overwater bungalows, crystal clear waters, and pristine white sand beaches.",
+    imageUrl: "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?q=80&w=1374&auto=format&fit=crop",
+    score: 99,
+    tags: ["Beach", "Luxury", "Romantic"]
+  },
+  {
+    id: 15,
+    name: "Amsterdam, Netherlands",
+    description: "Charming canal city with historic architecture, world-class museums, and cycling culture.",
+    imageUrl: "https://images.unsplash.com/photo-1584003564911-a5dfe077b645?q=80&w=1470&auto=format&fit=crop",
+    score: 92,
+    tags: ["Cultural", "Urban", "Historical"]
+  },
+  {
+    id: 16,
+    name: "Prague, Czech Republic",
+    description: "Fairytale city with stunning architecture, medieval charm, and rich cultural heritage.",
+    imageUrl: "https://images.unsplash.com/photo-1541849546-216549ae216d?q=80&w=1470&auto=format&fit=crop",
+    score: 93,
+    tags: ["Historical", "Cultural", "Scenic"]
+  },
+  {
+    id: 17,
+    name: "Dubrovnik, Croatia",
+    description: "Medieval walled city on the Adriatic with stunning beaches and Game of Thrones fame.",
+    imageUrl: "https://images.unsplash.com/photo-1565101845408-c2dbaf45a3c5?q=80&w=1470&auto=format&fit=crop",
+    score: 92,
+    tags: ["Historical", "Beach", "Scenic"]
+  },
+  {
+    id: 18,
+    name: "Marrakech, Morocco",
+    description: "Exotic city with vibrant markets, stunning palaces, and rich cultural traditions.",
+    imageUrl: "https://images.unsplash.com/photo-1597212618440-806262de4f6b?q=80&w=1470&auto=format&fit=crop",
+    score: 91,
+    tags: ["Cultural", "Historical", "Shopping"]
+  },
+  {
+    id: 19,
+    name: "Cape Town, South Africa",
+    description: "Spectacular coastal city with Table Mountain, stunning beaches, and amazing wildlife.",
+    imageUrl: "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?q=80&w=1470&auto=format&fit=crop",
+    score: 94,
+    tags: ["Scenic", "Nature", "Beach"]
+  },
+  {
+    id: 20,
+    name: "Rio de Janeiro, Brazil",
+    description: "Vibrant coastal city with stunning beaches, iconic Christ the Redeemer, and samba culture.",
+    imageUrl: "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?q=80&w=1470&auto=format&fit=crop",
+    score: 93,
+    tags: ["Beach", "Cultural", "Scenic"]
+  },
+  {
+    id: 21,
+    name: "Bangkok, Thailand",
+    description: "Bustling metropolis with ornate temples, floating markets, and incredible street food.",
+    imageUrl: "https://images.unsplash.com/photo-1563492065599-3520f775eeed?q=80&w=1470&auto=format&fit=crop",
+    score: 92,
+    tags: ["Cultural", "Food", "Urban"]
+  },
+  {
+    id: 22,
+    name: "Istanbul, Turkey",
+    description: "Transcontinental city straddling Europe and Asia with rich history and stunning architecture.",
+    imageUrl: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?q=80&w=1471&auto=format&fit=crop",
+    score: 94,
+    tags: ["Historical", "Cultural", "Food"]
+  },
+  {
+    id: 23,
+    name: "Vienna, Austria",
+    description: "Imperial city known for classical music, stunning palaces, and cafe culture.",
+    imageUrl: "https://images.unsplash.com/photo-1516550893885-985c836c68d6?q=80&w=1472&auto=format&fit=crop",
+    score: 92,
+    tags: ["Cultural", "Historical", "Art"]
+  },
+  {
+    id: 24,
+    name: "Dubai, UAE",
+    description: "Futuristic city with towering skyscrapers, luxury shopping, and desert adventures.",
+    imageUrl: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1470&auto=format&fit=crop",
+    score: 93,
+    tags: ["Luxury", "Shopping", "Urban"]
   }
 ];

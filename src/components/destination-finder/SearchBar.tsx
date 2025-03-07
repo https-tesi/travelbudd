@@ -40,9 +40,9 @@ const SearchBar = ({
             onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
           />
           
-          {/* Suggestions dropdown - Updated z-index and position */}
+          {/* Suggestions dropdown - Fixed positioning and z-index */}
           {showSuggestions && (
-            <div className="absolute z-50 bg-white border border-gray-200 shadow-lg rounded-md w-full mt-1 max-h-60 overflow-auto">
+            <div className="absolute z-[100] bg-white border border-gray-200 shadow-lg rounded-md w-full mt-1 max-h-60 overflow-auto">
               {suggestions.map((suggestion, index) => (
                 <div 
                   key={index}
