@@ -39,14 +39,14 @@ export const citySpecificImages: Record<string, string[]> = {
   
   // Russia
   "Moscow": [
-    "https://images.unsplash.com/photo-1596484552834-6a58f850d0a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+    "https://images.unsplash.com/photo-1513326738677-b964603b136d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
     "https://images.unsplash.com/photo-1547448415-e9f5b28e570d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
     "https://images.unsplash.com/photo-1520106212299-d99c443e4568?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
   ],
   "St. Petersburg": [
-    "https://images.unsplash.com/photo-1550648242-3f31e1a57478?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+    "https://images.unsplash.com/photo-1548834925-e48f8a27ae36?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
     "https://images.unsplash.com/photo-1556610961-2fecc5927173?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-    "https://images.unsplash.com/photo-1548834925-e48f8a27ae36?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+    "https://images.unsplash.com/photo-1564155421944-354a6202ab8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
   ],
   
   // Italy
@@ -68,12 +68,12 @@ export const citySpecificImages: Record<string, string[]> = {
   
   // Switzerland
   "Zurich": [
+    "https://images.unsplash.com/photo-1577285921731-3ebd8ac15379?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
     "https://images.unsplash.com/photo-1515488764276-beab7607c1e6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-    "https://images.unsplash.com/photo-1559407238-2d5ed4d5bb3c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-    "https://images.unsplash.com/photo-1577285921731-3ebd8ac15379?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+    "https://images.unsplash.com/photo-1559407238-2d5ed4d5bb3c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
   ],
   "Geneva": [
-    "https://images.unsplash.com/photo-1663326223138-0e85ab846fd1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+    "https://images.unsplash.com/photo-1560969184-10fe8719e047?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
     "https://images.unsplash.com/photo-1573108724029-4c46571d6490?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
     "https://images.unsplash.com/photo-1560438550-a93ca7703587?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
   ],
@@ -87,7 +87,7 @@ export const citySpecificImages: Record<string, string[]> = {
   "Vienna": [
     "https://images.unsplash.com/photo-1573599852326-2d4da0bbe613?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", 
     "https://images.unsplash.com/photo-1516550893885-985c836c68d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-    "https://images.unsplash.com/photo-1516550893885-985c836c68d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+    "https://images.unsplash.com/photo-1574867155527-436c97b3bcf3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
   ],
   "Mexico City": [
     "https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
@@ -95,3 +95,4 @@ export const citySpecificImages: Record<string, string[]> = {
     "https://images.unsplash.com/photo-1592461876279-b2b39e0cc258?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
   ]
 };
+

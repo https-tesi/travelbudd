@@ -16,13 +16,19 @@ export const ImageDisplay = ({ destination, isFavorite, setIsFavorite }: ImageDi
   const [imageSrc, setImageSrc] = useState(destination.imageUrl);
   
   useEffect(() => {
-    // Load city-specific images right away if the destination is one of the new cities
+    // Reset image state when destination changes
+    setImageError(false);
+    setImageSrc(destination.imageUrl);
+    
+    // Extract the city name from the destination
     const cityName = destination.name.split(',')[0].trim();
+    
+    // Check if we have specific images for this city
     if (citySpecificImages[cityName]) {
-      // Use the primary image for the city
+      // Use the primary image for the city (first in the array)
       setImageSrc(citySpecificImages[cityName][0]);
     }
-  }, [destination.name]);
+  }, [destination.name, destination.imageUrl]);
 
   // Enhanced image error handling with specific city image loading
   const handleImageError = () => {
