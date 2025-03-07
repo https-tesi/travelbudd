@@ -17,12 +17,28 @@ const DestinationCard = ({ destination }: DestinationCardProps) => {
   const handleExplore = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent the parent onClick from firing
     console.log(`Navigating to destination/${destination.id}`);
-    navigate(`/destination/${destination.id}`);
+    // Scroll to bottom of current page before navigating
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth'
+    });
+    // Navigate after a short delay to allow the scroll to complete
+    setTimeout(() => {
+      navigate(`/destination/${destination.id}`);
+    }, 500);
   };
   
   const handleCardClick = () => {
     console.log(`Card clicked for destination ${destination.id}`);
-    navigate(`/destination/${destination.id}`);
+    // Scroll to bottom of current page before navigating
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth'
+    });
+    // Navigate after a short delay to allow the scroll to complete
+    setTimeout(() => {
+      navigate(`/destination/${destination.id}`);
+    }, 500);
   };
   
   return (
