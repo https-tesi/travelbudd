@@ -1,4 +1,3 @@
-
 import { Destination } from "@/types/destination";
 
 export const southernEuropeDestinations: Destination[] = [
@@ -282,5 +281,126 @@ export const southernEuropeDestinations: Destination[] = [
         type: "Food"
       }
     ]
+  },
+  {
+    id: 35,
+    name: "Milan, Italy",
+    description: "Fashion and design capital with stunning architecture, high-end shopping, and rich cultural heritage.",
+    imageUrl: "https://images.unsplash.com/photo-1520440229-6469a149ac59?q=80&w=1470&auto=format&fit=crop",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1513581166391-887a96ddeafd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1603122630570-cecebca18090?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1533661537256-53111e86554a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+    ],
+    score: 90,
+    tags: ["Fashion", "Architecture", "Cultural"],
+    attractions: [
+      {
+        name: "Milan Cathedral (Duomo)",
+        description: "Magnificent Gothic cathedral with rooftop offering city views",
+        type: "Religious"
+      },
+      {
+        name: "Galleria Vittorio Emanuele II",
+        description: "Historic shopping arcade with luxury boutiques and cafés",
+        type: "Shopping"
+      },
+      {
+        name: "Leonardo da Vinci's Last Supper",
+        description: "Famous mural painting housed in the Convent of Santa Maria delle Grazie",
+        type: "Art"
+      },
+      {
+        name: "Sforza Castle",
+        description: "15th-century fortress housing several museums and art collections",
+        type: "Historical"
+      },
+      {
+        name: "Brera District",
+        description: "Artistic neighborhood with the Pinacoteca di Brera art gallery",
+        type: "Cultural"
+      }
+    ]
+  },
+  {
+    id: 36,
+    name: "Naples, Italy",
+    description: "Vibrant southern Italian city with rich history, incredible food, and breathtaking bay views.",
+    imageUrl: "https://images.unsplash.com/photo-1517006487751-b9d5fd48fad4?q=80&w=1470&auto=format&fit=crop",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1513177137281-106a00c1ef48?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1605546122428-9a85de0d2cab?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1528804431125-842f17de657f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+    ],
+    score: 88,
+    tags: ["Historical", "Food", "Coastal"],
+    attractions: [
+      {
+        name: "Naples National Archaeological Museum",
+        description: "Museum housing Greek and Roman artifacts from Pompeii and Herculaneum",
+        type: "Museum"
+      },
+      {
+        name: "Pompeii",
+        description: "Ancient Roman city preserved by the eruption of Mount Vesuvius",
+        type: "Historical"
+      },
+      {
+        name: "Mount Vesuvius",
+        description: "Active volcano that famously destroyed Pompeii in 79 AD",
+        type: "Nature"
+      },
+      {
+        name: "Castel dell'Ovo",
+        description: "Seaside castle with panoramic views of the Bay of Naples",
+        type: "Historical"
+      },
+      {
+        name: "Spaccanapoli",
+        description: "Historic street running through the heart of Naples' old town",
+        type: "Cultural"
+      }
+    ]
+  },
+  {
+    id: 37,
+    name: "Palermo, Italy",
+    description: "Sicily's vibrant capital with Arab-Norman architecture, colorful markets, and delicious street food.",
+    imageUrl: "https://images.unsplash.com/photo-1523365280197-f1183defb1fd?q=80&w=1470&auto=format&fit=crop",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1602176542419-f6d9a0192c54?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1556797611-f0a988ee276a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1604580864964-0462f5d5b1a8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+    ],
+    score: 87,
+    tags: ["Historical", "Food", "Cultural"],
+    attractions: [
+      {
+        name: "Palermo Cathedral",
+        description: "Spectacular cathedral showcasing different architectural styles",
+        type: "Religious"
+      },
+      {
+        name: "Palazzo dei Normanni",
+        description: "Royal Palace with stunning Byzantine mosaics in the Palatine Chapel",
+        type: "Historical"
+      },
+      {
+        name: "Ballarò Market",
+        description: "Bustling street market with local produce and street food",
+        type: "Market"
+      },
+      {
+        name: "Quattro Canti",
+        description: "Baroque square at the intersection of the city's main streets",
+        type: "Landmark"
+      },
+      {
+        name: "Catacombs of the Capuchins",
+        description: "Unusual burial site with preserved mummies",
+        type: "Historical"
+      }
+    ]
   }
 ];
+

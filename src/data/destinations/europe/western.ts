@@ -121,5 +121,125 @@ export const westernEuropeDestinations: Destination[] = [
         type: "Scenic"
       }
     ]
+  },
+  {
+    id: 30,
+    name: "Brussels, Belgium",
+    description: "European capital with grand squares, Art Nouveau architecture, chocolate, and beer culture.",
+    imageUrl: "https://images.unsplash.com/photo-1559113513-d5e09c78b9dd?q=80&w=1470&auto=format&fit=crop",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1608025053138-bc9c5a43bc62?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1565791154677-4a78a26df94d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1612348507507-a21c36493c39?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+    ],
+    score: 88,
+    tags: ["Cultural", "Food", "Architecture"],
+    attractions: [
+      {
+        name: "Grand Place",
+        description: "UNESCO World Heritage site with opulent guildhalls and town hall",
+        type: "Landmark"
+      },
+      {
+        name: "Manneken Pis",
+        description: "Iconic small bronze fountain sculpture of a urinating boy",
+        type: "Landmark"
+      },
+      {
+        name: "Atomium",
+        description: "Unique monument representing an iron crystal magnified 165 billion times",
+        type: "Landmark"
+      },
+      {
+        name: "Royal Museums of Fine Arts",
+        description: "Complex of art museums with ancient and modern works",
+        type: "Museum"
+      },
+      {
+        name: "Mini-Europe",
+        description: "Park with miniature reproductions of European monuments",
+        type: "Attraction"
+      }
+    ]
+  },
+  {
+    id: 31,
+    name: "Bruges, Belgium",
+    description: "Medieval fairy-tale city with cobbled streets, canals, and Gothic architecture.",
+    imageUrl: "https://images.unsplash.com/photo-1491557345352-5929e343eb89?q=80&w=1470&auto=format&fit=crop",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1569431431167-9c1ee6f2af2e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1546763481-7b1f926286e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1598108588429-933a215a7853?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+    ],
+    score: 90,
+    tags: ["Historical", "Romantic", "Scenic"],
+    attractions: [
+      {
+        name: "Market Square (Markt)",
+        description: "Central plaza with colorful guild houses and belfry tower",
+        type: "Landmark"
+      },
+      {
+        name: "Belfry Tower",
+        description: "Medieval bell tower with panoramic city views",
+        type: "Landmark"
+      },
+      {
+        name: "Groeningemuseum",
+        description: "Museum with fine collection of Flemish and Belgian paintings",
+        type: "Museum"
+      },
+      {
+        name: "Canal Tour",
+        description: "Boat trip through the picturesque canals of Bruges",
+        type: "Scenic"
+      },
+      {
+        name: "Basilica of the Holy Blood",
+        description: "Church housing a relic of the Holy Blood of Jesus Christ",
+        type: "Religious"
+      }
+    ]
+  },
+  {
+    id: 32,
+    name: "Rotterdam, Netherlands",
+    description: "Modern city with bold architecture, maritime heritage, and innovative urban design.",
+    imageUrl: "https://images.unsplash.com/photo-1453713786606-af73ee25aca7?q=80&w=1534&auto=format&fit=crop",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1541089801-5b7a0e4a2b68?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1584029327107-3d9206e8f6f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1575322353738-a12f72fc05c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+    ],
+    score: 87,
+    tags: ["Modern", "Architecture", "Urban"],
+    attractions: [
+      {
+        name: "Cube Houses",
+        description: "Iconic tilted cubic houses designed by Piet Blom",
+        type: "Architecture"
+      },
+      {
+        name: "Erasmus Bridge",
+        description: "Striking cable-stayed bridge connecting north and south Rotterdam",
+        type: "Landmark"
+      },
+      {
+        name: "Markthal",
+        description: "Spectacular covered market hall with apartments and food stalls",
+        type: "Food"
+      },
+      {
+        name: "Rotterdam Harbor Tour",
+        description: "Boat tour of one of the world's largest ports",
+        type: "Scenic"
+      },
+      {
+        name: "Museum Boijmans Van Beuningen",
+        description: "Art museum with works spanning from the Middle Ages to modern times",
+        type: "Museum"
+      }
+    ]
   }
 ];
