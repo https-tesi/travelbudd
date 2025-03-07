@@ -321,5 +321,206 @@ export const europeDestinations: Destination[] = [
         type: "Cultural"
       }
     ]
+  },
+  {
+    id: 21,
+    name: "Amsterdam, Netherlands",
+    description: "Picturesque canal city with rich art history, vibrant culture, and unique architecture.",
+    imageUrl: "https://images.unsplash.com/photo-1584003564911-a5dfe077b645?q=80&w=1470&auto=format&fit=crop",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1512470876302-972faa2aa9a4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80",
+      "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80",
+      "https://images.unsplash.com/photo-1576924542622-772281b13aa8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80"
+    ],
+    score: 92,
+    tags: ["Cultural", "Urban", "Scenic"],
+    attractions: [
+      {
+        name: "Rijksmuseum",
+        description: "Dutch national museum dedicated to arts and history",
+        type: "Museum"
+      },
+      {
+        name: "Anne Frank House",
+        description: "Biographical museum dedicated to Jewish wartime diarist Anne Frank",
+        type: "Historical"
+      },
+      {
+        name: "Van Gogh Museum",
+        description: "Museum housing the largest collection of Van Gogh's paintings and drawings",
+        type: "Museum"
+      },
+      {
+        name: "Jordaan",
+        description: "Charming neighborhood with narrow streets, boutiques, and cafés",
+        type: "Cultural"
+      },
+      {
+        name: "Canal Cruise",
+        description: "Scenic boat tour through Amsterdam's historic canals",
+        type: "Scenic"
+      }
+    ]
+  },
+  {
+    id: 22,
+    name: "Vienna, Austria",
+    description: "Imperial city known for its magnificent palaces, classical music legacy, and café culture.",
+    imageUrl: "https://images.unsplash.com/photo-1516550893885-985c836c68d6?q=80&w=1472&auto=format&fit=crop",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1592906209472-a36b1f3782ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1573599852326-2d4da0bbe613?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1585900801693-31482399066f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+    ],
+    score: 93,
+    tags: ["Historical", "Cultural", "Music"],
+    attractions: [
+      {
+        name: "Schönbrunn Palace",
+        description: "Former imperial summer residence with beautiful gardens",
+        type: "Historical"
+      },
+      {
+        name: "St. Stephen's Cathedral",
+        description: "Iconic Gothic cathedral in the city center",
+        type: "Religious"
+      },
+      {
+        name: "Belvedere Palace",
+        description: "Historic palace complex housing Austrian art collections",
+        type: "Museum"
+      },
+      {
+        name: "Vienna State Opera",
+        description: "Renowned opera house with performances of the highest quality",
+        type: "Cultural"
+      },
+      {
+        name: "Naschmarkt",
+        description: "Popular market offering local and international foods",
+        type: "Market"
+      }
+    ]
+  },
+  {
+    id: 23,
+    name: "Dubrovnik, Croatia",
+    description: "Stunning coastal city with medieval walls, marble streets, and breathtaking Adriatic views.",
+    imageUrl: "https://images.unsplash.com/photo-1555990538-32d1500b7b77?q=80&w=1470&auto=format&fit=crop",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1591977584734-384d7e3764ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1542342212-1076c6686382?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1559742089-0a81edca171b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+    ],
+    score: 91,
+    tags: ["Beach", "Historical", "Scenic"],
+    attractions: [
+      {
+        name: "City Walls",
+        description: "Medieval defensive walls offering panoramic views of the city and sea",
+        type: "Historical"
+      },
+      {
+        name: "Old Town",
+        description: "UNESCO World Heritage site with historic streets and buildings",
+        type: "Cultural"
+      },
+      {
+        name: "Lokrum Island",
+        description: "Nearby forested island with botanical gardens and swimming spots",
+        type: "Nature"
+      },
+      {
+        name: "Mount Srđ",
+        description: "Mountain overlooking Dubrovnik with cable car and panoramic views",
+        type: "Scenic"
+      },
+      {
+        name: "Rector's Palace",
+        description: "Gothic-Renaissance palace that once served as the seat of government",
+        type: "Historical"
+      }
+    ]
+  },
+  {
+    id: 24,
+    name: "Istanbul, Turkey",
+    description: "Captivating city straddling Europe and Asia, with rich Byzantine and Ottoman heritage.",
+    imageUrl: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?q=80&w=1471&auto=format&fit=crop",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1527838832700-5059252407fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1520444451380-ebe0f7b3e630?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+    ],
+    score: 94,
+    tags: ["Historical", "Cultural", "Food"],
+    attractions: [
+      {
+        name: "Hagia Sophia",
+        description: "Ancient cathedral turned mosque with stunning Byzantine architecture",
+        type: "Religious"
+      },
+      {
+        name: "Blue Mosque",
+        description: "Iconic mosque known for its blue Iznik tiles and six minarets",
+        type: "Religious"
+      },
+      {
+        name: "Topkapi Palace",
+        description: "Former residence of Ottoman sultans with extensive collections",
+        type: "Historical"
+      },
+      {
+        name: "Grand Bazaar",
+        description: "One of the world's oldest and largest covered markets",
+        type: "Market"
+      },
+      {
+        name: "Bosphorus Cruise",
+        description: "Scenic boat trip along the strait separating Europe and Asia",
+        type: "Scenic"
+      }
+    ]
+  },
+  {
+    id: 25,
+    name: "Madrid, Spain",
+    description: "Vibrant capital with elegant boulevards, expansive parks, and world-class art museums.",
+    imageUrl: "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?q=80&w=1470&auto=format&fit=crop",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1543783207-ec64e4d95325?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1558370781-d6196949e317?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1574555893412-01817b496a4f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+    ],
+    score: 90,
+    tags: ["Cultural", "Art", "Food"],
+    attractions: [
+      {
+        name: "Prado Museum",
+        description: "Spain's main national art museum with works by Goya, Velázquez, and more",
+        type: "Museum"
+      },
+      {
+        name: "Retiro Park",
+        description: "Large, peaceful park with a lake, gardens, and monuments",
+        type: "Park"
+      },
+      {
+        name: "Royal Palace",
+        description: "Official residence of the Spanish Royal Family used for state ceremonies",
+        type: "Historical"
+      },
+      {
+        name: "Plaza Mayor",
+        description: "Historic central square surrounded by traditional architecture",
+        type: "Landmark"
+      },
+      {
+        name: "Mercado San Miguel",
+        description: "Historic food market offering Spanish delicacies and tapas",
+        type: "Food"
+      }
+    ]
   }
 ];
+
