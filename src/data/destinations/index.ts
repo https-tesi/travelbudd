@@ -87,7 +87,7 @@ const addCostEstimates = (destinations: Destination[]): Destination[] => {
     "Sydney, Australia": 18,
     "Maldives": 28,
     
-    // New cities
+    // New cities - ensure all temperatures are properly set
     "Berlin, Germany": 10,
     "Munich, Germany": 9,
     "Brussels, Belgium": 11,

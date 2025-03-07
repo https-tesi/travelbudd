@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MapPin, Star, ArrowRight, ImageOff, Heart } from "lucide-react";
@@ -50,10 +49,10 @@ const DestinationCard = ({ destination }: DestinationCardProps) => {
         "https://images.unsplash.com/photo-1543783207-ec64e4d95325?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
       ],
       
-      // Belgium
+      // Belgium - Updated images for Brussels
       "Brussels": [
-        "https://images.unsplash.com/photo-1559113513-d5e09c78b9dd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-        "https://images.unsplash.com/photo-1626268655048-cd89a8653e21?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+        "https://images.unsplash.com/photo-1559113202-7ea0a3c6a06a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+        "https://images.unsplash.com/photo-1600801814746-2b2aa7dd8bdc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
         "https://images.unsplash.com/photo-1612348507507-a21c36493c39?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
       ],
       "Bruges": [
@@ -62,16 +61,16 @@ const DestinationCard = ({ destination }: DestinationCardProps) => {
         "https://images.unsplash.com/photo-1547494225-f80c136a26fe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
       ],
       
-      // Netherlands
+      // Netherlands - Updated images for Rotterdam
       "Amsterdam": [
         "https://images.unsplash.com/photo-1524047934617-cb782c24e5f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
         "https://images.unsplash.com/photo-1512470876302-972faa2aa9a4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
         "https://images.unsplash.com/photo-1579585269657-14289fd4b7db?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
       ],
       "Rotterdam": [
-        "https://images.unsplash.com/photo-1541089801-5b7a0e4a2b68?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-        "https://images.unsplash.com/photo-1574920162043-b872873f19c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-        "https://images.unsplash.com/photo-1575322353738-a12f72fc05c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+        "https://images.unsplash.com/photo-1555854877-5b31b72c8edc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+        "https://images.unsplash.com/photo-1512569603403-8287e3fc4a5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+        "https://images.unsplash.com/photo-1541742425281-9d7854541e9b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
       ],
       
       // Russia
@@ -86,28 +85,28 @@ const DestinationCard = ({ destination }: DestinationCardProps) => {
         "https://images.unsplash.com/photo-1639322537523-babff80746a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
       ],
       
-      // Italy
+      // Italy - Updated images for Milan
       "Milan": [
-        "https://images.unsplash.com/photo-1520440229-6469a149ac59?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+        "https://images.unsplash.com/photo-1610016302534-6f67f1c968d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
         "https://images.unsplash.com/photo-1603122630570-cecebca18090?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-        "https://images.unsplash.com/photo-1603835898612-403595429728?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+        "https://images.unsplash.com/photo-1574401179458-2c0de4e6c9b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
       ],
       "Naples": [
-        "https://images.unsplash.com/photo-1517006487751-b9d5fd48fad4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-        "https://images.unsplash.com/photo-1596123068611-c89d922a0f0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-        "https://images.unsplash.com/photo-1518721998665-556e646d9a00?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+        "https://images.unsplash.com/photo-1548156847-3b30aa9c91e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+        "https://images.unsplash.com/photo-1594377157609-5c996118ac7f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+        "https://images.unsplash.com/photo-1583060981218-511157f1e44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
       ],
       "Palermo": [
-        "https://images.unsplash.com/photo-1523365280197-f1183defb1fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-        "https://images.unsplash.com/photo-1523366270962-77bd296055a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+        "https://images.unsplash.com/photo-1559113513-d5e09c78b9dd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+        "https://images.unsplash.com/photo-1627215448603-1cb32e40d2af?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
         "https://images.unsplash.com/photo-1558947206-1ede5c5f14bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
       ],
       
-      // Switzerland
+      // Switzerland - Updated images for Zurich
       "Zurich": [
-        "https://images.unsplash.com/photo-1515488764276-beab7607c1e6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-        "https://images.unsplash.com/photo-1551523839-5bd5aa17d7e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-        "https://images.unsplash.com/photo-1525670347580-fb8a8b8428ac?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+        "https://images.unsplash.com/photo-1620746696340-ed8d11aae923?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+        "https://images.unsplash.com/photo-1559407238-2d5ed4d5bb3c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+        "https://images.unsplash.com/photo-1630527592348-149abe10889f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
       ],
       "Geneva": [
         "https://images.unsplash.com/photo-1573108724029-4c46571d6490?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
@@ -115,11 +114,11 @@ const DestinationCard = ({ destination }: DestinationCardProps) => {
         "https://images.unsplash.com/photo-1588763295700-a9daedbbd965?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
       ],
       
-      // Additional fallbacks for problematic cities
+      // Additional fallbacks for problematic cities - Updated images for Dubrovnik
       "Dubrovnik": [
-        "https://images.unsplash.com/photo-1555990538-1468f35a7676?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
         "https://images.unsplash.com/photo-1522748906645-95d8adfd52c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-        "https://images.unsplash.com/photo-1414862625453-d87604a607e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+        "https://images.unsplash.com/photo-1564959128472-88f2291c1c20?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+        "https://images.unsplash.com/photo-1542642546-2f0e6e4efc91?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
       ],
       "Vienna": [
         "https://images.unsplash.com/photo-1516550893885-985c836c68d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", 
@@ -127,9 +126,9 @@ const DestinationCard = ({ destination }: DestinationCardProps) => {
         "https://images.unsplash.com/photo-1585900801693-31482399066f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
       ],
       "Mexico City": [
-        "https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-        "https://images.unsplash.com/photo-1574836800700-993daf5eda8e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-        "https://images.unsplash.com/photo-1631215583473-4710df684df1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+        "https://images.unsplash.com/photo-1594155648697-0a63d39f8a0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+        "https://images.unsplash.com/photo-1575349591490-29848de3a95c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+        "https://images.unsplash.com/photo-1629777161042-7f7b6ee9042f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
       ]
     };
     
@@ -144,16 +143,17 @@ const DestinationCard = ({ destination }: DestinationCardProps) => {
     let fallbackImages = defaultFallbackImages;
     const cityName = destination.name.split(',')[0].trim();
     
-    // First check exact matches
+    // First check exact matches - we need to handle some cities more carefully
     if (cityFallbackImages[cityName]) {
       fallbackImages = cityFallbackImages[cityName];
     } else {
       // Then check partial matches
-      Object.keys(cityFallbackImages).forEach(city => {
+      for (const city of Object.keys(cityFallbackImages)) {
         if (cityName.includes(city) || city.includes(cityName)) {
           fallbackImages = cityFallbackImages[city];
+          break;
         }
-      });
+      }
     }
     
     // Generate a consistent index based on the destination name to get a predictable fallback
