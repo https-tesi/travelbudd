@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
@@ -25,7 +24,8 @@ import {
   CalendarDays,
   Users,
   X,
-  CheckCircle2
+  CheckCircle2,
+  ExternalLink
 } from "lucide-react";
 import { sampleDestinations } from "@/data/sampleDestinations";
 import { Destination } from "@/types/destination";
@@ -323,25 +323,27 @@ const DestinationDetails = () => {
   }, []);
 
   const handleAccommodationBooking = (accommodation: { name: string; description: string; type: string }) => {
-    setSelectedAccommodation(accommodation);
-    setBookingModalOpen(true);
-    setBookingSuccess(false);
-  };
-
-  const handleBookNow = () => {
-    if (!checkInDate || !checkOutDate) {
-      toast.error("Please select check-in and check-out dates");
-      return;
-    }
-
-    setIsBookingLoading(true);
+    // Instead of opening the modal, we'll prepare a Booking.com search URL
+    const destinationQuery = destination?.name || "";
+    const accommodationNameQuery = accommodation.name;
     
-    // Simulate booking process
-    setTimeout(() => {
-      setIsBookingLoading(false);
-      setBookingSuccess(true);
-      toast.success(`Booking at ${selectedAccommodation?.name} confirmed!`);
-    }, 1500);
+    // Build the URL for Booking.com
+    const checkInDate = new Date();
+    const checkOutDate = new Date();
+    checkOutDate.setDate(checkOutDate.getDate() + 3); // Default 3-day stay
+    
+    const formattedCheckIn = format(checkInDate, "yyyy-MM-dd");
+    const formattedCheckOut = format(checkOutDate, "yyyy-MM-dd");
+    
+    // Note that we're including both the destination and accommodation name to increase search relevance
+    const searchQuery = encodeURIComponent(`${destinationQuery} ${accommodationNameQuery}`);
+    
+    const bookingUrl = `https://www.booking.com/searchresults.html?ss=${searchQuery}&checkin=${formattedCheckIn}&checkout=${formattedCheckOut}&group_adults=2&no_rooms=1`;
+    
+    // Open Booking.com in a new tab
+    window.open(bookingUrl, '_blank');
+    
+    toast.success(`Opening Booking.com to find "${accommodation.name}" in ${destination?.name}`);
   };
 
   const handleFlightSearch = (e: React.FormEvent) => {
@@ -572,8 +574,10 @@ const DestinationDetails = () => {
                               <Button 
                                 size="sm" 
                                 onClick={() => handleAccommodationBooking(accommodation)}
+                                className="flex items-center gap-1"
                               >
-                                Book Now
+                                <ExternalLink className="h-3.5 w-3.5" />
+                                Book on Booking.com
                               </Button>
                             </div>
                           </CardContent>
@@ -582,6 +586,17 @@ const DestinationDetails = () => {
                     ) : (
                       <div className="col-span-2 text-center py-10">
                         <p className="text-gray-500">No accommodation information available for this destination.</p>
+                        <Button 
+                          className="mt-4 flex items-center gap-1"
+                          onClick={() => {
+                            const query = encodeURIComponent(destination.name);
+                            window.open(`https://www.booking.com/searchresults.html?ss=${query}`, '_blank');
+                            toast.success(`Opening Booking.com to find accommodations in ${destination.name}`);
+                          }}
+                        >
+                          <ExternalLink className="h-4 w-4 mr-1" />
+                          Search on Booking.com
+                        </Button>
                       </div>
                     )}
                   </div>
@@ -672,128 +687,28 @@ const DestinationDetails = () => {
                   ))}
                 </ul>
               </div>
+              
+              <div className="bg-white rounded-lg shadow-sm p-6 mt-6">
+                <h2 className="text-lg font-semibold mb-4">Find Accommodations</h2>
+                <p className="text-sm text-gray-600 mb-4">
+                  Discover the best places to stay in {destination.name} with our partner Booking.com
+                </p>
+                <Button 
+                  className="w-full flex items-center gap-1"
+                  onClick={() => {
+                    const query = encodeURIComponent(destination.name);
+                    window.open(`https://www.booking.com/searchresults.html?ss=${query}`, '_blank');
+                    toast.success(`Opening Booking.com to find accommodations in ${destination.name}`);
+                  }}
+                >
+                  <Hotel className="h-4 w-4 mr-1" />
+                  Find Hotels on Booking.com
+                </Button>
+              </div>
             </div>
           </div>
         </div>
       </main>
-      
-      <Dialog open={bookingModalOpen} onOpenChange={setBookingModalOpen}>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>
-              {bookingSuccess ? "Booking Confirmed!" : `Book ${selectedAccommodation?.name}`}
-            </DialogTitle>
-            <DialogDescription>
-              {bookingSuccess 
-                ? "Your booking has been confirmed. We've sent the details to your email."
-                : selectedAccommodation?.description}
-            </DialogDescription>
-          </DialogHeader>
-          
-          {!bookingSuccess ? (
-            <div className="grid gap-4 py-4">
-              <div className="grid gap-2">
-                <Label htmlFor="checkin">Check-in Date</Label>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      id="checkin"
-                      variant="outline"
-                      className="justify-start text-left font-normal"
-                    >
-                      <CalendarDays className="mr-2 h-4 w-4" />
-                      {checkInDate ? format(checkInDate, "PPP") : "Select date"}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0">
-                    <CalendarComponent
-                      mode="single"
-                      selected={checkInDate}
-                      onSelect={setCheckInDate}
-                      disabled={(date) =>
-                        date < new Date(new Date().setHours(0, 0, 0, 0))
-                      }
-                    />
-                  </PopoverContent>
-                </Popover>
-              </div>
-              
-              <div className="grid gap-2">
-                <Label htmlFor="checkout">Check-out Date</Label>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      id="checkout"
-                      variant="outline"
-                      className="justify-start text-left font-normal"
-                    >
-                      <CalendarDays className="mr-2 h-4 w-4" />
-                      {checkOutDate ? format(checkOutDate, "PPP") : "Select date"}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0">
-                    <CalendarComponent
-                      mode="single"
-                      selected={checkOutDate}
-                      onSelect={setCheckOutDate}
-                      disabled={(date) =>
-                        date < (checkInDate || new Date(new Date().setHours(0, 0, 0, 0)))
-                      }
-                    />
-                  </PopoverContent>
-                </Popover>
-              </div>
-              
-              <div className="grid gap-2">
-                <Label htmlFor="guests">Number of Guests</Label>
-                <Select value={guestCount} onValueChange={setGuestCount}>
-                  <SelectTrigger id="guests">
-                    <SelectValue placeholder="Select number of guests" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="1">1 Guest</SelectItem>
-                    <SelectItem value="2">2 Guests</SelectItem>
-                    <SelectItem value="3">3 Guests</SelectItem>
-                    <SelectItem value="4">4 Guests</SelectItem>
-                    <SelectItem value="5">5+ Guests</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-          ) : (
-            <div className="py-6 flex flex-col items-center text-center">
-              <div className="rounded-full bg-green-100 p-3 mb-4">
-                <CheckCircle2 className="h-8 w-8 text-green-600" />
-              </div>
-              <h3 className="font-medium text-lg mb-2">Booking Successful!</h3>
-              <p className="text-sm text-gray-500 mb-4">
-                Your stay at {selectedAccommodation?.name} has been booked for{" "}
-                {checkInDate && format(checkInDate, "MMM dd, yyyy")} -{" "}
-                {checkOutDate && format(checkOutDate, "MMM dd, yyyy")}
-              </p>
-            </div>
-          )}
-          
-          <DialogFooter>
-            {!bookingSuccess ? (
-              <Button onClick={handleBookNow} disabled={isBookingLoading}>
-                {isBookingLoading ? (
-                  <>
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                    Processing...
-                  </>
-                ) : (
-                  "Book Now"
-                )}
-              </Button>
-            ) : (
-              <DialogClose asChild>
-                <Button>Done</Button>
-              </DialogClose>
-            )}
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
       
       <Footer />
     </div>
