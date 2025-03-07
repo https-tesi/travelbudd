@@ -27,7 +27,7 @@ const CategoryFilters = ({ handleCategoryClick }: CategoryFiltersProps) => {
             key={index}
             variant="outline" 
             size="sm" 
-            className="rounded-full bg-white"
+            className="rounded-full bg-white hover:bg-gray-100 cursor-pointer"
             onClick={() => handleCategoryClick(categoryValue)}
           >
             {category}

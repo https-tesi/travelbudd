@@ -9,8 +9,8 @@ const ShowAllButton = ({ onShowAll }: ShowAllButtonProps) => {
   return (
     <div className="text-center mt-12">
       <Button 
-        variant="outline" 
-        className="rounded-full"
+        variant="default" 
+        className="rounded-full bg-blue-600 hover:bg-blue-700 text-white"
         onClick={onShowAll}
       >
         Show All Destinations

@@ -22,7 +22,7 @@ const TravelHero = () => {
             <Button size="lg" className="bg-white text-blue-600 hover:bg-blue-50">
               Plan Your Trip <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/20 bg-purple-500 hover:bg-purple-600">
               Explore Destinations
             </Button>
           </div>
