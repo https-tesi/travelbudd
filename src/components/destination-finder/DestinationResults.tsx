@@ -4,50 +4,25 @@ import { Info } from "lucide-react";
 import { Destination } from "@/types/destination";
 import DestinationCard from "@/components/ui/DestinationCard";
 
+interface SearchParamsType {
+  destination: string;
+  when: string;
+  budget: string;
+}
+
 interface DestinationResultsProps {
   isGenerating: boolean;
   filteredDestinations: Destination[];
   handleCardClick: (destinationId: number) => void;
+  searchParams?: SearchParamsType;
 }
 
 const DestinationResults = ({
   isGenerating,
   filteredDestinations,
-  handleCardClick
+  handleCardClick,
+  searchParams = { destination: "", when: "", budget: "" }
 }: DestinationResultsProps) => {
-  const [searchParams, setSearchParams] = useState({
-    destination: "",
-    when: "",
-    budget: ""
-  });
-  
-  // Listen for custom search events from TravelHero component
-  useEffect(() => {
-    const handleTravelSearch = (event: any) => {
-      const { destination, when, budget } = event.detail;
-      setSearchParams({ destination, when, budget });
-      
-      // You could add additional filtering logic here if needed
-      console.log("Search params received:", { destination, when, budget });
-    };
-    
-    document.addEventListener('travelSearch', handleTravelSearch);
-    
-    // Read URL parameters on initial load
-    const urlParams = new URLSearchParams(window.location.search);
-    const destination = urlParams.get('destination') || "";
-    const when = urlParams.get('when') || "";
-    const budget = urlParams.get('budget') || "";
-    
-    if (destination || when || budget) {
-      setSearchParams({ destination, when, budget });
-    }
-    
-    return () => {
-      document.removeEventListener('travelSearch', handleTravelSearch);
-    };
-  }, []);
-
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
       {/* Show search parameters if they exist */}

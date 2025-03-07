@@ -16,6 +16,11 @@ const DestinationFinder = () => {
   const [filteredDestinations, setFilteredDestinations] = useState<Destination[]>(sampleDestinations.slice(0, 3));
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [searchParams, setSearchParams] = useState({
+    destination: "",
+    when: "",
+    budget: ""
+  });
   const { toast } = useToast();
   const navigate = useNavigate();
   
@@ -51,6 +56,113 @@ const DestinationFinder = () => {
     }
   }, [searchQuery]);
 
+  // Process search parameters from URL or TravelHero search events
+  useEffect(() => {
+    const handleTravelSearch = (event: any) => {
+      const { destination, when, budget } = event.detail;
+      
+      // Set search params
+      setSearchParams({ destination, when, budget });
+      
+      // If destination is provided, use it as search query
+      if (destination) {
+        setSearchQuery(destination);
+        processAdvancedSearch(destination, when, budget);
+      }
+    };
+    
+    document.addEventListener('travelSearch', handleTravelSearch);
+    
+    // Read URL parameters on initial load
+    const urlParams = new URLSearchParams(window.location.search);
+    const destination = urlParams.get('destination') || "";
+    const when = urlParams.get('when') || "";
+    const budget = urlParams.get('budget') || "";
+    
+    if (destination || when || budget) {
+      setSearchParams({ destination, when, budget });
+      
+      if (destination) {
+        setSearchQuery(destination);
+        processAdvancedSearch(destination, when, budget);
+      }
+    }
+    
+    return () => {
+      document.removeEventListener('travelSearch', handleTravelSearch);
+    };
+  }, []);
+
+  const processAdvancedSearch = (destination: string, when: string, budget: string) => {
+    setIsGenerating(true);
+    
+    setTimeout(() => {
+      let filtered = sampleDestinations;
+      
+      // Filter by destination if provided
+      if (destination) {
+        const lowercaseDestination = destination.toLowerCase();
+        filtered = filtered.filter(d => 
+          d.name.toLowerCase().includes(lowercaseDestination) ||
+          d.description.toLowerCase().includes(lowercaseDestination)
+        );
+      }
+      
+      // Advanced filtering based on month
+      if (when) {
+        const lowercaseWhen = when.toLowerCase();
+        // Simulate season-based filtering
+        if (lowercaseWhen.includes('summer') || 
+            lowercaseWhen.includes('june') || 
+            lowercaseWhen.includes('july') || 
+            lowercaseWhen.includes('august')) {
+          filtered = filtered.filter(d => 
+            d.tags.some(tag => ['Beach', 'Nature'].includes(tag)) ||
+            d.name.toLowerCase().includes('greece') ||
+            d.name.toLowerCase().includes('italy') ||
+            d.name.toLowerCase().includes('bali')
+          );
+        } else if (lowercaseWhen.includes('winter') || 
+                  lowercaseWhen.includes('december') || 
+                  lowercaseWhen.includes('january') || 
+                  lowercaseWhen.includes('february')) {
+          filtered = filtered.filter(d => 
+            d.tags.some(tag => ['Urban'].includes(tag)) ||
+            d.name.toLowerCase().includes('new york') ||
+            d.name.toLowerCase().includes('tokyo')
+          );
+        }
+      }
+      
+      // Budget-based filtering
+      if (budget) {
+        const budgetNum = parseInt(budget);
+        if (!isNaN(budgetNum)) {
+          if (budgetNum < 500) {
+            filtered = filtered.filter(d => 
+              d.tags.some(tag => ['Urban', 'Cultural'].includes(tag))
+            );
+          } else if (budgetNum > 2000) {
+            filtered = filtered.filter(d => 
+              d.tags.some(tag => ['Luxury', 'Romantic'].includes(tag))
+            );
+          }
+        }
+      }
+      
+      setFilteredDestinations(filtered.length > 0 ? filtered : []);
+      setIsGenerating(false);
+      
+      toast({
+        title: `Found ${filtered.length} destinations for you`,
+        description: when || budget ? 
+          `Destinations for ${destination || 'your search'} in ${when || 'any time'} with budget ${budget || 'flexible'}` :
+          "Browse the results or refine your search for more options",
+        variant: "default",
+      });
+    }, 1500);
+  };
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     setShowSuggestions(false);
@@ -64,49 +176,12 @@ const DestinationFinder = () => {
       return;
     }
     
-    // Simulate AI-powered search
-    setIsGenerating(true);
-    
-    setTimeout(() => {
-      const lowercaseQuery = searchQuery.toLowerCase();
-      let filtered;
-      
-      // Simulate AI understanding of natural language queries
-      if (lowercaseQuery.includes("nature") || lowercaseQuery.includes("scenic")) {
-        filtered = sampleDestinations.filter(d => 
-          d.tags.some(tag => ["Nature", "Scenic"].includes(tag))
-        );
-      } else if (lowercaseQuery.includes("food") || lowercaseQuery.includes("cuisine")) {
-        filtered = sampleDestinations.filter(d => 
-          d.tags.some(tag => ["Food"].includes(tag))
-        );
-      } else if (lowercaseQuery.includes("history") || lowercaseQuery.includes("historical")) {
-        filtered = sampleDestinations.filter(d => 
-          d.tags.some(tag => ["Historical"].includes(tag))
-        );
-      } else if (lowercaseQuery.includes("europe")) {
-        filtered = sampleDestinations.filter(d => 
-          d.name.toLowerCase().includes("italy") || 
-          d.name.toLowerCase().includes("greece") || 
-          d.name.toLowerCase().includes("france")
-        );
-      } else {
-        filtered = sampleDestinations.filter(destination => 
-          destination.name.toLowerCase().includes(lowercaseQuery) ||
-          destination.description.toLowerCase().includes(lowercaseQuery) ||
-          destination.tags.some(tag => tag.toLowerCase().includes(lowercaseQuery))
-        );
-      }
-      
-      setFilteredDestinations(filtered.length > 0 ? filtered : []);
-      setIsGenerating(false);
-      
-      toast({
-        title: `Found ${filtered.length} destinations for you`,
-        description: "Browse the results or refine your search for more options",
-        variant: "default",
-      });
-    }, 1500);
+    // Process the search with current searchQuery and any existing searchParams
+    processAdvancedSearch(
+      searchQuery, 
+      searchParams.when, 
+      searchParams.budget
+    );
   };
 
   const handleSuggestionClick = (suggestion: string) => {
@@ -183,6 +258,7 @@ const DestinationFinder = () => {
           isGenerating={isGenerating}
           filteredDestinations={filteredDestinations}
           handleCardClick={handleCardClick}
+          searchParams={searchParams}
         />
         
         <ShowAllButton onShowAll={handleShowAll} />
