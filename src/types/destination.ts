@@ -23,7 +23,7 @@ export type Destination = {
   name: string;
   description: string;
   imageUrl: string;
-  galleryImages: string[];  // Changed from optional to required field for consistency
+  galleryImages: string[];  // Required field
   score: number;
   tags: string[];
   attractions?: Attraction[];
