@@ -1,19 +1,41 @@
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Globe, Menu, X, Heart } from "lucide-react";
+import { Globe, Menu, X, Heart, ArrowLeft } from "lucide-react";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Check if we're on a detail page to show the back button
+  const isDetailPage = location.pathname.includes("/destination/");
+  
+  const handleBack = () => {
+    navigate(-1);
+  };
 
   return (
     <nav className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-gray-100">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 text-xl font-semibold text-primary">
-          <Globe className="h-6 w-6" />
-          <span>TravelAI</span>
-        </Link>
+        <div className="flex items-center gap-2">
+          {isDetailPage && (
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={handleBack}
+              className="mr-2"
+              aria-label="Go back"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+          )}
+          <Link to="/" className="flex items-center gap-2 text-xl font-semibold text-primary">
+            <Globe className="h-6 w-6" />
+            <span>TravelAI</span>
+          </Link>
+        </div>
 
         {/* Desktop menu */}
         <div className="hidden md:flex items-center gap-8">
@@ -23,11 +45,6 @@ const Navbar = () => {
           <Link to="/favorites" className="text-sm font-medium hover:text-primary transition-colors flex items-center gap-1">
             <Heart className="h-4 w-4" /> Favorites
           </Link>
-        </div>
-
-        <div className="hidden md:flex items-center gap-4">
-          <Button variant="outline" size="sm">Sign In</Button>
-          <Button size="sm">Get Started</Button>
         </div>
 
         {/* Mobile menu button */}
@@ -49,10 +66,6 @@ const Navbar = () => {
             <Link to="/favorites" className="text-sm font-medium hover:text-primary transition-colors flex items-center gap-1">
               <Heart className="h-4 w-4" /> Favorites
             </Link>
-            <div className="flex flex-col gap-2 pt-2">
-              <Button variant="outline" size="sm" className="w-full">Sign In</Button>
-              <Button size="sm" className="w-full">Get Started</Button>
-            </div>
           </div>
         </div>
       )}
