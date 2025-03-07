@@ -213,10 +213,14 @@ const DestinationDetails = () => {
     toast.info(`Searching flights from ${nearestAirport || "your location"} to ${destinationCode}`);
     
     setTimeout(() => {
-      const url = `https://www.wizzair.com/#/booking/select-flight/${nearestAirport || ""}/${destinationCode}/${departureDate}/${returnDate || departureDate}`;
+      // Redirect to eDreams instead of WizzAir
+      const formattedDepartureDate = departureDate;
+      const formattedReturnDate = returnDate || departureDate;
+      
+      const url = `https://www.edreams.com/travel/#/results/type=R;from=${nearestAirport || ""};to=${destinationCode};departure=${formattedDepartureDate};return=${formattedReturnDate};adults=1;children=0;infants=0`;
       window.open(url, '_blank');
       
-      toast.success("Redirecting to flight booking...");
+      toast.success("Redirecting to eDreams flight booking...");
     }, 1500);
   };
 
@@ -767,4 +771,3 @@ const DestinationDetails = () => {
 };
 
 export default DestinationDetails;
-

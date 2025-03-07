@@ -185,15 +185,16 @@ const SearchBar = ({
     // Simulate flight search API call
     toast.info(`Searching flights from ${nearestAirport || "your location"} to ${destinationCode}`);
     
-    // In a real app, we would call an actual flight API like:
-    // const flightResults = await searchFlights(nearestAirport, destination, departureDate, returnDate);
-    
-    // Redirect to flight booking site as a fallback solution
+    // Redirect to eDreams instead of WizzAir
     setTimeout(() => {
-      const url = `https://www.wizzair.com/#/booking/select-flight/${nearestAirport || ""}/${destinationCode}/${departureDate}/${returnDate || departureDate}`;
+      // Format date for eDreams URL (YYYY-MM-DD)
+      const formattedDepartureDate = departureDate;
+      const formattedReturnDate = returnDate || departureDate;
+      
+      const url = `https://www.edreams.com/travel/#/results/type=R;from=${nearestAirport || ""};to=${destinationCode};departure=${formattedDepartureDate};return=${formattedReturnDate};adults=1;children=0;infants=0`;
       window.open(url, '_blank');
       
-      toast.success("Redirecting to flight booking...");
+      toast.success("Redirecting to eDreams flight booking...");
     }, 1500);
   };
 
