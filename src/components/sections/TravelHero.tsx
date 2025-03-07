@@ -1,7 +1,7 @@
 
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Search, Calendar, DollarSign } from "lucide-react";
+import { ArrowRight, Search, Calendar, DollarSign, MapPin } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { sampleDestinations } from "@/data/sampleDestinations";
