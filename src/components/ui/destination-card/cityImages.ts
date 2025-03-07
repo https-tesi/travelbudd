@@ -1,4 +1,3 @@
-
 // City-specific primary images organized by city
 export const citySpecificImages: Record<string, string[]> = {
   // Germany
@@ -32,9 +31,9 @@ export const citySpecificImages: Record<string, string[]> = {
     "https://images.unsplash.com/photo-1579585269657-14289fd4b7db?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80"  // Traditional Dutch buildings
   ],
   "Rotterdam": [
-    "https://images.unsplash.com/photo-1512569974449-c6ea7a129f89?q=80&w=1470&auto=format&fit=crop", // Rotterdam skyline
-    "https://images.unsplash.com/photo-1565105368895-0e3342683e0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Cube houses
-    "https://images.unsplash.com/photo-1558441552-d4df6c6285d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"  // Erasmus bridge
+    "https://images.unsplash.com/photo-1578894381163-e72c17f2d45f?q=80&w=1471&auto=format&fit=crop", // Rotterdam city view with Erasmus Bridge
+    "https://images.unsplash.com/photo-1541971740753-039ca1d9e01a?q=80&w=1476&auto=format&fit=crop", // Cube houses (Kubuswoningen)
+    "https://images.unsplash.com/photo-1574960346442-5306d3cf9bf9?q=80&w=1470&auto=format&fit=crop"  // Rotterdam modern architecture
   ],
   
   // Russia
