@@ -12,7 +12,9 @@ const Index = () => {
       <Navbar />
       <main>
         <TravelHero />
-        <DestinationFinder />
+        <div id="destination-finder">
+          <DestinationFinder />
+        </div>
         <HowItWorks />
       </main>
       <Footer />
