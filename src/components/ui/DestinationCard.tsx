@@ -27,18 +27,22 @@ const DestinationCard = ({ destination }: DestinationCardProps) => {
   
   return (
     <Card 
-      className="overflow-hidden group hover:shadow-md transition-all cursor-pointer"
+      className="overflow-hidden group hover:shadow-md transition-all cursor-pointer h-full flex flex-col"
       onClick={handleCardClick}
     >
-      <ImageDisplay 
-        destination={destination} 
-        isFavorite={isFavorite} 
-        setIsFavorite={setIsFavorite} 
-      />
-      <DestinationInfo 
-        destination={destination} 
-        onExplore={handleExplore} 
-      />
+      <div className="flex-shrink-0">
+        <ImageDisplay 
+          destination={destination} 
+          isFavorite={isFavorite} 
+          setIsFavorite={setIsFavorite} 
+        />
+      </div>
+      <div className="flex-grow flex flex-col">
+        <DestinationInfo 
+          destination={destination} 
+          onExplore={handleExplore} 
+        />
+      </div>
     </Card>
   );
 };

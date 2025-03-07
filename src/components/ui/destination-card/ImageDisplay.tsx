@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ImageOff, Star, Heart } from "lucide-react";
 import { toast } from "sonner";
 import { Destination } from "@/types/destination";
@@ -15,6 +15,7 @@ export const ImageDisplay = ({ destination, isFavorite, setIsFavorite }: ImageDi
   const [imageError, setImageError] = useState(false);
   const [imageSrc, setImageSrc] = useState("");
   const [fallbackAttempts, setFallbackAttempts] = useState(0);
+  const maxAttempts = useRef(4); // Limit fallback attempts
   
   const cityName = destination.name.split(',')[0].trim();
   
@@ -30,6 +31,7 @@ export const ImageDisplay = ({ destination, isFavorite, setIsFavorite }: ImageDi
       newImageSrc = citySpecificImages[cityName][0];
       console.log(`Using city-specific image for ${cityName}:`, newImageSrc);
     } else {
+      // If no city-specific images, use the destination's image URL
       newImageSrc = destination.imageUrl;
       console.log(`No city-specific images found for ${cityName}, using default:`, newImageSrc);
     }
@@ -38,39 +40,39 @@ export const ImageDisplay = ({ destination, isFavorite, setIsFavorite }: ImageDi
   }, [destination.id, cityName, destination.imageUrl]);
 
   const handleImageError = () => {
-    console.log(`Image failed to load for ${destination.name}: ${imageSrc}`);
+    console.log(`Image failed to load for ${destination.name} (ID: ${destination.id}): ${imageSrc}`);
     
     // Increment attempt counter
     const newAttemptCount = fallbackAttempts + 1;
     setFallbackAttempts(newAttemptCount);
     
-    // Try city-specific fallback images first
-    if (citySpecificImages[cityName]) {
-      if (newAttemptCount < citySpecificImages[cityName].length) {
-        const nextImage = citySpecificImages[cityName][newAttemptCount];
-        console.log(`Trying city-specific fallback image ${newAttemptCount} for ${cityName}:`, nextImage);
-        setImageSrc(nextImage);
-        return;
-      }
+    if (newAttemptCount >= maxAttempts.current) {
+      console.log(`Maximum fallback attempts reached for ${destination.name}. Using final fallback.`);
+      // Use a guaranteed working image as final fallback
+      setImageSrc("https://images.unsplash.com/photo-1500835556837-99ac94a94552?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1173&q=80");
+      return;
     }
     
-    // If all city-specific images fail, use default fallbacks
+    // Try city-specific fallback images first
+    if (citySpecificImages[cityName] && newAttemptCount < citySpecificImages[cityName].length) {
+      const nextImage = citySpecificImages[cityName][newAttemptCount];
+      console.log(`Trying city-specific fallback image ${newAttemptCount} for ${cityName}:`, nextImage);
+      setImageSrc(nextImage);
+      return;
+    }
+    
+    // If all city-specific images fail or don't exist, use default fallbacks
     const defaultFallbackImages = [
-      "https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=1035&q=80",
-      "https://images.unsplash.com/photo-1502301103665-0b95cc738daf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1035&q=80",
-      "https://images.unsplash.com/photo-1500835556837-99ac94a94552?ixlib=rb-4.0.3&auto=format&fit=crop&w=1173&q=80"
+      "https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1035&q=80",
+      "https://images.unsplash.com/photo-1500835556837-99ac94a94552?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1173&q=80",
+      "https://images.unsplash.com/photo-1530789253388-582c481c54b0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
     ];
     
     // Use a deterministic approach to pick a fallback image
-    const nameHash = destination.name.split('').reduce(
-      (acc, char) => acc + char.charCodeAt(0), 0
-    );
-    
-    // Use a combination of hash and attempt count to cycle through fallbacks
-    const fallbackIndex = (nameHash + newAttemptCount - citySpecificImages[cityName]?.length || 0) % defaultFallbackImages.length;
+    const fallbackIndex = Math.min(newAttemptCount - (citySpecificImages[cityName]?.length || 0), defaultFallbackImages.length - 1);
     const fallbackImage = defaultFallbackImages[fallbackIndex];
     
-    console.log(`Using default fallback image for ${destination.name}:`, fallbackImage);
+    console.log(`Using default fallback image #${fallbackIndex} for ${destination.name}:`, fallbackImage);
     setImageSrc(fallbackImage);
     setImageError(true);
   };
@@ -103,13 +105,13 @@ export const ImageDisplay = ({ destination, isFavorite, setIsFavorite }: ImageDi
           onError={handleImageError}
           data-destination-id={destination.id}
           data-city-name={cityName}
-          key={`img-${destination.id}-${imageSrc}-${fallbackAttempts}`}
+          key={`img-${destination.id}-${fallbackAttempts}`}
         />
       ) : (
         <div className="w-full h-full flex items-center justify-center bg-gray-100">
           <div className="text-center">
             <ImageOff className="h-10 w-10 text-gray-400 mx-auto mb-2" />
-            <span className="text-sm text-gray-500">Loading...</span>
+            <span className="text-sm text-gray-500">Loading image...</span>
           </div>
         </div>
       )}
