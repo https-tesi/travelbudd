@@ -1,4 +1,3 @@
-
 import { Destination } from "@/types/destination";
 import { asiaDestinations } from "./asia";
 import { europeDestinations } from "./europe";
