@@ -23,6 +23,7 @@ export type Destination = {
   name: string;
   description: string;
   imageUrl: string;
+  galleryImages?: string[];  // Added gallery images array for concise photo display
   score: number;
   tags: string[];
   attractions?: Attraction[];

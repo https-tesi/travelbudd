@@ -102,9 +102,12 @@ const DestinationDetails = () => {
     }
   };
   
-  const generateGalleryImages = (destinationName: string): string[] => {
-    const fallbackImages = getDestinationFallbackImages(destinationName);
-    return fallbackImages;
+  const generateGalleryImages = (destination: Destination): string[] => {
+    if (destination.galleryImages && destination.galleryImages.length > 0) {
+      return destination.galleryImages;
+    }
+    
+    return getDestinationFallbackImages(destination.name);
   };
   
   useEffect(() => {
@@ -118,9 +121,9 @@ const DestinationDetails = () => {
     
     if (foundDestination) {
       setDestination(foundDestination);
-      const images = generateGalleryImages(foundDestination.name);
+      const images = generateGalleryImages(foundDestination);
       setGalleryImages(images);
-      setActiveImage(images[0]);
+      setActiveImage(foundDestination.imageUrl || images[0]);
     }
     
     setLoading(false);
@@ -245,9 +248,8 @@ const DestinationDetails = () => {
             alt={destination.name}
             className="w-full h-full object-cover"
             onError={() => {
-              if (destination && galleryImages.length > 1) {
-                const fallbacks = getDestinationFallbackImages(destination.name);
-                setActiveImage(fallbacks[0]);
+              if (destination) {
+                setActiveImage(destination.imageUrl);
               }
             }}
           />
@@ -278,29 +280,43 @@ const DestinationDetails = () => {
         </div>
         
         <div className="container mx-auto px-4 -mt-6 md:-mt-10 relative z-10">
-          <div className="flex gap-2 overflow-x-auto pb-4 md:pb-6 px-2 md:px-0">
-            {galleryImages.map((imageUrl, index) => (
+          {galleryImages.length > 0 && (
+            <div className="flex gap-2 overflow-x-auto pb-4 md:pb-6 px-2 md:px-0">
               <div 
-                key={index}
-                className={`h-16 md:h-20 aspect-video rounded-lg overflow-hidden cursor-pointer border-2 ${activeImage === imageUrl ? 'border-primary' : 'border-transparent'}`}
-                onClick={() => setActiveImage(imageUrl)}
+                className={`h-16 md:h-20 aspect-video rounded-lg overflow-hidden cursor-pointer border-2 ${activeImage === destination.imageUrl ? 'border-primary' : 'border-transparent'}`}
+                onClick={() => setActiveImage(destination.imageUrl)}
               >
                 <img 
-                  src={imageUrl}
-                  alt={`Gallery image of ${destination.name}`} 
+                  src={destination.imageUrl}
+                  alt={`Main image of ${destination.name}`} 
                   className="w-full h-full object-cover"
-                  onError={() => handleImageError(index)}
+                  onError={() => handleImageError(0)}
                 />
               </div>
-            ))}
-            
-            {imageError && galleryImages.length < 2 && (
-              <div className="flex flex-col items-center justify-center h-16 md:h-20 aspect-video bg-gray-100 rounded-lg">
-                <ImageOff className="h-6 w-6 text-gray-400" />
-                <span className="text-xs text-gray-500 mt-1">No images</span>
-              </div>
-            )}
-          </div>
+              
+              {galleryImages.map((imageUrl, index) => (
+                <div 
+                  key={index}
+                  className={`h-16 md:h-20 aspect-video rounded-lg overflow-hidden cursor-pointer border-2 ${activeImage === imageUrl ? 'border-primary' : 'border-transparent'}`}
+                  onClick={() => setActiveImage(imageUrl)}
+                >
+                  <img 
+                    src={imageUrl}
+                    alt={`Gallery image of ${destination.name}`} 
+                    className="w-full h-full object-cover"
+                    onError={() => handleImageError(index)}
+                  />
+                </div>
+              ))}
+              
+              {imageError && galleryImages.length < 1 && (
+                <div className="flex flex-col items-center justify-center h-16 md:h-20 aspect-video bg-gray-100 rounded-lg">
+                  <ImageOff className="h-6 w-6 text-gray-400" />
+                  <span className="text-xs text-gray-500 mt-1">No images</span>
+                </div>
+              )}
+            </div>
+          )}
           
           <Card className="mb-6">
             <CardContent className="p-4">

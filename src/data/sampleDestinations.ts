@@ -5,6 +5,10 @@ export const sampleDestinations = [
     name: "Kyoto, Japan",
     description: "Experience traditional Japanese culture with stunning temples and beautiful gardens.",
     imageUrl: "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?q=80&w=1470&auto=format&fit=crop",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1493997181344-712f2f19d87a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+    ],
     score: 98,
     tags: ["Historical", "Cultural", "Scenic"],
     attractions: [
@@ -40,6 +44,10 @@ export const sampleDestinations = [
     name: "Santorini, Greece",
     description: "Breathtaking views of the Aegean Sea from white-washed buildings along volcanic cliffs.",
     imageUrl: "https://images.unsplash.com/photo-1570077188670-e3a8d3c6071d?q=80&w=1374&auto=format&fit=crop",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1035&q=80",
+      "https://images.unsplash.com/photo-1601581875039-e899893d520c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1035&q=80"
+    ],
     score: 96,
     tags: ["Romantic", "Beach", "Scenic"],
     attractions: [
@@ -670,6 +678,10 @@ export const sampleDestinations = [
     name: "Rio de Janeiro, Brazil",
     description: "Vibrant coastal city with stunning beaches, iconic Christ the Redeemer, and samba culture.",
     imageUrl: "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?q=80&w=1470&auto=format&fit=crop",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1516306580123-e6e52b1b7b5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1036&q=80",
+      "https://images.unsplash.com/photo-1544989164-763188a8f6bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80"
+    ],
     score: 93,
     tags: ["Beach", "Cultural", "Scenic"],
     attractions: [
