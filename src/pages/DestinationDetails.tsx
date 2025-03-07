@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
@@ -70,6 +69,69 @@ const DEFAULT_FALLBACK_IMAGES = [
   "https://images.unsplash.com/photo-1504150558240-0b4fd8946624?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1035&q=80",
   "https://images.unsplash.com/photo-1528127269322-539801943592?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1035&q=80"
 ];
+
+const DESTINATION_INFO = {
+  "Japan": { language: "Japanese", currency: "Japanese Yen (JPY)" },
+  "Indonesia": { language: "Indonesian (Bahasa Indonesia)", currency: "Indonesian Rupiah (IDR)" },
+  "Thailand": { language: "Thai", currency: "Thai Baht (THB)" },
+  
+  "Italy": { language: "Italian", currency: "Euro (EUR)" },
+  "Greece": { language: "Greek", currency: "Euro (EUR)" },
+  "France": { language: "French", currency: "Euro (EUR)" },
+  "Spain": { language: "Spanish", currency: "Euro (EUR)" },
+  "United Kingdom": { language: "English", currency: "Pound Sterling (GBP)" },
+  "Netherlands": { language: "Dutch", currency: "Euro (EUR)" },
+  "Czech Republic": { language: "Czech", currency: "Czech Koruna (CZK)" },
+  "Croatia": { language: "Croatian", currency: "Euro (EUR)" },
+  "Austria": { language: "German", currency: "Euro (EUR)" },
+  "Turkey": { language: "Turkish", currency: "Turkish Lira (TRY)" },
+  
+  "USA": { language: "English", currency: "US Dollar (USD)" },
+  
+  "Peru": { language: "Spanish", currency: "Peruvian Sol (PEN)" },
+  "Brazil": { language: "Portuguese", currency: "Brazilian Real (BRL)" },
+  
+  "Morocco": { language: "Arabic, Berber", currency: "Moroccan Dirham (MAD)" },
+  "South Africa": { language: "11 official languages including English, Zulu, Xhosa", currency: "South African Rand (ZAR)" },
+  
+  "UAE": { language: "Arabic", currency: "UAE Dirham (AED)" },
+  
+  "Australia": { language: "English", currency: "Australian Dollar (AUD)" },
+  
+  "Maldives": { language: "Dhivehi", currency: "Maldivian Rufiyaa (MVR)" }
+};
+
+const getDestinationInfo = (destinationName: string) => {
+  const nameParts = destinationName.split(',');
+  let country = nameParts[1]?.trim();
+  
+  if (destinationName.includes("Kyoto") || destinationName.includes("Tokyo")) country = "Japan";
+  if (destinationName.includes("Rome") || destinationName.includes("Venice") || destinationName.includes("Florence")) country = "Italy";
+  if (destinationName.includes("Santorini")) country = "Greece";
+  if (destinationName.includes("Paris")) country = "France";
+  if (destinationName.includes("Barcelona")) country = "Spain";
+  if (destinationName.includes("New York") || destinationName.includes("NYC")) country = "USA";
+  if (destinationName.includes("London")) country = "United Kingdom";
+  if (destinationName.includes("Amsterdam")) country = "Netherlands";
+  if (destinationName.includes("Prague")) country = "Czech Republic";
+  if (destinationName.includes("Dubrovnik")) country = "Croatia";
+  if (destinationName.includes("Vienna")) country = "Austria";
+  if (destinationName.includes("Machu Picchu")) country = "Peru";
+  if (destinationName.includes("Bali")) country = "Indonesia";
+  if (destinationName.includes("Bangkok")) country = "Thailand";
+  if (destinationName.includes("Istanbul")) country = "Turkey";
+  if (destinationName.includes("Dubai")) country = "UAE";
+  if (destinationName.includes("Sydney")) country = "Australia";
+  if (destinationName.includes("Rio")) country = "Brazil";
+  if (destinationName.includes("Marrakech")) country = "Morocco";
+  if (destinationName.includes("Cape Town")) country = "South Africa";
+  if (destinationName === "Maldives") country = "Maldives";
+  
+  return DESTINATION_INFO[country as keyof typeof DESTINATION_INFO] || { 
+    language: "Local language", 
+    currency: "Local currency" 
+  };
+};
 
 const DestinationDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -213,7 +275,6 @@ const DestinationDetails = () => {
     toast.info(`Searching flights from ${nearestAirport || "your location"} to ${destinationCode}`);
     
     setTimeout(() => {
-      // Redirect to eDreams instead of WizzAir
       const formattedDepartureDate = departureDate;
       const formattedReturnDate = returnDate || departureDate;
       
@@ -539,11 +600,11 @@ const DestinationDetails = () => {
                                 description: "Traditional local dishes in a cozy atmosphere",
                                 type: "Local",
                                 cuisine: destination.name.includes('Japan') ? 'Japanese' : 
-                                  destination.name.includes('Italy') ? 'Italian' :
-                                  destination.name.includes('Greece') ? 'Mediterranean' :
-                                  destination.name.includes('Peru') ? 'Peruvian' :
-                                  destination.name.includes('Czech') ? 'Czech' :
-                                  'Regional'
+                                  destination.name.includes('Italy') ? 'Northern Italian' :
+                                  destination.name.includes('Greece') ? 'Modern Greek' :
+                                  destination.name.includes('Peru') ? 'Novo Andean' :
+                                  destination.name.includes('Czech') ? 'Modern European' :
+                                  'Gourmet'
                               },
                               {
                                 name: `${locationName} Fine Dining`,
@@ -667,13 +728,7 @@ const DestinationDetails = () => {
                       <div>
                         <h4 className="font-medium">Local Language</h4>
                         <p className="text-sm text-gray-600">
-                          {destination.name.includes('Japan') ? 'Japanese' : 
-                            destination.name.includes('Italy') ? 'Italian' :
-                            destination.name.includes('Greece') ? 'Greek' :
-                            destination.name.includes('Peru') ? 'Spanish' :
-                            destination.name.includes('Netherlands') ? 'Dutch' :
-                            destination.name.includes('Czech') ? 'Czech' :
-                            'Local language'}
+                          {destination ? getDestinationInfo(destination.name).language : "Local language"}
                         </p>
                       </div>
                     </div>
@@ -699,11 +754,7 @@ const DestinationDetails = () => {
                       <div>
                         <h4 className="font-medium">Currency</h4>
                         <p className="text-sm text-gray-600">
-                          {destination.name.includes('Japan') ? 'Japanese Yen (JPY)' : 
-                            destination.name.includes('Italy') || destination.name.includes('Greece') || destination.name.includes('Netherlands') ? 'Euro (EUR)' :
-                            destination.name.includes('Peru') ? 'Peruvian Sol (PEN)' :
-                            destination.name.includes('Czech') ? 'Czech Koruna (CZK)' :
-                            'Local currency'}
+                          {destination ? getDestinationInfo(destination.name).currency : "Local currency"}
                         </p>
                       </div>
                     </div>
