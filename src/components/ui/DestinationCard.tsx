@@ -20,10 +20,15 @@ const DestinationCard = ({ destination }: DestinationCardProps) => {
     navigate(`/destination/${destination.id}`);
   };
   
+  const handleCardClick = () => {
+    console.log(`Card clicked for destination ${destination.id}`);
+    navigate(`/destination/${destination.id}`);
+  };
+  
   return (
     <Card 
-      className="overflow-hidden group hover:shadow-md transition-all"
-      onClick={() => navigate(`/destination/${destination.id}`)}
+      className="overflow-hidden group hover:shadow-md transition-all cursor-pointer"
+      onClick={handleCardClick}
     >
       <ImageDisplay 
         destination={destination} 

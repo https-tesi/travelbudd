@@ -13,7 +13,8 @@ const Navbar = () => {
   const isDetailPage = location.pathname.includes("/destination/");
   
   const handleBack = () => {
-    navigate(-1);
+    // Navigate to home page instead of using history.back()
+    navigate('/');
   };
 
   return (

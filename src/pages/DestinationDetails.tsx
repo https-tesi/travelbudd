@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
@@ -127,7 +126,6 @@ const DESTINATION_INFO = {
   
   "Maldives": { language: "Dhivehi", currency: "Maldivian Rufiyaa (MVR)" },
   
-  // Added new countries
   "Germany": { language: "German", currency: "Euro (EUR)" },
   "Belgium": { language: "Dutch, French, German", currency: "Euro (EUR)" },
   "Switzerland": { language: "German, French, Italian, Romansh", currency: "Swiss Franc (CHF)" },
@@ -162,7 +160,6 @@ const getDestinationInfo = (destinationName: string) => {
   if (destinationName.includes("Cape Town")) country = "South Africa";
   if (destinationName === "Maldives") country = "Maldives";
   
-  // Added mappings for new cities
   if (destinationName.includes("Berlin") || destinationName.includes("Munich")) country = "Germany";
   if (destinationName.includes("Brussels") || destinationName.includes("Bruges")) country = "Belgium";
   if (destinationName.includes("Zurich") || destinationName.includes("Geneva")) country = "Switzerland";
@@ -224,7 +221,6 @@ const DestinationDetails = () => {
   const [destinationTemp, setDestinationTemp] = useState<number | undefined>(undefined);
   const [costEstimate, setCostEstimate] = useState<string | undefined>(undefined);
   
-  // Booking related states
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
   const [selectedAccommodation, setSelectedAccommodation] = useState<{
     name: string;
@@ -339,24 +335,20 @@ const DestinationDetails = () => {
   }, []);
 
   const handleAccommodationBooking = (accommodation: { name: string; description: string; type: string }) => {
-    // Instead of opening the modal, we'll prepare a Booking.com search URL
     const destinationQuery = destination?.name || "";
     const accommodationNameQuery = accommodation.name;
     
-    // Build the URL for Booking.com
     const checkInDate = new Date();
     const checkOutDate = new Date();
-    checkOutDate.setDate(checkOutDate.getDate() + 3); // Default 3-day stay
+    checkOutDate.setDate(checkOutDate.getDate() + 3);
     
     const formattedCheckIn = format(checkInDate, "yyyy-MM-dd");
     const formattedCheckOut = format(checkOutDate, "yyyy-MM-dd");
     
-    // Note that we're including both the destination and accommodation name to increase search relevance
     const searchQuery = encodeURIComponent(`${destinationQuery} ${accommodationNameQuery}`);
     
     const bookingUrl = `https://www.booking.com/searchresults.html?ss=${searchQuery}&checkin=${formattedCheckIn}&checkout=${formattedCheckOut}&group_adults=2&no_rooms=1`;
     
-    // Open Booking.com in a new tab
     window.open(bookingUrl, '_blank');
     
     toast.success(`Opening Booking.com to find "${accommodation.name}" in ${destination?.name}`);
@@ -382,22 +374,29 @@ const DestinationDetails = () => {
       "London": "LHR",
       "Tokyo": "HND",
       "Bali": "DPS",
-      "Sydney": "SYD"
+      "Sydney": "SYD",
+      "Moscow": "SVO",
+      "St. Petersburg": "LED",
+      "Zurich": "ZRH",
+      "Milan": "MXP",
+      "Istanbul": "IST",
+      "Cape Town": "CPT",
+      "Marrakech": "RAK"
     };
     
     const destinationCode = airportCodes[destinationName] || destinationName.substring(0, 3).toUpperCase();
     
     toast.info(`Searching flights from ${nearestAirport || "your location"} to ${destinationCode}`);
     
-    setTimeout(() => {
-      const formattedDepartureDate = departureDate;
-      const formattedReturnDate = returnDate || departureDate;
-      
-      const url = `https://www.edreams.com/travel/#/results/type=R;from=${nearestAirport || ""};to=${destinationCode};departure=${formattedDepartureDate};return=${formattedReturnDate};adults=1;children=0;infants=0`;
-      window.open(url, '_blank');
-      
-      toast.success("Redirecting to eDreams flight booking...");
-    }, 1500);
+    const formattedDepartureDate = departureDate;
+    const formattedReturnDate = returnDate || departureDate;
+    
+    const url = `https://www.edreams.com/travel/#/results/type=R;from=${nearestAirport || ""};to=${destinationCode};departure=${formattedDepartureDate};return=${formattedReturnDate};adults=1;children=0;infants=0`;
+    
+    console.log("Opening flight search URL:", url);
+    window.open(url, '_blank');
+    
+    toast.success("Redirecting to eDreams flight booking...");
   };
 
   if (!loading && !destination) {
@@ -463,7 +462,6 @@ const DestinationDetails = () => {
                   <DollarSign className="h-4 w-4" />
                   <span>Cost: {costEstimate}</span>
                 </div>
-                {/* Destination info badges */}
                 {destination.tags && destination.tags.map((tag, index) => (
                   <div key={index} className="flex items-center gap-1 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">
                     <span>{tag}</span>
