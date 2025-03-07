@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
@@ -12,7 +11,6 @@ import { sampleDestinations } from "@/data/sampleDestinations";
 import { Destination } from "@/types/destination";
 import { toast } from "sonner";
 
-// Static fallback images to ensure we always have something to display
 const STATIC_FALLBACK_IMAGES = {
   "Kyoto, Japan": [
     "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
@@ -52,7 +50,6 @@ const STATIC_FALLBACK_IMAGES = {
   ]
 };
 
-// Default fallback images for any destination not in the static map
 const DEFAULT_FALLBACK_IMAGES = [
   "https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1035&q=80",
   "https://images.unsplash.com/photo-1533105079780-92b9be482077?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1035&q=80",
@@ -76,42 +73,27 @@ const DestinationDetails = () => {
   const [imageError, setImageError] = useState(false);
   const [failedImageIndexes, setFailedImageIndexes] = useState<Set<number>>(new Set());
   
-  // Get fallback images for a specific destination
   const getDestinationFallbackImages = (destinationName: string): string[] => {
-    // Try to find static fallbacks first
     for (const [key, images] of Object.entries(STATIC_FALLBACK_IMAGES)) {
       if (destinationName.includes(key.split(',')[0])) {
         return images;
       }
     }
-    
-    // Use default fallbacks if no specific ones are found
     return DEFAULT_FALLBACK_IMAGES;
   };
   
-  // Handler for image loading errors
   const handleImageError = (index: number) => {
     console.log(`Image at index ${index} failed to load`);
-    
-    // Add to failed image indexes set
     setFailedImageIndexes(prev => {
-      // If we've already tried to recover this image, don't try again to avoid loops
       if (prev.has(index)) return prev;
-      
       const newSet = new Set(prev);
       newSet.add(index);
       return newSet;
     });
-    
-    // Set image error state to true if we have at least one failed image
     setImageError(true);
-    
-    // Replace the failed image with a fallback from our static collection
-    // Only try to replace if we haven't already tried for this index
     if (!failedImageIndexes.has(index) && destination) {
       const fallbacks = getDestinationFallbackImages(destination.name);
       const fallbackIndex = index % fallbacks.length;
-      
       setGalleryImages(prevImages => {
         const newImages = [...prevImages];
         newImages[index] = fallbacks[fallbackIndex];
@@ -120,57 +102,45 @@ const DestinationDetails = () => {
     }
   };
   
-  // Generate gallery images for a destination with a strong fallback system
   const generateGalleryImages = (destinationName: string): string[] => {
-    // First try to get static fallback images specific to this destination
     const fallbackImages = getDestinationFallbackImages(destinationName);
-    
-    // Return our static fallbacks (either specific or default)
     return fallbackImages;
   };
   
-  // Fetch the destination data based on the ID
   useEffect(() => {
     setLoading(true);
     setImageError(false);
     setFailedImageIndexes(new Set());
     
-    // Find the destination in the sampleDestinations array
     const foundDestination = sampleDestinations.find(
       dest => dest.id === Number(id)
     );
     
     if (foundDestination) {
       setDestination(foundDestination);
-      
-      // Generate gallery images with reliable fallbacks
       const images = generateGalleryImages(foundDestination.name);
       setGalleryImages(images);
-      setActiveImage(images[0]); // Set the first image as active
+      setActiveImage(images[0]);
     }
     
     setLoading(false);
   }, [id]);
 
-  // Get user location
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           try {
-            // Use reverse geocoding to get location name
             const response = await fetch(
               `https://nominatim.openstreetmap.org/reverse?format=json&lat=${position.coords.latitude}&lon=${position.coords.longitude}`
             );
             const data = await response.json();
             
-            // Extract country or city from the response
             const country = data.address?.country;
             const city = data.address?.city || data.address?.town || data.address?.village;
             
             setUserLocation(city ? `${city}, ${country}` : country);
             
-            // Find nearest airport (mock implementation)
             const mockAirports: Record<string, string> = {
               "Albania": "TIA",
               "Italy": "FCO",
@@ -207,10 +177,8 @@ const DestinationDetails = () => {
       return;
     }
     
-    // Get destination airport code based on destination name
     const destinationName = destination?.name.split(',')[0] || "";
     
-    // Simple mapping of cities to airport codes (mock)
     const airportCodes: Record<string, string> = {
       "Kyoto": "KIX",
       "Paris": "CDG",
@@ -226,13 +194,8 @@ const DestinationDetails = () => {
     
     const destinationCode = airportCodes[destinationName] || destinationName.substring(0, 3).toUpperCase();
     
-    // Simulate flight search API call
     toast.info(`Searching flights from ${nearestAirport || "your location"} to ${destinationCode}`);
     
-    // In a real app, we would call an actual flight API like:
-    // const flightResults = await searchFlights(nearestAirport, destinationCode, departureDate, returnDate);
-    
-    // Redirect to flight booking site as a fallback solution
     setTimeout(() => {
       const url = `https://www.wizzair.com/#/booking/select-flight/${nearestAirport || ""}/${destinationCode}/${departureDate}/${returnDate || departureDate}`;
       window.open(url, '_blank');
@@ -241,7 +204,6 @@ const DestinationDetails = () => {
     }, 1500);
   };
 
-  // If destination not found, show error state
   if (!loading && !destination) {
     return (
       <div className="min-h-screen bg-gray-50">
@@ -259,7 +221,6 @@ const DestinationDetails = () => {
     );
   }
   
-  // Show loading state
   if (loading || !destination) {
     return (
       <div className="min-h-screen bg-gray-50">
@@ -278,14 +239,12 @@ const DestinationDetails = () => {
       <Navbar />
       
       <main className="pb-16">
-        {/* Hero section */}
         <div className="h-[40vh] md:h-[60vh] relative overflow-hidden">
           <img 
             src={activeImage} 
             alt={destination.name}
             className="w-full h-full object-cover"
             onError={() => {
-              // If main image fails, try another image from our galleryImages
               if (destination && galleryImages.length > 1) {
                 const fallbacks = getDestinationFallbackImages(destination.name);
                 setActiveImage(fallbacks[0]);
@@ -319,7 +278,6 @@ const DestinationDetails = () => {
         </div>
         
         <div className="container mx-auto px-4 -mt-6 md:-mt-10 relative z-10">
-          {/* Gallery thumbnails */}
           <div className="flex gap-2 overflow-x-auto pb-4 md:pb-6 px-2 md:px-0">
             {galleryImages.map((imageUrl, index) => (
               <div 
@@ -344,7 +302,6 @@ const DestinationDetails = () => {
             )}
           </div>
           
-          {/* Flight search card */}
           <Card className="mb-6">
             <CardContent className="p-4">
               <div className="flex justify-between items-center mb-3">
@@ -410,9 +367,7 @@ const DestinationDetails = () => {
             </CardContent>
           </Card>
           
-          {/* Content */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
-            {/* Main content */}
             <div className="lg:col-span-2 space-y-6">
               <Card>
                 <CardContent className="p-6">
@@ -470,7 +425,6 @@ const DestinationDetails = () => {
                     <CardContent className="p-6">
                       <div className="space-y-6">
                         {destination?.attractions ? (
-                          // Use actual attractions data from our destination object
                           destination.attractions.map((attraction, index) => (
                             <div key={index} className="flex gap-4">
                               <div className="h-12 w-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
@@ -486,7 +440,6 @@ const DestinationDetails = () => {
                             </div>
                           ))
                         ) : (
-                          // Fallback to generic attractions if none are specified
                           Array.from({ length: 5 }).map((_, index) => {
                             const locationName = destination?.name.split(',')[0] || "";
                             const attractions = [
@@ -522,30 +475,99 @@ const DestinationDetails = () => {
                   <Card>
                     <CardContent className="p-6">
                       <div className="space-y-6">
-                        {Array.from({ length: 4 }).map((_, index) => {
-                          const locationName = destination?.name.split(',')[0] || "";
-                          const restaurants = [
-                            {name: `Authentic ${locationName} Cuisine`, description: "Traditional local dishes in a cozy atmosphere", type: "Local"},
-                            {name: `${locationName} Fine Dining`, description: "Upscale restaurant with gourmet specialties", type: "Fine Dining"},
-                            {name: `${locationName} Street Food`, description: "Casual spot with delicious street food options", type: "Casual"},
-                            {name: `${locationName} Café`, description: "Charming café with coffee and pastries", type: "Café"}
-                          ];
-                          
-                          return (
+                        {destination?.restaurants ? (
+                          destination.restaurants.map((restaurant, index) => (
                             <div key={index} className="flex gap-4">
                               <div className="h-12 w-12 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center shrink-0">
                                 <Utensils className="h-6 w-6" />
                               </div>
                               <div>
-                                <h3 className="text-lg font-medium mb-1">{restaurants[index % restaurants.length].name}</h3>
-                                <p className="text-gray-600 text-sm mb-2">{restaurants[index % restaurants.length].description}</p>
-                                <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
-                                  {restaurants[index % restaurants.length].type}
-                                </span>
+                                <h3 className="text-lg font-medium mb-1">{restaurant.name}</h3>
+                                <p className="text-gray-600 text-sm mb-2">{restaurant.description}</p>
+                                <div className="flex flex-wrap gap-2">
+                                  <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
+                                    {restaurant.type}
+                                  </span>
+                                  {restaurant.cuisine && (
+                                    <span className="text-xs bg-orange-50 text-orange-600 px-2 py-1 rounded-full">
+                                      {restaurant.cuisine}
+                                    </span>
+                                  )}
+                                </div>
                               </div>
                             </div>
-                          );
-                        })}
+                          ))
+                        ) : (
+                          Array.from({ length: 4 }).map((_, index) => {
+                            const locationName = destination?.name.split(',')[0] || "";
+                            const restaurants = [
+                              {
+                                name: `Authentic ${locationName} Cuisine`,
+                                description: "Traditional local dishes in a cozy atmosphere",
+                                type: "Local",
+                                cuisine: destination.name.includes('Japan') ? 'Japanese' : 
+                                  destination.name.includes('Italy') ? 'Italian' :
+                                  destination.name.includes('Greece') ? 'Mediterranean' :
+                                  destination.name.includes('Peru') ? 'Peruvian' :
+                                  destination.name.includes('Czech') ? 'Czech' :
+                                  'Regional'
+                              },
+                              {
+                                name: `${locationName} Fine Dining`,
+                                description: "Upscale restaurant with gourmet specialties",
+                                type: "Fine Dining",
+                                cuisine: destination.name.includes('Japan') ? 'Kaiseki' : 
+                                  destination.name.includes('Italy') ? 'Northern Italian' :
+                                  destination.name.includes('Greece') ? 'Modern Greek' :
+                                  destination.name.includes('Peru') ? 'Novo Andean' :
+                                  destination.name.includes('Czech') ? 'Modern European' :
+                                  'Gourmet'
+                              },
+                              {
+                                name: `${locationName} Street Food`,
+                                description: "Casual spot with delicious street food options",
+                                type: "Casual",
+                                cuisine: destination.name.includes('Japan') ? 'Izakaya' : 
+                                  destination.name.includes('Italy') ? 'Roman Street Food' :
+                                  destination.name.includes('Greece') ? 'Meze & Souvlaki' :
+                                  destination.name.includes('Peru') ? 'Cevicheria' :
+                                  destination.name.includes('Czech') ? 'Pub Food' :
+                                  'Street Food'
+                              },
+                              {
+                                name: `${locationName} Café`,
+                                description: "Charming café with coffee and pastries",
+                                type: "Café",
+                                cuisine: destination.name.includes('Japan') ? 'Japanese Patisserie' : 
+                                  destination.name.includes('Italy') ? 'Italian Pastries' :
+                                  destination.name.includes('Greece') ? 'Greek Bakery' :
+                                  destination.name.includes('Peru') ? 'Coffee & Dulces' :
+                                  destination.name.includes('Czech') ? 'Central European Pastries' :
+                                  'Pastries & Coffee'
+                              }
+                            ];
+                            
+                            return (
+                              <div key={index} className="flex gap-4">
+                                <div className="h-12 w-12 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center shrink-0">
+                                  <Utensils className="h-6 w-6" />
+                                </div>
+                                <div>
+                                  <h3 className="text-lg font-medium mb-1">{restaurants[index].name}</h3>
+                                  <p className="text-gray-600 text-sm mb-2">{restaurants[index].description}</p>
+                                  <div className="flex flex-wrap gap-2">
+                                    <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
+                                      {restaurants[index].type}
+                                    </span>
+                                    <span className="text-xs bg-orange-50 text-orange-600 px-2 py-1 rounded-full">
+                                      {restaurants[index].cuisine}
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })
+                        )}
                       </div>
                     </CardContent>
                   </Card>
@@ -555,29 +577,46 @@ const DestinationDetails = () => {
                   <Card>
                     <CardContent className="p-6">
                       <div className="space-y-6">
-                        {Array.from({ length: 3 }).map((_, index) => {
-                          const locationName = destination?.name.split(',')[0] || "";
-                          const accommodations = [
-                            {name: `${locationName} Luxury Hotel`, description: "5-star hotel with exceptional amenities", type: "Luxury"},
-                            {name: `${locationName} Boutique Inn`, description: "Charming boutique accommodation with unique character", type: "Boutique"},
-                            {name: `${locationName} Budget Hostel`, description: "Affordable option for budget-conscious travelers", type: "Budget"}
-                          ];
-                          
-                          return (
+                        {destination?.accommodations ? (
+                          destination.accommodations.map((accommodation, index) => (
                             <div key={index} className="flex gap-4">
                               <div className="h-12 w-12 rounded-full bg-green-100 text-green-600 flex items-center justify-center shrink-0">
                                 <Hotel className="h-6 w-6" />
                               </div>
                               <div>
-                                <h3 className="text-lg font-medium mb-1">{accommodations[index].name}</h3>
-                                <p className="text-gray-600 text-sm mb-2">{accommodations[index].description}</p>
+                                <h3 className="text-lg font-medium mb-1">{accommodation.name}</h3>
+                                <p className="text-gray-600 text-sm mb-2">{accommodation.description}</p>
                                 <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
-                                  {accommodations[index].type}
+                                  {accommodation.type}
                                 </span>
                               </div>
                             </div>
-                          );
-                        })}
+                          ))
+                        ) : (
+                          Array.from({ length: 3 }).map((_, index) => {
+                            const locationName = destination?.name.split(',')[0] || "";
+                            const accommodations = [
+                              {name: `${locationName} Luxury Hotel`, description: "5-star hotel with exceptional amenities", type: "Luxury"},
+                              {name: `${locationName} Boutique Inn`, description: "Charming boutique accommodation with unique character", type: "Boutique"},
+                              {name: `${locationName} Budget Hostel`, description: "Affordable option for budget-conscious travelers", type: "Budget"}
+                            ];
+                            
+                            return (
+                              <div key={index} className="flex gap-4">
+                                <div className="h-12 w-12 rounded-full bg-green-100 text-green-600 flex items-center justify-center shrink-0">
+                                  <Hotel className="h-6 w-6" />
+                                </div>
+                                <div>
+                                  <h3 className="text-lg font-medium mb-1">{accommodations[index].name}</h3>
+                                  <p className="text-gray-600 text-sm mb-2">{accommodations[index].description}</p>
+                                  <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
+                                    {accommodations[index].type}
+                                  </span>
+                                </div>
+                              </div>
+                            );
+                          })
+                        )}
                       </div>
                     </CardContent>
                   </Card>
@@ -585,7 +624,6 @@ const DestinationDetails = () => {
               </Tabs>
             </div>
             
-            {/* Sidebar */}
             <div className="space-y-6">
               <Card>
                 <CardContent className="p-6">
