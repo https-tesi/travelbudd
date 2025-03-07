@@ -1,11 +1,10 @@
-
 // City-specific primary images organized by city
 export const citySpecificImages: Record<string, string[]> = {
   // Germany
   "Berlin": [
     "https://images.unsplash.com/photo-1560969184-10fe8719e047?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Brandenburg Gate
     "https://images.unsplash.com/photo-1587330979470-3595b8e9964c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Berlin Wall art
-    "https://images.unsplash.com/photo-1566404791232-af9fe8edb60d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"  // TV Tower and cityscape
+    "https://images.unsplash.com/photo-1565791154677-4a78a26df94d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"  // TV Tower and cityscape
   ],
   "Munich": [
     "https://images.unsplash.com/photo-1595867818082-083862f3d630?q=80&w=1470&auto=format&fit=crop", // Marienplatz
@@ -56,8 +55,8 @@ export const citySpecificImages: Record<string, string[]> = {
     "https://images.unsplash.com/photo-1595846406905-33e428b5d4ed?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"  // Milan cityscape
   ],
   "Naples": [
-    "https://images.unsplash.com/photo-1552832230-c0197dd311b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Naples with Vesuvius
-    "https://images.unsplash.com/photo-1563116213-27685bfbc7bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Colorful Naples buildings
+    "https://images.unsplash.com/photo-1517006487751-b9d5fd48fad4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Naples Bay with Vesuvius
+    "https://images.unsplash.com/photo-1564599784297-c84618730223?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Naples street
     "https://images.unsplash.com/photo-1662502711735-4e0117049a40?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"  // Naples coastline
   ],
   "Palermo": [
