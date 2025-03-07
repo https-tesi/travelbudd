@@ -1,3 +1,4 @@
+
 // City-specific primary images organized by city
 export const citySpecificImages: Record<string, string[]> = {
   // Germany
@@ -119,7 +120,7 @@ export const citySpecificImages: Record<string, string[]> = {
     "https://images.unsplash.com/photo-1610641818989-127863698aa0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"  // Coastline view
   ],
   "Marrakech": [
-    "https://images.unsplash.com/photo-1618987990643-f545b7fac061?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Jemaa el-Fnaa market
+    "https://images.unsplash.com/photo-1597212645728-322e45b5b6a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Marrakech cityscape with Atlas mountains
     "https://images.unsplash.com/photo-1597212720281-158131cc8d7f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Moroccan architecture
     "https://images.unsplash.com/photo-1554701261-4f29a12b3a75?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"  // Colorful Marrakech street
   ],
