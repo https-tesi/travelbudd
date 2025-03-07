@@ -9,31 +9,21 @@ import { getDestinationInfo } from "@/utils/destination-utils";
 
 interface DestinationSidebarProps {
   destination: Destination;
-  userLocation: string | null;
-  nearestAirport: string | null;
-  destinationTemp: number;
   handleFlightSearch: (e: React.FormEvent) => void;
-  setDepartureDate: (date: string) => void;
-  setReturnDate: (date: string) => void;
-  departureDate: string;
-  returnDate: string;
-  showFlightSearch: boolean;
-  setShowFlightSearch: (show: boolean) => void;
 }
 
 const DestinationSidebar = ({
   destination,
-  userLocation,
-  nearestAirport,
-  destinationTemp,
-  handleFlightSearch,
-  setDepartureDate,
-  setReturnDate,
-  departureDate,
-  returnDate,
-  showFlightSearch,
-  setShowFlightSearch
+  handleFlightSearch
 }: DestinationSidebarProps) => {
+  // Local state for sidebar
+  const [showFlightSearch, setShowFlightSearch] = useState(false);
+  const [departureDate, setDepartureDate] = useState("");
+  const [returnDate, setReturnDate] = useState("");
+  const destinationTemp = destination.averageTemp || 20;
+  const userLocation = "Your location";
+  const nearestAirport = null;
+
   return (
     <div className="lg:w-1/4">
       <div className="bg-white rounded-lg shadow-sm p-6 mb-6">

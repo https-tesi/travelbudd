@@ -1,3 +1,4 @@
+
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import DestinationHeader from "@/components/destination-details/DestinationHeader";
@@ -11,7 +12,7 @@ import { useDestinationDetails } from "@/hooks/useDestinationDetails";
 import { useAccommodationBooking } from "@/hooks/useAccommodationBooking";
 import { useFlightSearch } from "@/hooks/useFlightSearch";
 import { Toaster } from "sonner";
-import { AlertTriangle, ImageOff } from "lucide-react";
+import { AlertTriangle } from "lucide-react";
 
 const DestinationDetails = () => {
   const { id } = useParams();
@@ -103,6 +104,7 @@ const DestinationDetails = () => {
               
               {/* Tabs for Accommodations, Attractions, etc. */}
               <DestinationTabs 
+                destination={destination}
                 accommodations={accommodations}
                 attractions={attractions}
                 handleAccommodationBooking={handleAccommodationBooking}

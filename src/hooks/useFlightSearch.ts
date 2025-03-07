@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 
-export const useFlightSearch = (destination: string | undefined, nearestAirport: string | null) => {
+export const useFlightSearch = (destination: string | undefined, nearestAirport: string | null = null) => {
   const [departureDate, setDepartureDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
   const [showFlightSearch, setShowFlightSearch] = useState(false);

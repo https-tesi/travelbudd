@@ -8,10 +8,12 @@ import { toast } from "sonner";
 
 interface DestinationTabsProps {
   destination: Destination;
+  accommodations: any[];
+  attractions: any[];
   handleAccommodationBooking: (accommodation: { name: string; description: string; type: string }) => void;
 }
 
-const DestinationTabs = ({ destination, handleAccommodationBooking }: DestinationTabsProps) => {
+const DestinationTabs = ({ destination, accommodations, attractions, handleAccommodationBooking }: DestinationTabsProps) => {
   return (
     <Tabs defaultValue="attractions" className="mb-8">
       <TabsList className="grid w-full grid-cols-3">
@@ -30,7 +32,7 @@ const DestinationTabs = ({ destination, handleAccommodationBooking }: Destinatio
       </TabsList>
       <TabsContent value="attractions" className="mt-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {destination.attractions.map((attraction, index) => (
+          {attractions.map((attraction, index) => (
             <Card key={index}>
               <CardContent className="p-4">
                 <h3 className="font-semibold text-lg">{attraction.name}</h3>
@@ -64,8 +66,8 @@ const DestinationTabs = ({ destination, handleAccommodationBooking }: Destinatio
       </TabsContent>
       <TabsContent value="accommodations" className="mt-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {destination.accommodations && destination.accommodations.length > 0 ? (
-            destination.accommodations.map((accommodation, index) => (
+          {accommodations && accommodations.length > 0 ? (
+            accommodations.map((accommodation, index) => (
               <Card key={index}>
                 <CardContent className="p-4">
                   <h3 className="font-semibold text-lg">{accommodation.name}</h3>

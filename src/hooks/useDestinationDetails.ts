@@ -4,15 +4,16 @@ import { Destination } from "@/types/destination";
 import { sampleDestinations } from "@/data/destinations";
 import { getDestinationFallbackImages, getDestinationCost } from "@/utils/destination-utils";
 
-export const useDestinationDetails = (id: string | undefined) => {
+export const useDestinationDetails = (destinationId: number) => {
   const [activeImage, setActiveImage] = useState("");
   const [destination, setDestination] = useState<Destination | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [galleryImages, setGalleryImages] = useState<string[]>([]);
   const [imageError, setImageError] = useState(false);
   const [failedImageIndexes, setFailedImageIndexes] = useState<Set<number>>(new Set());
   const [destinationTemp, setDestinationTemp] = useState<number | undefined>(undefined);
   const [costEstimate, setCostEstimate] = useState<string | undefined>(undefined);
+  const [averageRating, setAverageRating] = useState(4.5);
   
   const handleImageError = (index: number) => {
     console.log(`Image at index ${index} failed to load`);
@@ -43,12 +44,12 @@ export const useDestinationDetails = (id: string | undefined) => {
   };
   
   useEffect(() => {
-    setLoading(true);
+    setIsLoading(true);
     setImageError(false);
     setFailedImageIndexes(new Set());
     
     const foundDestination = sampleDestinations.find(
-      dest => dest.id === Number(id)
+      dest => dest.id === destinationId
     );
     
     if (foundDestination) {
@@ -60,18 +61,25 @@ export const useDestinationDetails = (id: string | undefined) => {
       setCostEstimate(foundDestination.costEstimate || getDestinationCost(foundDestination.name));
     }
     
-    setLoading(false);
-  }, [id]);
+    setIsLoading(false);
+  }, [destinationId]);
+
+  // Get accommodations and attractions from the destination
+  const accommodations = destination?.accommodations || [];
+  const attractions = destination?.attractions || [];
 
   return {
     destination,
-    loading,
+    isLoading,
     activeImage,
     setActiveImage,
     galleryImages,
     imageError,
     handleImageError,
     destinationTemp,
-    costEstimate
+    costEstimate,
+    averageRating,
+    accommodations,
+    attractions
   };
 };
