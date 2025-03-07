@@ -13,52 +13,52 @@ export const citySpecificImages: Record<string, string[]> = {
     "https://images.unsplash.com/photo-1595867818082-083862f3d630?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
   ],
   
-  // Belgium
+  // Belgium - Updated with better images
   "Brussels": [
-    "https://images.unsplash.com/photo-1559113513-d5e09c78b9dd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
     "https://images.unsplash.com/photo-1587110876426-4432f5088405?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+    "https://images.unsplash.com/photo-1573499931826-8a7b338a2776?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
     "https://images.unsplash.com/photo-1559113202-7ea0a3c6a06a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
   ],
   "Bruges": [
-    "https://images.unsplash.com/photo-1546763481-7b1f926286e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-    "https://images.unsplash.com/photo-1486752954876-c53ef57174e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-    "https://images.unsplash.com/photo-1570098750192-8a9a534a3929?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80"
+    "https://images.unsplash.com/photo-1569431661891-42a9734f6891?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+    "https://images.unsplash.com/photo-1576483417397-227dc6772d30?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+    "https://images.unsplash.com/photo-1557460031-1e0bc39839c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
   ],
   
-  // Netherlands
+  // Netherlands - Updated Rotterdam with better images
   "Amsterdam": [
     "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
     "https://images.unsplash.com/photo-1524047934617-cb782c24e5f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
     "https://images.unsplash.com/photo-1612524780291-c1eda9d40159?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
   ],
   "Rotterdam": [
-    "https://images.unsplash.com/photo-1555894069-3c8b638b-2-2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-    "https://images.unsplash.com/photo-1512569603403-8287e3fc4a5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-    "https://images.unsplash.com/photo-1555992828-65a01bf2fb4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+    "https://images.unsplash.com/photo-1559715541-5daf8a0296d0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+    "https://images.unsplash.com/photo-1591982113199-4c8d7b9b6276?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+    "https://images.unsplash.com/photo-1590081475307-acd225af651f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
   ],
   
-  // Russia
+  // Russia - Updated St. Petersburg with better images
   "Moscow": [
     "https://images.unsplash.com/photo-1513326738677-b964603b136d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
     "https://images.unsplash.com/photo-1547448415-e9f5b28e570d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
     "https://images.unsplash.com/photo-1578312014018-c12b8e502df3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
   ],
   "St. Petersburg": [
-    "https://images.unsplash.com/photo-1556610961-2fecc5927173?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-    "https://images.unsplash.com/photo-1564155421944-354a6202ab8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-    "https://images.unsplash.com/photo-1542849187-5ec6ea5e6a27?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80"
+    "https://images.unsplash.com/photo-1587448944173-52001abf96bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1471&q=80",
+    "https://images.unsplash.com/photo-1553514029-1318c9127859?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+    "https://images.unsplash.com/photo-1556610814-cad862c13d9d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
   ],
   
-  // Italy
+  // Italy - Updated Naples with better images
   "Milan": [
     "https://images.unsplash.com/photo-1610016302534-6f67f1c968d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
     "https://images.unsplash.com/photo-1516285277725-71ecf61f0b6a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
     "https://images.unsplash.com/photo-1520440229-6469a149ac59?ixlib=rb-4.0.3&auto=format&fit=crop&w=1074&q=80"
   ],
   "Naples": [
-    "https://images.unsplash.com/photo-1594377157609-5c996118ac7f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-    "https://images.unsplash.com/photo-1548156847-3b30aa9c91e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-    "https://images.unsplash.com/photo-1567346636128-c58bd29c7461?ixlib=rb-4.0.3&auto=format&fit=crop&w=1167&q=80"
+    "https://images.unsplash.com/photo-1574151838476-e31b89263f2c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+    "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+    "https://images.unsplash.com/photo-1579040853269-3bc054139466?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
   ],
   "Palermo": [
     "https://images.unsplash.com/photo-1586867715478-3feeffcdace8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
@@ -78,11 +78,11 @@ export const citySpecificImages: Record<string, string[]> = {
     "https://images.unsplash.com/photo-1560438550-a93ca7703587?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
   ],
   
-  // Croatia
+  // Croatia - Updated Dubrovnik with better images
   "Dubrovnik": [
-    "https://images.unsplash.com/photo-1522748906645-95d8adfd52c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-    "https://images.unsplash.com/photo-1602509044689-599a3a0ffba8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-    "https://images.unsplash.com/photo-1596139236124-e5f0aa446747?ixlib=rb-4.0.3&auto=format&fit=crop&w=1074&q=80"
+    "https://images.unsplash.com/photo-1555990538-32d1500b7b77?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+    "https://images.unsplash.com/photo-1559742089-0a81edca171b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+    "https://images.unsplash.com/photo-1591977584734-384d7e3764ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
   ],
   "Vienna": [
     "https://images.unsplash.com/photo-1573599852326-2d4da0bbe613?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", 
@@ -195,3 +195,4 @@ export const citySpecificImages: Record<string, string[]> = {
     "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1439&q=80"
   ]
 };
+
