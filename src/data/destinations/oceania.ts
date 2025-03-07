@@ -42,6 +42,43 @@ export const oceaniaDestinations: Destination[] = [
         description: "Zoo with Australian wildlife and spectacular harbor views",
         type: "Nature"
       }
+    ],
+    restaurants: [
+      {
+        name: "Quay",
+        description: "Award-winning fine dining restaurant with harbor views",
+        type: "Fine Dining",
+        cuisine: "Contemporary Australian"
+      },
+      {
+        name: "Tetsuya's",
+        description: "Elegant restaurant serving Japanese-French fusion cuisine",
+        type: "Fine Dining",
+        cuisine: "Japanese-French"
+      },
+      {
+        name: "The Boathouse",
+        description: "Casual waterfront dining with fresh seafood",
+        type: "Casual",
+        cuisine: "Seafood"
+      }
+    ],
+    accommodations: [
+      {
+        name: "Park Hyatt Sydney",
+        description: "Luxury hotel with stunning Opera House views",
+        type: "Luxury Hotel"
+      },
+      {
+        name: "The Rocks YHA",
+        description: "Budget-friendly hostel in the historic Rocks district",
+        type: "Hostel"
+      },
+      {
+        name: "Bondi Beach House",
+        description: "Boutique guesthouse just steps from Bondi Beach",
+        type: "Guesthouse"
+      }
     ]
   }
 ];
