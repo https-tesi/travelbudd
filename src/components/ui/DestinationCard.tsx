@@ -3,15 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MapPin, Star, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
-interface Destination {
-  id: number;
-  name: string;
-  description: string;
-  imageUrl: string;
-  score: number;
-  tags: string[];
-}
+import { Destination } from "@/types/destination";
 
 interface DestinationCardProps {
   destination: Destination;
