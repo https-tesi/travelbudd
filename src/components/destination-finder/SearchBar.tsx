@@ -40,14 +40,14 @@ const SearchBar = ({
             onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
           />
           
-          {/* Suggestions dropdown */}
+          {/* Suggestions dropdown - Updated z-index and position */}
           {showSuggestions && (
-            <div className="absolute z-10 bg-white border border-gray-200 shadow-lg rounded-md w-full mt-1 max-h-60 overflow-auto">
+            <div className="absolute z-50 bg-white border border-gray-200 shadow-lg rounded-md w-full mt-1 max-h-60 overflow-auto">
               {suggestions.map((suggestion, index) => (
                 <div 
                   key={index}
                   className="px-4 py-2 hover:bg-blue-50 cursor-pointer text-left"
-                  onClick={() => handleSuggestionClick(suggestion)}
+                  onMouseDown={() => handleSuggestionClick(suggestion)}
                 >
                   <div className="flex items-center">
                     <MapPin className="h-4 w-4 mr-2 text-blue-500" />

@@ -1,4 +1,3 @@
-
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Search, Calendar, DollarSign } from "lucide-react";
@@ -15,13 +14,11 @@ const TravelHero = () => {
   const { toast } = useToast();
   const destinationFinderRef = useRef<HTMLDivElement>(null);
 
-  // Generate destination suggestions based on input
   const handleDestinationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setDestination(value);
     
     if (value.length > 2) {
-      // Filter destinations based on input
       const filtered = sampleDestinations
         .filter(dest => 
           dest.name.toLowerCase().includes(value.toLowerCase()) ||
@@ -52,13 +49,11 @@ const TravelHero = () => {
       return;
     }
 
-    // Pass search parameters through URL query params to filter destinations
     const searchParams = new URLSearchParams();
     if (destination) searchParams.set("destination", destination);
     if (when) searchParams.set("when", when);
     if (budget) searchParams.set("budget", budget);
     
-    // Update URL with search parameters (could be used for filtering in a real application)
     const currentUrl = new URL(window.location.href);
     currentUrl.search = searchParams.toString();
     window.history.pushState({}, '', currentUrl);
@@ -69,12 +64,10 @@ const TravelHero = () => {
       variant: "default",
     });
 
-    // Scroll to destination finder and filter results based on search
     if (destinationFinderRef.current) {
       destinationFinderRef.current.scrollIntoView({ behavior: "smooth" });
     }
 
-    // Dispatch a custom event that DestinationFinder component can listen to
     const searchEvent = new CustomEvent('travelSearch', { 
       detail: { destination, when, budget } 
     });
@@ -89,7 +82,6 @@ const TravelHero = () => {
 
   return (
     <div className="relative overflow-hidden bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
-      {/* Background patterns */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC40Ij48cGF0aCBkPSJNMzYgMzRjMC0yLjIgMS44LTQgNC00czQgMS44IDQgNC0xLjggNC00IDQtNC0xLjgtNC00bTAgLTEyYzAtMi4yIDEuOC00IDQtNHM0IDEuOCA0IDQtMS44IDQtNCA0LTQtMS44LTQtNG0tMTIgMTJjMC0yLjIgMS44LTQgNC00czQgMS44IDQgNC0xLjggNC00IDQtNC0xLjgtNC00bTAtMTJjMC0yLjIgMS44LTQgNC00czQgMS44IDQgNC0xLjggNC00IDQtNC0xLjgtNC00bS0xMiAxMmMwLTIuMiAxLjgtNCA0LTRzNCAxLjggNCA0LTEuOCA0LTQgNC00LTEuOC00LTRtMC0xMmMwLTIuMiAxLjgtNCA0LTRzNCAxLjggNCA0LTEuOCA0LTQgNC00LTEuOC00LTQiLz48L2c+PC9nPjwvc3ZnPg==')]"></div>
       </div>
@@ -117,11 +109,9 @@ const TravelHero = () => {
           </div>
         </div>
 
-        {/* Search box - Repositioned with prominent search button */}
-        <div className="bg-white rounded-xl shadow-xl max-w-4xl mx-auto overflow-hidden transform translate-y-12">
+        <div className="bg-white rounded-xl shadow-xl max-w-4xl mx-auto overflow-hidden transform translate-y-12 relative z-20">
           <div className="p-6">
             <div className="flex flex-col space-y-4">
-              {/* Search button now at the top for better visibility */}
               <Button 
                 className="w-full py-6 text-lg font-semibold bg-blue-600 hover:bg-blue-700" 
                 onClick={handleSearch}
@@ -144,9 +134,8 @@ const TravelHero = () => {
                     />
                   </div>
                   
-                  {/* Destination suggestions dropdown */}
                   {showSuggestions && (
-                    <div className="absolute z-20 bg-white border border-gray-200 shadow-lg rounded-md w-full mt-1 max-h-60 overflow-auto">
+                    <div className="absolute z-50 bg-white border border-gray-200 shadow-lg rounded-md w-full mt-1 max-h-60 overflow-auto">
                       {suggestions.map((suggestion, index) => (
                         <div 
                           key={index}
@@ -187,7 +176,6 @@ const TravelHero = () => {
         </div>
       </div>
       
-      {/* Hidden ref to destination finder section for scrolling */}
       <div ref={destinationFinderRef} />
     </div>
   );
