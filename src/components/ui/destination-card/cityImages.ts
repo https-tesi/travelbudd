@@ -62,7 +62,7 @@ export const citySpecificImages: Record<string, string[]> = {
   ],
   "Palermo": [
     "https://images.unsplash.com/photo-1558947206-1ede5c5f14bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-    "https://images.unsplash.com/photo-1559113513-d5e09c78b9dd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+    "https://images.unsplash.com/photo-1550681661-f360d99307e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
     "https://images.unsplash.com/photo-1586867715478-3feeffcdace8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
   ],
   
@@ -108,5 +108,30 @@ export const citySpecificImages: Record<string, string[]> = {
     "https://images.unsplash.com/photo-1597212618440-806262de4f6b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
     "https://images.unsplash.com/photo-1551471824-87889a4e214c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
     "https://images.unsplash.com/photo-1548774211-1a75f9e7f7c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+  ],
+  "Rome": [
+    "https://images.unsplash.com/photo-1552832230-c0197dd311b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+    "https://images.unsplash.com/photo-1525874684015-58379d421a52?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+    "https://images.unsplash.com/photo-1552484885-422d6e9ad82f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+  ],
+  "Paris": [
+    "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+    "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+    "https://images.unsplash.com/photo-1541617219835-3689726fa8e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+  ],
+  "London": [
+    "https://images.unsplash.com/photo-1533929736458-ca588d08c8be?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+    "https://images.unsplash.com/photo-1596903307583-5aa18788801d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+    "https://images.unsplash.com/photo-1505761671935-60b3a7427bad?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+  ],
+  "Barcelona": [
+    "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+    "https://images.unsplash.com/photo-1583422409516-2895a77efded?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+    "https://images.unsplash.com/photo-1511527661048-7fe73d85e9a4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+  ],
+  "Prague": [
+    "https://images.unsplash.com/photo-1541849546-216549ae216d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+    "https://images.unsplash.com/photo-1519677100203-a0e668c92439?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+    "https://images.unsplash.com/photo-1592906209472-a36b1f3782ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
   ]
 };

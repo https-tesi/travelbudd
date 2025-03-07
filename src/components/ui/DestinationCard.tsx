@@ -16,11 +16,15 @@ const DestinationCard = ({ destination }: DestinationCardProps) => {
 
   const handleExplore = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent the parent onClick from firing
+    console.log(`Navigating to destination/${destination.id}`);
     navigate(`/destination/${destination.id}`);
   };
   
   return (
-    <Card className="overflow-hidden group hover:shadow-md transition-all">
+    <Card 
+      className="overflow-hidden group hover:shadow-md transition-all"
+      onClick={() => navigate(`/destination/${destination.id}`)}
+    >
       <ImageDisplay 
         destination={destination} 
         isFavorite={isFavorite} 

@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from "react";
+
+import { useState, useEffect } from "react";
 import { ImageOff, Star, Heart } from "lucide-react";
 import { toast } from "sonner";
 import { Destination } from "@/types/destination";
@@ -17,61 +18,61 @@ export const ImageDisplay = ({ destination, isFavorite, setIsFavorite }: ImageDi
   
   const cityName = destination.name.split(',')[0].trim();
   
-  const getImageForCity = useCallback(() => {
-    setImageError(false);
-    
-    if (citySpecificImages[cityName] && citySpecificImages[cityName].length > 0) {
-      if (fallbackAttempts > 0 && fallbackAttempts < citySpecificImages[cityName].length) {
-        return citySpecificImages[cityName][fallbackAttempts];
-      }
-      return citySpecificImages[cityName][0];
-    }
-    
-    return destination.imageUrl;
-  }, [cityName, destination.imageUrl, fallbackAttempts]);
-  
+  // Reset state when destination changes
   useEffect(() => {
     setImageError(false);
     setFallbackAttempts(0);
     
-    const newImageSrc = getImageForCity();
-    console.log(`Setting image for ${cityName}:`, newImageSrc);
+    // Get the appropriate image for this city
+    let newImageSrc = "";
+    
+    if (citySpecificImages[cityName] && citySpecificImages[cityName].length > 0) {
+      newImageSrc = citySpecificImages[cityName][0];
+      console.log(`Using city-specific image for ${cityName}:`, newImageSrc);
+    } else {
+      newImageSrc = destination.imageUrl;
+      console.log(`No city-specific images found for ${cityName}, using default:`, newImageSrc);
+    }
+    
     setImageSrc(newImageSrc);
-  }, [destination.id, cityName, getImageForCity]);
+  }, [destination.id, cityName, destination.imageUrl]);
 
   const handleImageError = () => {
     console.log(`Image failed to load for ${destination.name}: ${imageSrc}`);
-    setImageError(true);
     
+    // Increment attempt counter
     const newAttemptCount = fallbackAttempts + 1;
     setFallbackAttempts(newAttemptCount);
     
+    // Try city-specific fallback images first
     if (citySpecificImages[cityName]) {
       if (newAttemptCount < citySpecificImages[cityName].length) {
         const nextImage = citySpecificImages[cityName][newAttemptCount];
-        console.log(`Trying fallback city image ${newAttemptCount}:`, nextImage);
+        console.log(`Trying city-specific fallback image ${newAttemptCount} for ${cityName}:`, nextImage);
         setImageSrc(nextImage);
-        setImageError(false);
         return;
       }
     }
     
+    // If all city-specific images fail, use default fallbacks
     const defaultFallbackImages = [
       "https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=1035&q=80",
       "https://images.unsplash.com/photo-1502301103665-0b95cc738daf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1035&q=80",
       "https://images.unsplash.com/photo-1500835556837-99ac94a94552?ixlib=rb-4.0.3&auto=format&fit=crop&w=1173&q=80"
     ];
     
+    // Use a deterministic approach to pick a fallback image
     const nameHash = destination.name.split('').reduce(
       (acc, char) => acc + char.charCodeAt(0), 0
     );
     
-    const fallbackIndex = (nameHash + newAttemptCount) % defaultFallbackImages.length;
+    // Use a combination of hash and attempt count to cycle through fallbacks
+    const fallbackIndex = (nameHash + newAttemptCount - citySpecificImages[cityName]?.length || 0) % defaultFallbackImages.length;
     const fallbackImage = defaultFallbackImages[fallbackIndex];
     
-    console.log(`Using default fallback image:`, fallbackImage);
+    console.log(`Using default fallback image for ${destination.name}:`, fallbackImage);
     setImageSrc(fallbackImage);
-    setImageError(false);
+    setImageError(true);
   };
   
   const toggleFavorite = (e: React.MouseEvent) => {
@@ -94,7 +95,7 @@ export const ImageDisplay = ({ destination, isFavorite, setIsFavorite }: ImageDi
 
   return (
     <div className="relative h-48 overflow-hidden">
-      {!imageError ? (
+      {imageSrc ? (
         <img 
           src={imageSrc} 
           alt={destination.name}
@@ -108,7 +109,7 @@ export const ImageDisplay = ({ destination, isFavorite, setIsFavorite }: ImageDi
         <div className="w-full h-full flex items-center justify-center bg-gray-100">
           <div className="text-center">
             <ImageOff className="h-10 w-10 text-gray-400 mx-auto mb-2" />
-            <span className="text-sm text-gray-500">{destination.name}</span>
+            <span className="text-sm text-gray-500">Loading...</span>
           </div>
         </div>
       )}
