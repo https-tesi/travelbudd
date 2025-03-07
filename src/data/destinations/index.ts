@@ -63,56 +63,56 @@ const addCostEstimates = (destinations: Destination[]): Destination[] => {
 
   // Apply temperature estimates for destinations that don't have them
   const tempEstimates: Record<string, number> = {
-    // Asian cities
+    // Asian cities - updated with more accurate values
     "Kyoto, Japan": 15,
     "Tokyo, Japan": 16,
-    "Bangkok, Thailand": 28,
+    "Bangkok, Thailand": 32,
     "Bali, Indonesia": 27,
-    "Dubai, UAE": 29,
+    "Dubai, UAE": 33,
     "Maldives": 28,
     
-    // European cities - Western
-    "Paris, France": 12,
+    // European cities - Western - updated with more varied values
+    "Paris, France": 13,
     "London, UK": 11,
     "Amsterdam, Netherlands": 10,
-    "Berlin, Germany": 10,
-    "Munich, Germany": 9,
+    "Berlin, Germany": 9,
+    "Munich, Germany": 8,
     "Brussels, Belgium": 11,
     "Bruges, Belgium": 10,
     "Rotterdam, Netherlands": 10,
-    "Zurich, Switzerland": 8,
-    "Geneva, Switzerland": 9,
+    "Zurich, Switzerland": 6,
+    "Geneva, Switzerland": 7,
     
-    // European cities - Eastern
-    "Prague, Czech Republic": 9,
-    "Vienna, Austria": 11,
+    // European cities - Eastern - updated with more varied values
+    "Prague, Czech Republic": 8,
+    "Vienna, Austria": 9,
     "Moscow, Russia": 5,
     "St. Petersburg, Russia": 4,
     
-    // European cities - Southern
-    "Rome, Italy": 17,
+    // European cities - Southern - updated with more varied values
+    "Rome, Italy": 18,
     "Venice, Italy": 14,
-    "Florence, Italy": 15,
+    "Florence, Italy": 16,
     "Milan, Italy": 13,
-    "Naples, Italy": 16,
-    "Palermo, Italy": 17,
+    "Naples, Italy": 17,
+    "Palermo, Italy": 19,
     "Barcelona, Spain": 18,
-    "Santorini, Greece": 18,
-    "Dubrovnik, Croatia": 16,
+    "Santorini, Greece": 21,
+    "Dubrovnik, Croatia": 17,
     "Istanbul, Turkey": 14,
     
-    // Americas
+    // Americas - updated with more varied values
     "New York City, USA": 12,
-    "Rio de Janeiro, Brazil": 25,
-    "Machu Picchu, Peru": 12,
-    "Mexico City, Mexico": 17,
+    "Rio de Janeiro, Brazil": 27,
+    "Machu Picchu, Peru": 11,
+    "Mexico City, Mexico": 19,
     
-    // Africa
-    "Cape Town, South Africa": 17,
-    "Marrakech, Morocco": 19,
+    // Africa - updated with more varied values
+    "Cape Town, South Africa": 20,
+    "Marrakech, Morocco": 23,
     
-    // Oceania
-    "Sydney, Australia": 18
+    // Oceania - updated with more varied values
+    "Sydney, Australia": 22
   };
 
   return destinations.map(dest => {
