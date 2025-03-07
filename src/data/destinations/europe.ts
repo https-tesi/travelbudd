@@ -5,14 +5,15 @@ export const europeDestinations: Destination[] = [
     id: 2,
     name: "Santorini, Greece",
     description: "Breathtaking views of the Aegean Sea from white-washed buildings along volcanic cliffs.",
-    imageUrl: "https://images.unsplash.com/photo-1570077188670-e3a8d3c6071d?q=80&w=1374&auto=format&fit=crop",
+    imageUrl: "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1035&q=80",
     galleryImages: [
-      "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1035&q=80",
-      "https://images.unsplash.com/photo-1601581875039-e899893d520c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1035&q=80",
-      "https://images.unsplash.com/photo-1515861461225-2860bdc6e37d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80"
+      "https://images.unsplash.com/photo-1601581875039-e899893d520c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1035&q=80",
+      "https://images.unsplash.com/photo-1515861461225-2860bdc6e37d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1074&q=80",
+      "https://images.unsplash.com/photo-1557630256-4ce69b5c0e3c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1074&q=80"
     ],
     score: 96,
     tags: ["Romantic", "Beach", "Scenic"],
+    averageTemp: 23,
     attractions: [
       {
         name: "Oia Village",

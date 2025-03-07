@@ -13,6 +13,7 @@ export const asiaDestinations: Destination[] = [
     ],
     score: 98,
     tags: ["Historical", "Cultural", "Scenic"],
+    averageTemp: 16,
     attractions: [
       {
         name: "Fushimi Inari Shrine",
@@ -53,6 +54,7 @@ export const asiaDestinations: Destination[] = [
     ],
     score: 95,
     tags: ["Beach", "Spiritual", "Nature"],
+    averageTemp: 27,
     attractions: [
       {
         name: "Ubud Monkey Forest",
@@ -93,6 +95,7 @@ export const asiaDestinations: Destination[] = [
     ],
     score: 96,
     tags: ["Urban", "Food", "Shopping"],
+    averageTemp: 16,
     attractions: [
       {
         name: "Senso-ji Temple",
@@ -125,14 +128,15 @@ export const asiaDestinations: Destination[] = [
     id: 16,
     name: "Istanbul, Turkey",
     description: "Transcontinental city straddling Europe and Asia with rich Byzantine and Ottoman heritage.",
-    imageUrl: "https://images.unsplash.com/photo-1602137968838-8bbd25b13511?q=80&w=1470&auto=format&fit=crop",
+    imageUrl: "https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1758&q=80",
     galleryImages: [
-      "https://images.unsplash.com/photo-1589561454226-796a8aa89b05?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-      "https://images.unsplash.com/photo-1636111805795-3992cfd9a094?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-      "https://images.unsplash.com/photo-1638376776402-9a4b75fe21bb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+      "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?ixlib=rb-4.0.3&auto=format&fit=crop&w=1471&q=80",
+      "https://images.unsplash.com/photo-1527838832700-5059252407fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1498&q=80",
+      "https://images.unsplash.com/photo-1604928141064-207cea6f571f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1374&q=80"
     ],
     score: 94,
     tags: ["Historical", "Cultural", "Food"],
+    averageTemp: 16,
     attractions: [
       {
         name: "Hagia Sophia",
@@ -173,6 +177,7 @@ export const asiaDestinations: Destination[] = [
     ],
     score: 93,
     tags: ["Cultural", "Food", "Shopping"],
+    averageTemp: 29,
     attractions: [
       {
         name: "Grand Palace",

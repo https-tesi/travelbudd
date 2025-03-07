@@ -342,7 +342,7 @@ const DestinationDetails = () => {
               <div className="flex flex-wrap items-center gap-3 md:gap-6">
                 <div className="flex items-center gap-1 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">
                   <Thermometer className="h-4 w-4" />
-                  <span>Weather: {Math.floor(Math.random() * 20) + 10}°C</span>
+                  <span>Weather: {destination.averageTemp || 20}°C</span>
                 </div>
                 <div className="flex items-center gap-1 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">
                   <Calendar className="h-4 w-4" />
