@@ -1,4 +1,3 @@
-
 import { Destination } from "@/types/destination";
 
 export const westernEuropeDestinations: Destination[] = [
@@ -86,10 +85,10 @@ export const westernEuropeDestinations: Destination[] = [
     id: 21,
     name: "Amsterdam, Netherlands",
     description: "Picturesque canal city with rich art history, vibrant culture, and unique architecture.",
-    imageUrl: "https://images.unsplash.com/photo-1584003564911-a5dfe077b645?q=80&w=1470&auto=format&fit=crop",
+    imageUrl: "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?q=80&w=1470&auto=format&fit=crop",
     galleryImages: [
       "https://images.unsplash.com/photo-1512470876302-972faa2aa9a4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80",
-      "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80",
+      "https://images.unsplash.com/photo-1579585269657-14289fd4b7db?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80",
       "https://images.unsplash.com/photo-1576924542622-772281b13aa8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80"
     ],
     score: 92,
@@ -206,9 +205,9 @@ export const westernEuropeDestinations: Destination[] = [
     id: 32,
     name: "Rotterdam, Netherlands",
     description: "Modern city with bold architecture, maritime heritage, and innovative urban design.",
-    imageUrl: "https://images.unsplash.com/photo-1453713786606-af73ee25aca7?q=80&w=1534&auto=format&fit=crop",
+    imageUrl: "https://images.unsplash.com/photo-1541089801-5b7a0e4a2b68?q=80&w=1470&auto=format&fit=crop",
     galleryImages: [
-      "https://images.unsplash.com/photo-1541089801-5b7a0e4a2b68?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1555634871-d4459153f2b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
       "https://images.unsplash.com/photo-1584029327107-3d9206e8f6f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
       "https://images.unsplash.com/photo-1575322353738-a12f72fc05c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
     ],

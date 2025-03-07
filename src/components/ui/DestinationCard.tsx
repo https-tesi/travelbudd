@@ -30,9 +30,28 @@ const DestinationCard = ({ destination }: DestinationCardProps) => {
     navigate(`/destination/${destination.id}`);
   };
 
+  // Enhanced image error handling
   const handleImageError = () => {
     setImageError(true);
     console.log(`Image failed to load for ${destination.name}`);
+    
+    // Use a common fallback image pattern for predictable recovery
+    const fallbackImages = [
+      "https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=1035&q=80",
+      "https://images.unsplash.com/photo-1502301103665-0b95cc738daf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1035&q=80",
+      "https://images.unsplash.com/photo-1500835556837-99ac94a94552?ixlib=rb-4.0.3&auto=format&fit=crop&w=1173&q=80"
+    ];
+    
+    // Generate a consistent index based on the destination name to get a predictable fallback
+    const nameHash = destination.name.split('').reduce(
+      (acc, char) => acc + char.charCodeAt(0), 0
+    );
+    
+    // Set the image src element directly to avoid re-triggering the error
+    const imgElement = document.querySelector(`[data-destination-id="${destination.id}"]`) as HTMLImageElement;
+    if (imgElement) {
+      imgElement.src = fallbackImages[nameHash % fallbackImages.length];
+    }
   };
   
   const toggleFavorite = (e: React.MouseEvent) => {
@@ -66,6 +85,7 @@ const DestinationCard = ({ destination }: DestinationCardProps) => {
             alt={destination.name}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             onError={handleImageError}
+            data-destination-id={destination.id}
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-gray-100">
