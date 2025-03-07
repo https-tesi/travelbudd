@@ -48,12 +48,30 @@ export const ImageDisplay = ({ destination, isFavorite, setIsFavorite }: ImageDi
     
     if (newAttemptCount >= maxAttempts.current) {
       console.log(`Maximum fallback attempts reached for ${destination.name}. Using final fallback.`);
-      // Use a guaranteed working image as final fallback - using a different one for Naples
+      
+      // Use guaranteed working fallback images for specific cities with known issues
       if (cityName === 'Naples') {
-        setImageSrc("https://images.pexels.com/photos/10902904/pexels-photo-10902904.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
+        setImageSrc("https://i.imgur.com/AYt1HlL.jpeg"); // Naples with Vesuvius
+        return;
+      } else if (cityName === 'Cape Town') {
+        setImageSrc("https://i.imgur.com/e9afBQw.jpeg"); // Table Mountain
+        return;
+      } else if (cityName === 'Marrakech') {
+        setImageSrc("https://i.imgur.com/LyZpjQD.jpeg"); // Marrakech
+        return;
+      } else if (cityName === 'St. Petersburg') {
+        setImageSrc("https://i.imgur.com/0gJ1qJF.jpeg"); // St. Petersburg
+        return;
+      } else if (cityName === 'Florence') {
+        setImageSrc("https://i.imgur.com/6JtVdV8.jpeg"); // Florence Duomo
+        return;
+      } else if (cityName === 'Palermo') {
+        setImageSrc("https://i.imgur.com/iYYZl6y.jpeg"); // Palermo
         return;
       }
-      setImageSrc("https://images.unsplash.com/photo-1500835556837-99ac94a94552?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1173&q=80");
+      
+      // Default guaranteed working image for all other cities
+      setImageSrc("https://i.imgur.com/pMZVCQu.jpeg"); // Generic travel image
       return;
     }
     
@@ -65,23 +83,32 @@ export const ImageDisplay = ({ destination, isFavorite, setIsFavorite }: ImageDi
       return;
     }
     
-    // If all city-specific images fail or don't exist, use default fallbacks
+    // If all city-specific images fail or don't exist, use default fallbacks with guaranteed working images
     const defaultFallbackImages = [
-      "https://images.unsplash.com/photo-1500835556837-99ac94a94552?ixlib=rb-4.0.3&auto=format&fit=crop&w=1173&q=80",
-      "https://images.unsplash.com/photo-1488085061387-422e29b40080?ixlib=rb-4.0.3&auto=format&fit=crop&w=1031&q=80",
-      "https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+      "https://i.imgur.com/pMZVCQu.jpeg", // Generic travel image
+      "https://i.imgur.com/9RCaIVn.jpeg", // European city
+      "https://i.imgur.com/4qHUzYS.jpeg"  // Travel landscape
     ];
     
-    // Special case for Naples - use specific guaranteed fallbacks
+    // Special case for cities with known image issues - use specific guaranteed fallbacks
     if (cityName === 'Naples') {
       const naplesFallbacks = [
-        "https://images.pexels.com/photos/10902904/pexels-photo-10902904.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-        "https://images.pexels.com/photos/7031744/pexels-photo-7031744.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-        "https://images.pexels.com/photos/4179480/pexels-photo-4179480.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+        "https://i.imgur.com/AYt1HlL.jpeg", // Naples with Vesuvius
+        "https://i.imgur.com/qEbCkRW.jpeg", // Naples harbor
+        "https://i.imgur.com/Z3esAP6.jpeg"  // Naples street
       ];
       const fallbackIndex = Math.min(newAttemptCount - (citySpecificImages[cityName]?.length || 0), naplesFallbacks.length - 1);
       console.log(`Using Naples-specific fallback image #${fallbackIndex} for ${destination.name}`);
       setImageSrc(naplesFallbacks[fallbackIndex]);
+      return;
+    } else if (cityName === 'Cape Town') {
+      const capeTownFallbacks = [
+        "https://i.imgur.com/e9afBQw.jpeg", // Table Mountain
+        "https://i.imgur.com/LWtQMv6.jpeg", // Cape Town coast
+        "https://i.imgur.com/PGkPfZx.jpeg"  // Cape Town city
+      ];
+      const fallbackIndex = Math.min(newAttemptCount - (citySpecificImages[cityName]?.length || 0), capeTownFallbacks.length - 1);
+      setImageSrc(capeTownFallbacks[fallbackIndex]);
       return;
     }
     
