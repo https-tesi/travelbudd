@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Calendar, MapPin, DollarSign, Clock, Thermometer, Globe, Utensils, Camera, Hotel, Bookmark, Share, AlertCircle, Plane } from "lucide-react";
+import { Calendar, MapPin, DollarSign, Clock, Thermometer, Globe, Utensils, Camera, Hotel, Bookmark, Share, AlertCircle, Plane, ImageOff } from "lucide-react";
 import { sampleDestinations } from "@/data/sampleDestinations";
 import { Destination } from "@/types/destination";
 import { toast } from "sonner";
@@ -23,10 +23,104 @@ const DestinationDetails = () => {
   const [nearestAirport, setNearestAirport] = useState<string | null>(null);
   const [departureDate, setDepartureDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
+  const [galleryImages, setGalleryImages] = useState<string[]>([]);
+  const [imageError, setImageError] = useState(false);
+  
+  // Generate fallback image URL based on destination name
+  const getFallbackImageUrl = (destinationName: string) => {
+    const fallbackImages: Record<string, string> = {
+      "Kyoto, Japan": "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      "Santorini, Greece": "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1035&q=80",
+      "Machu Picchu, Peru": "https://images.unsplash.com/photo-1526392060635-9d6019884377?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      "Rome, Italy": "https://images.unsplash.com/photo-1552832230-c0197dd311b5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      "Venice, Italy": "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      "Florence, Italy": "https://images.unsplash.com/photo-1543429257-3eb0b65d9c58?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      "Bali, Indonesia": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      "Paris, France": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1473&q=80",
+      "Barcelona, Spain": "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+      "Tokyo, Japan": "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80",
+      "New York City, USA": "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      "London, UK": "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      "Sydney, Australia": "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      "Maldives": "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80",
+      "Amsterdam, Netherlands": "https://images.unsplash.com/photo-1512470876302-972faa2aa9a4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+      "Prague, Czech Republic": "https://images.unsplash.com/photo-1541849546-216549ae216d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      "Dubrovnik, Croatia": "https://images.unsplash.com/photo-1565101845408-c2dbaf45a3c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      "Marrakech, Morocco": "https://images.unsplash.com/photo-1597212618440-806262de4f6b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      "Cape Town, South Africa": "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      "Rio de Janeiro, Brazil": "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      "Bangkok, Thailand": "https://images.unsplash.com/photo-1563492065599-3520f775eeed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      "Istanbul, Turkey": "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80",
+      "Vienna, Austria": "https://images.unsplash.com/photo-1516550893885-985c836c68d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80",
+      "Dubai, UAE": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+    };
+    
+    return fallbackImages[destinationName] || null;
+  };
+  
+  // Generate additional gallery images for a destination
+  const generateGalleryImages = (destinationName: string, destinationId: number) => {
+    // Create theme-based collections based on destination tags
+    const themes = {
+      beach: ["3319606", "2437291", "1285625", "3601434", "2049422"],
+      city: ["4321548", "4350879", "1519088", "4348078", "1373360"],
+      mountain: ["2468845", "4440985", "134469", "1891882", "2356399"],
+      culture: ["3109504", "2989424", "4444436", "2995268", "3374245"]
+    };
+    
+    // Determine theme based on destination name or id
+    let themeCollection = "3314899"; // Default to travel collection
+    
+    if (destinationName.toLowerCase().includes("beach") || 
+        destinationName.includes("Santorini") || 
+        destinationName.includes("Bali") || 
+        destinationName.includes("Maldives")) {
+      themeCollection = themes.beach[destinationId % themes.beach.length];
+    } else if (destinationName.includes("Tokyo") || 
+               destinationName.includes("New York") || 
+               destinationName.includes("London") ||
+               destinationName.includes("Paris")) {
+      themeCollection = themes.city[destinationId % themes.city.length];
+    } else if (destinationName.includes("Machu Picchu") || 
+               destinationName.includes("Alps") ||
+               destinationName.includes("Mountain")) {
+      themeCollection = themes.mountain[destinationId % themes.mountain.length];
+    } else if (destinationName.includes("Kyoto") || 
+               destinationName.includes("Rome") ||
+               destinationName.includes("Prague")) {
+      themeCollection = themes.culture[destinationId % themes.culture.length];
+    }
+    
+    // Get main image with fallback
+    const fallbackMain = getFallbackImageUrl(destinationName);
+    const mainImage = fallbackMain || `https://source.unsplash.com/collection/${themeCollection}/800x600?${destinationName.split(',')[0]}`;
+    
+    // Generate additional images
+    const additionalImages = Array.from({ length: 4 }).map((_, index) => {
+      return `https://source.unsplash.com/collection/${themeCollection}/800x600?${destinationName.split(',')[0]}&sig=${destinationId * 10 + index}`;
+    });
+    
+    return [mainImage, ...additionalImages];
+  };
+  
+  // Handler for image loading errors
+  const handleImageError = (index: number) => {
+    console.log(`Image at index ${index} failed to load`);
+    setImageError(true);
+    
+    // Replace the failed image with a new one from a different collection
+    if (destination) {
+      const newImages = [...galleryImages];
+      const destinationName = destination.name.split(',')[0];
+      newImages[index] = `https://source.unsplash.com/collection/3314899/800x600?${destinationName}&sig=${Math.random()}`;
+      setGalleryImages(newImages);
+    }
+  };
   
   // Fetch the destination data based on the ID
   useEffect(() => {
     setLoading(true);
+    setImageError(false);
     
     // Find the destination in the sampleDestinations array
     const foundDestination = sampleDestinations.find(
@@ -35,7 +129,11 @@ const DestinationDetails = () => {
     
     if (foundDestination) {
       setDestination(foundDestination);
-      setActiveImage(foundDestination.imageUrl);
+      
+      // Generate gallery images
+      const images = generateGalleryImages(foundDestination.name, foundDestination.id);
+      setGalleryImages(images);
+      setActiveImage(images[0]); // Set the first image as active
     }
     
     setLoading(false);
@@ -173,6 +271,12 @@ const DestinationDetails = () => {
             src={activeImage} 
             alt={destination.name}
             className="w-full h-full object-cover"
+            onError={() => {
+              // If main image fails, show fallback
+              if (destination && galleryImages.length > 1) {
+                setActiveImage(galleryImages[1]);
+              }
+            }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
           <div className="absolute bottom-0 left-0 w-full p-6 md:p-10 text-white">
@@ -203,34 +307,27 @@ const DestinationDetails = () => {
         <div className="container mx-auto px-4 -mt-6 md:-mt-10 relative z-10">
           {/* Gallery thumbnails */}
           <div className="flex gap-2 overflow-x-auto pb-4 md:pb-6 px-2 md:px-0">
-            <div 
-              className={`h-16 md:h-20 aspect-video rounded-lg overflow-hidden cursor-pointer border-2 ${activeImage === destination.imageUrl ? 'border-primary' : 'border-transparent'}`}
-              onClick={() => setActiveImage(destination.imageUrl)}
-            >
-              <img 
-                src={destination.imageUrl}
-                alt="Gallery thumbnail" 
-                className="w-full h-full object-cover"
-              />
-            </div>
-            {/* Generate mock gallery images based on destination ID for variety */}
-            {Array.from({ length: 4 }).map((_, index) => {
-              const imageId = (Number(id) * 10 + index) % 20 + 1;
-              const imageUrl = `https://source.unsplash.com/collection/4321${imageId}/800x600`;
-              return (
-                <div 
-                  key={index}
-                  className={`h-16 md:h-20 aspect-video rounded-lg overflow-hidden cursor-pointer border-2 ${activeImage === imageUrl ? 'border-primary' : 'border-transparent'}`}
-                  onClick={() => setActiveImage(imageUrl)}
-                >
-                  <img 
-                    src={imageUrl}
-                    alt={`Gallery thumbnail ${index + 1}`} 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              );
-            })}
+            {galleryImages.map((imageUrl, index) => (
+              <div 
+                key={index}
+                className={`h-16 md:h-20 aspect-video rounded-lg overflow-hidden cursor-pointer border-2 ${activeImage === imageUrl ? 'border-primary' : 'border-transparent'}`}
+                onClick={() => setActiveImage(imageUrl)}
+              >
+                <img 
+                  src={imageUrl}
+                  alt={`Gallery image of ${destination.name}`} 
+                  className="w-full h-full object-cover"
+                  onError={() => handleImageError(index)}
+                />
+              </div>
+            ))}
+            
+            {imageError && galleryImages.length < 2 && (
+              <div className="flex flex-col items-center justify-center h-16 md:h-20 aspect-video bg-gray-100 rounded-lg">
+                <ImageOff className="h-6 w-6 text-gray-400" />
+                <span className="text-xs text-gray-500 mt-1">No images</span>
+              </div>
+            )}
           </div>
           
           {/* Flight search card */}
