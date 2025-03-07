@@ -1,70 +1,70 @@
 
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Calendar, MapPin, DollarSign, Clock, Thermometer, Globe, Utensils, Camera, Hotel, Bookmark, Share } from "lucide-react";
-
-// Mock data for a destination (would come from API in real app)
-const destinationData = {
-  id: 1,
-  name: "Kyoto, Japan",
-  description: "Experience the cultural heart of Japan with ancient temples, traditional gardens, and authentic cuisine. Kyoto served as Japan's capital and the emperor's residence from 794 until 1868. It is one of the country's ten largest cities with a population of 1.5 million people and a modern face. Over the centuries, Kyoto was destroyed by many wars and fires, but due to its exceptional historic value, the city was spared from air raids during World War II. Countless temples, shrines and other historically priceless structures survive in the city today.",
-  imageUrl: "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?q=80&w=1470&auto=format&fit=crop",
-  gallery: [
-    "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=1470&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1493997181344-712f2f19d87a?q=80&w=1470&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1528360983277-13d401cdc186?q=80&w=1470&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?q=80&w=1436&auto=format&fit=crop",
-  ],
-  score: 98,
-  tags: ["Historical", "Cultural", "Scenic"],
-  weather: {
-    current: "Sunny, 22°C",
-    bestTime: "March-May and October-November",
-    seasons: "Four distinct seasons with beautiful cherry blossoms in spring and colorful foliage in autumn"
-  },
-  budget: {
-    flightCost: "$800-1200",
-    accommodation: "$80-200 per night",
-    dailyExpenses: "$50-100 per day",
-    averageTotal: "$2000-3000 for 7 days"
-  },
-  attractions: [
-    { name: "Fushimi Inari Shrine", description: "Famous shrine with thousands of vermilion torii gates", type: "Temple" },
-    { name: "Arashiyama Bamboo Grove", description: "Stunning pathway through towering bamboo", type: "Nature" },
-    { name: "Kinkaku-ji (Golden Pavilion)", description: "Zen temple covered in gold leaf", type: "Temple" },
-    { name: "Gion District", description: "Traditional geisha district with preserved machiya houses", type: "Cultural" },
-    { name: "Nishiki Market", description: "Five-block shopping street with food vendors and shops", type: "Food" }
-  ],
-  restaurants: [
-    { name: "Nishiki Warai", description: "Traditional Kyoto cuisine in a historic setting", type: "Traditional" },
-    { name: "Kyoto Ramen Street", description: "Collection of top ramen shops in Kyoto Station", type: "Casual" },
-    { name: "Pontocho Alley", description: "Atmospheric alley with restaurants overlooking the Kamogawa River", type: "Various" }
-  ],
-  accommodations: [
-    { name: "Traditional Ryokan", description: "Experience staying on tatami mats with traditional Japanese amenities", type: "Traditional" },
-    { name: "Modern Hotels", description: "Contemporary accommodations with western-style beds and amenities", type: "Modern" },
-    { name: "Machiya Stay", description: "Restored traditional wooden townhouses offering a local experience", type: "Unique" }
-  ],
-  culturalTips: [
-    "Remove shoes when entering temples, homes, and some restaurants",
-    "Learn basic Japanese phrases as English isn't widely spoken",
-    "Bow slightly when greeting people as a sign of respect",
-    "Avoid tipping as it's not customary in Japan",
-    "Be mindful of quiet behavior in temples and shrines"
-  ]
-};
+import { Calendar, MapPin, DollarSign, Clock, Thermometer, Globe, Utensils, Camera, Hotel, Bookmark, Share, AlertCircle } from "lucide-react";
+import { sampleDestinations } from "@/data/sampleDestinations";
+import { Destination } from "@/types/destination";
 
 const DestinationDetails = () => {
   const { id } = useParams<{ id: string }>();
-  const [activeImage, setActiveImage] = useState(destinationData.imageUrl);
+  const navigate = useNavigate();
+  const [activeImage, setActiveImage] = useState("");
+  const [destination, setDestination] = useState<Destination | null>(null);
+  const [loading, setLoading] = useState(true);
   
-  // In a real app, you would fetch the data based on the ID
-  // const { data: destination, isLoading, error } = useQuery(['destination', id], () => fetchDestination(id));
+  // Fetch the destination data based on the ID
+  useEffect(() => {
+    setLoading(true);
+    
+    // Find the destination in the sampleDestinations array
+    const foundDestination = sampleDestinations.find(
+      dest => dest.id === Number(id)
+    );
+    
+    if (foundDestination) {
+      setDestination(foundDestination);
+      setActiveImage(foundDestination.imageUrl);
+    }
+    
+    setLoading(false);
+  }, [id]);
+
+  // If destination not found, show error state
+  if (!loading && !destination) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Navbar />
+        <div className="container mx-auto px-4 py-20 text-center">
+          <AlertCircle className="h-16 w-16 text-red-500 mx-auto mb-6" />
+          <h1 className="text-2xl md:text-3xl font-bold mb-4">Destination Not Found</h1>
+          <p className="text-gray-600 mb-8">We couldn't find the destination you're looking for.</p>
+          <Button onClick={() => navigate('/')}>
+            Return to Home
+          </Button>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+  
+  // Show loading state
+  if (loading || !destination) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Navbar />
+        <div className="container mx-auto px-4 py-20 text-center">
+          <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mx-auto mb-6"></div>
+          <p className="text-lg text-gray-600">Loading destination details...</p>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -75,7 +75,7 @@ const DestinationDetails = () => {
         <div className="h-[40vh] md:h-[60vh] relative overflow-hidden">
           <img 
             src={activeImage} 
-            alt={destinationData.name}
+            alt={destination.name}
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -83,21 +83,21 @@ const DestinationDetails = () => {
             <div className="container mx-auto">
               <div className="flex items-center gap-2 text-sm mb-2 opacity-90">
                 <MapPin className="h-4 w-4" />
-                <span>Japan, Asia</span>
+                <span>{destination.name.includes(',') ? destination.name.split(',')[1]?.trim() : 'Destination'}</span>
               </div>
-              <h1 className="text-3xl md:text-5xl font-bold mb-2">{destinationData.name}</h1>
+              <h1 className="text-3xl md:text-5xl font-bold mb-2">{destination.name}</h1>
               <div className="flex flex-wrap items-center gap-3 md:gap-6">
                 <div className="flex items-center gap-1 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">
                   <Thermometer className="h-4 w-4" />
-                  <span>{destinationData.weather.current}</span>
+                  <span>Weather: {Math.floor(Math.random() * 20) + 10}°C</span>
                 </div>
                 <div className="flex items-center gap-1 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">
                   <Calendar className="h-4 w-4" />
-                  <span>Best: {destinationData.weather.bestTime}</span>
+                  <span>Best: {['Spring', 'Summer', 'Fall', 'Winter'][Math.floor(Math.random() * 4)]}</span>
                 </div>
                 <div className="flex items-center gap-1 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">
                   <DollarSign className="h-4 w-4" />
-                  <span>~{destinationData.budget.averageTotal}</span>
+                  <span>~${Math.floor(Math.random() * 1500) + 1000}-${Math.floor(Math.random() * 2000) + 2000}</span>
                 </div>
               </div>
             </div>
@@ -108,28 +108,33 @@ const DestinationDetails = () => {
           {/* Gallery thumbnails */}
           <div className="flex gap-2 overflow-x-auto pb-4 md:pb-6 px-2 md:px-0">
             <div 
-              className={`h-16 md:h-20 aspect-video rounded-lg overflow-hidden cursor-pointer border-2 ${activeImage === destinationData.imageUrl ? 'border-primary' : 'border-transparent'}`}
-              onClick={() => setActiveImage(destinationData.imageUrl)}
+              className={`h-16 md:h-20 aspect-video rounded-lg overflow-hidden cursor-pointer border-2 ${activeImage === destination.imageUrl ? 'border-primary' : 'border-transparent'}`}
+              onClick={() => setActiveImage(destination.imageUrl)}
             >
               <img 
-                src={destinationData.imageUrl}
+                src={destination.imageUrl}
                 alt="Gallery thumbnail" 
                 className="w-full h-full object-cover"
               />
             </div>
-            {destinationData.gallery.map((image, index) => (
-              <div 
-                key={index}
-                className={`h-16 md:h-20 aspect-video rounded-lg overflow-hidden cursor-pointer border-2 ${activeImage === image ? 'border-primary' : 'border-transparent'}`}
-                onClick={() => setActiveImage(image)}
-              >
-                <img 
-                  src={image}
-                  alt={`Gallery thumbnail ${index + 1}`} 
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            ))}
+            {/* Generate mock gallery images based on destination ID for variety */}
+            {Array.from({ length: 4 }).map((_, index) => {
+              const imageId = (Number(id) * 10 + index) % 20 + 1;
+              const imageUrl = `https://source.unsplash.com/collection/4321${imageId}/800x600`;
+              return (
+                <div 
+                  key={index}
+                  className={`h-16 md:h-20 aspect-video rounded-lg overflow-hidden cursor-pointer border-2 ${activeImage === imageUrl ? 'border-primary' : 'border-transparent'}`}
+                  onClick={() => setActiveImage(imageUrl)}
+                >
+                  <img 
+                    src={imageUrl}
+                    alt={`Gallery thumbnail ${index + 1}`} 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              );
+            })}
           </div>
           
           {/* Content */}
@@ -139,7 +144,7 @@ const DestinationDetails = () => {
               <Card>
                 <CardContent className="p-6">
                   <div className="flex justify-between items-start mb-4">
-                    <h2 className="text-2xl font-bold">About {destinationData.name}</h2>
+                    <h2 className="text-2xl font-bold">About {destination.name}</h2>
                     <div className="flex gap-2">
                       <Button variant="outline" size="sm" className="h-9 w-9 p-0">
                         <Bookmark className="h-5 w-5" />
@@ -150,10 +155,10 @@ const DestinationDetails = () => {
                     </div>
                   </div>
                   <p className="text-gray-600 mb-6">
-                    {destinationData.description}
+                    {destination.description}
                   </p>
                   <div className="flex flex-wrap gap-2 mb-2">
-                    {destinationData.tags.map((tag, index) => (
+                    {destination.tags.map((tag, index) => (
                       <span 
                         key={index} 
                         className="text-sm bg-blue-50 text-blue-600 px-3 py-1 rounded-full"
@@ -191,20 +196,30 @@ const DestinationDetails = () => {
                   <Card>
                     <CardContent className="p-6">
                       <div className="space-y-6">
-                        {destinationData.attractions.map((attraction, index) => (
-                          <div key={index} className="flex gap-4">
-                            <div className="h-12 w-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
-                              <Camera className="h-6 w-6" />
+                        {/* Generate mock attractions based on the destination */}
+                        {Array.from({ length: 5 }).map((_, index) => {
+                          const attractions = [
+                            {name: `${destination.name.split(',')[0]} Cathedral`, description: "Historic cathedral with stunning architecture", type: "Historical"},
+                            {name: `${destination.name.split(',')[0]} Museum`, description: "World-class museum with extensive collections", type: "Cultural"},
+                            {name: `${destination.name.split(',')[0]} Park`, description: "Beautiful urban park perfect for relaxation", type: "Nature"},
+                            {name: `${destination.name.split(',')[0]} Market`, description: "Vibrant market selling local specialties", type: "Shopping"},
+                            {name: `${destination.name.split(',')[0]} Tower`, description: "Iconic tower with panoramic city views", type: "Landmark"}
+                          ];
+                          return (
+                            <div key={index} className="flex gap-4">
+                              <div className="h-12 w-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
+                                <Camera className="h-6 w-6" />
+                              </div>
+                              <div>
+                                <h3 className="text-lg font-medium mb-1">{attractions[index].name}</h3>
+                                <p className="text-gray-600 text-sm mb-2">{attractions[index].description}</p>
+                                <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
+                                  {attractions[index].type}
+                                </span>
+                              </div>
                             </div>
-                            <div>
-                              <h3 className="text-lg font-medium mb-1">{attraction.name}</h3>
-                              <p className="text-gray-600 text-sm mb-2">{attraction.description}</p>
-                              <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
-                                {attraction.type}
-                              </span>
-                            </div>
-                          </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     </CardContent>
                   </Card>
@@ -214,20 +229,29 @@ const DestinationDetails = () => {
                   <Card>
                     <CardContent className="p-6">
                       <div className="space-y-6">
-                        {destinationData.restaurants.map((restaurant, index) => (
-                          <div key={index} className="flex gap-4">
-                            <div className="h-12 w-12 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center shrink-0">
-                              <Utensils className="h-6 w-6" />
+                        {/* Generate mock restaurants based on the destination */}
+                        {Array.from({ length: 3 }).map((_, index) => {
+                          const locationName = destination.name.split(',')[0];
+                          const restaurants = [
+                            {name: `Authentic ${locationName} Kitchen`, description: "Traditional cuisine in a warm atmosphere", type: "Local"},
+                            {name: `${locationName} Bistro`, description: "Modern takes on classic dishes", type: "Fusion"},
+                            {name: `The ${locationName} Terrace`, description: "Outdoor dining with stunning views", type: "Fine Dining"}
+                          ];
+                          return (
+                            <div key={index} className="flex gap-4">
+                              <div className="h-12 w-12 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center shrink-0">
+                                <Utensils className="h-6 w-6" />
+                              </div>
+                              <div>
+                                <h3 className="text-lg font-medium mb-1">{restaurants[index].name}</h3>
+                                <p className="text-gray-600 text-sm mb-2">{restaurants[index].description}</p>
+                                <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
+                                  {restaurants[index].type}
+                                </span>
+                              </div>
                             </div>
-                            <div>
-                              <h3 className="text-lg font-medium mb-1">{restaurant.name}</h3>
-                              <p className="text-gray-600 text-sm mb-2">{restaurant.description}</p>
-                              <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
-                                {restaurant.type}
-                              </span>
-                            </div>
-                          </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     </CardContent>
                   </Card>
@@ -237,20 +261,29 @@ const DestinationDetails = () => {
                   <Card>
                     <CardContent className="p-6">
                       <div className="space-y-6">
-                        {destinationData.accommodations.map((accommodation, index) => (
-                          <div key={index} className="flex gap-4">
-                            <div className="h-12 w-12 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0">
-                              <Hotel className="h-6 w-6" />
+                        {/* Generate mock accommodations based on the destination */}
+                        {Array.from({ length: 3 }).map((_, index) => {
+                          const locationName = destination.name.split(',')[0];
+                          const accommodations = [
+                            {name: `${locationName} Grand Hotel`, description: "Luxury hotel in the heart of the city", type: "Luxury"},
+                            {name: `${locationName} Boutique Inn`, description: "Charming boutique accommodation with character", type: "Boutique"},
+                            {name: `${locationName} Apartments`, description: "Self-catering apartments for an authentic local experience", type: "Apartment"}
+                          ];
+                          return (
+                            <div key={index} className="flex gap-4">
+                              <div className="h-12 w-12 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0">
+                                <Hotel className="h-6 w-6" />
+                              </div>
+                              <div>
+                                <h3 className="text-lg font-medium mb-1">{accommodations[index].name}</h3>
+                                <p className="text-gray-600 text-sm mb-2">{accommodations[index].description}</p>
+                                <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
+                                  {accommodations[index].type}
+                                </span>
+                              </div>
                             </div>
-                            <div>
-                              <h3 className="text-lg font-medium mb-1">{accommodation.name}</h3>
-                              <p className="text-gray-600 text-sm mb-2">{accommodation.description}</p>
-                              <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
-                                {accommodation.type}
-                              </span>
-                            </div>
-                          </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     </CardContent>
                   </Card>
@@ -269,25 +302,25 @@ const DestinationDetails = () => {
                         <DollarSign className="h-4 w-4" />
                         <span>Flight</span>
                       </div>
-                      <span className="font-medium">{destinationData.budget.flightCost}</span>
+                      <span className="font-medium">${Math.floor(Math.random() * 800) + 400}-${Math.floor(Math.random() * 600) + 1000}</span>
                     </div>
                     <div className="flex justify-between items-center pb-2 border-b border-gray-100">
                       <div className="flex items-center gap-2 text-gray-600">
                         <Hotel className="h-4 w-4" />
                         <span>Accommodation</span>
                       </div>
-                      <span className="font-medium">{destinationData.budget.accommodation}</span>
+                      <span className="font-medium">${Math.floor(Math.random() * 120) + 80}-${Math.floor(Math.random() * 150) + 150} per night</span>
                     </div>
                     <div className="flex justify-between items-center pb-2 border-b border-gray-100">
                       <div className="flex items-center gap-2 text-gray-600">
                         <Utensils className="h-4 w-4" />
                         <span>Daily Expenses</span>
                       </div>
-                      <span className="font-medium">{destinationData.budget.dailyExpenses}</span>
+                      <span className="font-medium">${Math.floor(Math.random() * 50) + 50}-${Math.floor(Math.random() * 50) + 100} per day</span>
                     </div>
                     <div className="flex justify-between items-center pt-2 font-semibold">
                       <span>Estimated Total (7 days)</span>
-                      <span className="text-green-600">{destinationData.budget.averageTotal}</span>
+                      <span className="text-green-600">${Math.floor(Math.random() * 1000) + 1500}-${Math.floor(Math.random() * 1500) + 2500}</span>
                     </div>
                   </div>
                 </CardContent>
@@ -301,21 +334,33 @@ const DestinationDetails = () => {
                       <Thermometer className="h-5 w-5 text-orange-500" />
                       <div>
                         <p className="text-sm text-gray-500">Current Weather</p>
-                        <p className="font-medium">{destinationData.weather.current}</p>
+                        <p className="font-medium">
+                          {['Sunny', 'Partly Cloudy', 'Clear', 'Rainy', 'Overcast'][Math.floor(Math.random() * 5)]}, 
+                          {Math.floor(Math.random() * 25) + 5}°C
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
                       <Calendar className="h-5 w-5 text-blue-500" />
                       <div>
                         <p className="text-sm text-gray-500">Best Time to Visit</p>
-                        <p className="font-medium">{destinationData.weather.bestTime}</p>
+                        <p className="font-medium">
+                          {(['January-March', 'April-June', 'June-August', 'September-November', 'All year round'][Math.floor(Math.random() * 5)])}
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
                       <Clock className="h-5 w-5 text-purple-500" />
                       <div>
                         <p className="text-sm text-gray-500">Seasons</p>
-                        <p className="font-medium">{destinationData.weather.seasons}</p>
+                        <p className="font-medium">
+                          {destination.tags.includes('Beach') 
+                            ? 'Hot summers and mild winters, perfect for beach activities'
+                            : destination.tags.includes('Urban')
+                              ? 'Four distinct seasons with vibrant city life year-round'
+                              : 'Varied weather throughout the year with scenic natural beauty'
+                          }
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -326,7 +371,14 @@ const DestinationDetails = () => {
                 <CardContent className="p-6">
                   <h3 className="text-lg font-semibold mb-4">Cultural Tips</h3>
                   <ul className="space-y-2">
-                    {destinationData.culturalTips.map((tip, index) => (
+                    {/* Generate cultural tips based on tags and region */}
+                    {[
+                      `Learn basic phrases in ${destination.name.includes('Japan') ? 'Japanese' : destination.name.includes('France') ? 'French' : destination.name.includes('Italy') ? 'Italian' : 'the local language'}`,
+                      `${destination.tags.includes('Beach') ? 'Respect beach etiquette and environmental rules' : 'Respect local customs and traditions'}`,
+                      `${destination.tags.includes('Urban') ? 'Public transportation is the best way to get around' : 'Consider renting a car to explore the surrounding areas'}`,
+                      `${destination.tags.includes('Historical') ? 'Many historical sites require modest dress' : 'Dress appropriately for the local weather and customs'}`,
+                      `Always carry some local currency for small purchases and tips`
+                    ].map((tip, index) => (
                       <li key={index} className="flex items-start gap-2">
                         <Globe className="h-5 w-5 text-blue-500 shrink-0 mt-0.5" />
                         <span className="text-gray-600">{tip}</span>
@@ -350,3 +402,4 @@ const DestinationDetails = () => {
 };
 
 export default DestinationDetails;
+
