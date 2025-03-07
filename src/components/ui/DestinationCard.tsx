@@ -1,9 +1,10 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MapPin, Star, ArrowRight } from "lucide-react";
+import { MapPin, Star, ArrowRight, ImageOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Destination } from "@/types/destination";
+import { useState } from "react";
 
 interface DestinationCardProps {
   destination: Destination;
@@ -11,20 +12,36 @@ interface DestinationCardProps {
 
 const DestinationCard = ({ destination }: DestinationCardProps) => {
   const navigate = useNavigate();
+  const [imageError, setImageError] = useState(false);
   
   const handleExplore = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent the parent onClick from firing
     navigate(`/destination/${destination.id}`);
   };
+
+  const handleImageError = () => {
+    setImageError(true);
+    console.log(`Image failed to load for ${destination.name}`);
+  };
   
   return (
     <Card className="overflow-hidden group hover:shadow-md transition-all">
       <div className="relative h-48 overflow-hidden">
-        <img 
-          src={destination.imageUrl} 
-          alt={destination.name}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-        />
+        {!imageError ? (
+          <img 
+            src={destination.imageUrl} 
+            alt={destination.name}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            onError={handleImageError}
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-gray-100">
+            <div className="text-center">
+              <ImageOff className="h-10 w-10 text-gray-400 mx-auto mb-2" />
+              <span className="text-sm text-gray-500">{destination.name}</span>
+            </div>
+          </div>
+        )}
         <div className="absolute top-3 right-3 bg-white rounded-full py-1 px-2 flex items-center gap-1 shadow-sm">
           <Star className="h-3 w-3 text-yellow-500 fill-yellow-500" />
           <span className="text-xs font-medium">{destination.score}%</span>
