@@ -1,4 +1,4 @@
-<lov-code>
+
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
@@ -52,7 +52,7 @@ const STATIC_FALLBACK_IMAGES = {
   ]
 };
 
-// Default fallback image for any destination not in the static map
+// Default fallback images for any destination not in the static map
 const DEFAULT_FALLBACK_IMAGES = [
   "https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1035&q=80",
   "https://images.unsplash.com/photo-1533105079780-92b9be482077?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1035&q=80",
@@ -493,4 +493,210 @@ const DestinationDetails = () => {
                               {name: `${locationName} Cathedral`, description: "Historic cathedral with stunning architecture", type: "Historical"},
                               {name: `${locationName} Museum`, description: "World-class museum with extensive collections", type: "Cultural"},
                               {name: `${locationName} Park`, description: "Beautiful urban park perfect for relaxation", type: "Nature"},
-                              {name: `${locationName} Market`, description: "
+                              {name: `${locationName} Market`, description: "Traditional market with local products and crafts", type: "Shopping"},
+                              {name: `${locationName} Tower`, description: "Iconic tower with panoramic city views", type: "Landmark"}
+                            ];
+                            
+                            return (
+                              <div key={index} className="flex gap-4">
+                                <div className="h-12 w-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
+                                  <Camera className="h-6 w-6" />
+                                </div>
+                                <div>
+                                  <h3 className="text-lg font-medium mb-1">{attractions[index % attractions.length].name}</h3>
+                                  <p className="text-gray-600 text-sm mb-2">{attractions[index % attractions.length].description}</p>
+                                  <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
+                                    {attractions[index % attractions.length].type}
+                                  </span>
+                                </div>
+                              </div>
+                            );
+                          })
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+                
+                <TabsContent value="restaurants" className="mt-0">
+                  <Card>
+                    <CardContent className="p-6">
+                      <div className="space-y-6">
+                        {Array.from({ length: 4 }).map((_, index) => {
+                          const locationName = destination?.name.split(',')[0] || "";
+                          const restaurants = [
+                            {name: `Authentic ${locationName} Cuisine`, description: "Traditional local dishes in a cozy atmosphere", type: "Local"},
+                            {name: `${locationName} Fine Dining`, description: "Upscale restaurant with gourmet specialties", type: "Fine Dining"},
+                            {name: `${locationName} Street Food`, description: "Casual spot with delicious street food options", type: "Casual"},
+                            {name: `${locationName} Café`, description: "Charming café with coffee and pastries", type: "Café"}
+                          ];
+                          
+                          return (
+                            <div key={index} className="flex gap-4">
+                              <div className="h-12 w-12 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center shrink-0">
+                                <Utensils className="h-6 w-6" />
+                              </div>
+                              <div>
+                                <h3 className="text-lg font-medium mb-1">{restaurants[index % restaurants.length].name}</h3>
+                                <p className="text-gray-600 text-sm mb-2">{restaurants[index % restaurants.length].description}</p>
+                                <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
+                                  {restaurants[index % restaurants.length].type}
+                                </span>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+                
+                <TabsContent value="accommodations" className="mt-0">
+                  <Card>
+                    <CardContent className="p-6">
+                      <div className="space-y-6">
+                        {Array.from({ length: 3 }).map((_, index) => {
+                          const locationName = destination?.name.split(',')[0] || "";
+                          const accommodations = [
+                            {name: `${locationName} Luxury Hotel`, description: "5-star hotel with exceptional amenities", type: "Luxury"},
+                            {name: `${locationName} Boutique Inn`, description: "Charming boutique accommodation with unique character", type: "Boutique"},
+                            {name: `${locationName} Budget Hostel`, description: "Affordable option for budget-conscious travelers", type: "Budget"}
+                          ];
+                          
+                          return (
+                            <div key={index} className="flex gap-4">
+                              <div className="h-12 w-12 rounded-full bg-green-100 text-green-600 flex items-center justify-center shrink-0">
+                                <Hotel className="h-6 w-6" />
+                              </div>
+                              <div>
+                                <h3 className="text-lg font-medium mb-1">{accommodations[index].name}</h3>
+                                <p className="text-gray-600 text-sm mb-2">{accommodations[index].description}</p>
+                                <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
+                                  {accommodations[index].type}
+                                </span>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+              </Tabs>
+            </div>
+            
+            {/* Sidebar */}
+            <div className="space-y-6">
+              <Card>
+                <CardContent className="p-6">
+                  <h3 className="text-lg font-semibold mb-4">Travel Information</h3>
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-3">
+                      <Globe className="h-5 w-5 text-blue-500 mt-0.5" />
+                      <div>
+                        <h4 className="font-medium">Local Language</h4>
+                        <p className="text-sm text-gray-600">
+                          {destination.name.includes('Japan') ? 'Japanese' : 
+                            destination.name.includes('Italy') ? 'Italian' :
+                            destination.name.includes('Greece') ? 'Greek' :
+                            destination.name.includes('Peru') ? 'Spanish' :
+                            destination.name.includes('Netherlands') ? 'Dutch' :
+                            destination.name.includes('Czech') ? 'Czech' :
+                            'Local language'}
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <Clock className="h-5 w-5 text-blue-500 mt-0.5" />
+                      <div>
+                        <h4 className="font-medium">Best Time to Visit</h4>
+                        <p className="text-sm text-gray-600">
+                          {destination.name.includes('Japan') ? 'Spring (March-May) and Fall (September-November)' : 
+                            destination.name.includes('Greece') ? 'Late spring to early fall (May-September)' :
+                            destination.name.includes('Peru') ? 'Dry season (May-October)' :
+                            destination.name.includes('Italy') ? 'Spring (April-June) and Fall (September-October)' :
+                            destination.name.includes('Netherlands') ? 'Spring (April-May) for tulips, Summer for festivals' :
+                            destination.name.includes('Czech') ? 'Spring and early Fall (May-June, September-October)' :
+                            'Spring or Fall for mild weather'}
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <DollarSign className="h-5 w-5 text-blue-500 mt-0.5" />
+                      <div>
+                        <h4 className="font-medium">Currency</h4>
+                        <p className="text-sm text-gray-600">
+                          {destination.name.includes('Japan') ? 'Japanese Yen (JPY)' : 
+                            destination.name.includes('Italy') || destination.name.includes('Greece') || destination.name.includes('Netherlands') ? 'Euro (EUR)' :
+                            destination.name.includes('Peru') ? 'Peruvian Sol (PEN)' :
+                            destination.name.includes('Czech') ? 'Czech Koruna (CZK)' :
+                            'Local currency'}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardContent className="p-6">
+                  <h3 className="text-lg font-semibold mb-4">Travel Tips</h3>
+                  <ul className="space-y-3 text-sm">
+                    <li className="flex items-start gap-2">
+                      <div className="h-5 w-5 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0 mt-0.5">
+                        <span className="text-xs">1</span>
+                      </div>
+                      <p>
+                        {destination.name.includes('Japan') ? 'Respect local customs and remove shoes when entering homes or certain establishments.' : 
+                          destination.name.includes('Greece') ? 'Wear comfortable shoes for walking on cobblestone streets and archaeological sites.' :
+                          destination.name.includes('Peru') ? 'Acclimate to the altitude gradually if visiting Machu Picchu.' :
+                          destination.name.includes('Italy') ? 'Many attractions require covered shoulders and knees for entry.' :
+                          destination.name.includes('Netherlands') ? 'Bike rentals are the best way to explore like a local.' :
+                          destination.name.includes('Czech') ? 'Exchange money at banks for better rates than street vendors.' :
+                          'Research local customs before your trip.'}
+                      </p>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <div className="h-5 w-5 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0 mt-0.5">
+                        <span className="text-xs">2</span>
+                      </div>
+                      <p>
+                        {destination.name.includes('Japan') ? 'Purchase a rail pass if you plan to travel between cities.' : 
+                          destination.name.includes('Greece') ? 'Ferry schedules between islands can change frequently - confirm before travel.' :
+                          destination.name.includes('Peru') ? 'Book Machu Picchu tickets well in advance as they limit daily visitors.' :
+                          destination.name.includes('Italy') ? 'Make restaurant reservations to avoid long waits during peak seasons.' :
+                          destination.name.includes('Netherlands') ? 'Purchase museum passes if you plan to visit multiple attractions.' :
+                          destination.name.includes('Czech') ? 'Public transportation is excellent and inexpensive - get a transit pass.' :
+                          'Check if you need any special permits for attractions.'}
+                      </p>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <div className="h-5 w-5 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0 mt-0.5">
+                        <span className="text-xs">3</span>
+                      </div>
+                      <p>
+                        {destination.name.includes('Japan') ? 'Tipping is not customary and may even be considered rude.' : 
+                          destination.name.includes('Greece') ? 'Sunscreen is essential even during shoulder seasons.' :
+                          destination.name.includes('Peru') ? 'Keep valuables secure and be aware of your surroundings in crowded areas.' :
+                          destination.name.includes('Italy') ? 'Water fountains throughout cities provide safe drinking water.' :
+                          destination.name.includes('Netherlands') ? 'Be careful taking photos of the Red Light District.' :
+                          destination.name.includes('Czech') ? 'Tipping 10% is customary for good service in restaurants.' :
+                          'Learn a few basic phrases in the local language.'}
+                      </p>
+                    </li>
+                  </ul>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </main>
+      
+      <Footer />
+    </div>
+  );
+};
+
+export default DestinationDetails;
