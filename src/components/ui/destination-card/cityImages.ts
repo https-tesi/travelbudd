@@ -55,9 +55,9 @@ export const citySpecificImages: Record<string, string[]> = {
     "https://images.unsplash.com/photo-1595846406905-33e428b5d4ed?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"  // Milan cityscape
   ],
   "Naples": [
-    "https://images.unsplash.com/photo-1669558420456-cca1e076b2b4?q=80&w=1470&auto=format&fit=crop", // Naples panoramic view with Vesuvius
-    "https://images.unsplash.com/photo-1669558420328-9ca434b32068?q=80&w=1470&auto=format&fit=crop", // Naples seaside promenade
-    "https://images.unsplash.com/photo-1599828196935-513f6887f8fb?q=80&w=1470&auto=format&fit=crop"  // Naples street view with Vesuvius
+    "https://images.unsplash.com/photo-1472396961693-142e6e269027?q=80&w=1470&auto=format&fit=crop", // Naples cityscape
+    "https://images.unsplash.com/photo-1466721591366-2d5fba72006d?q=80&w=1470&auto=format&fit=crop", // Naples coastal view
+    "https://images.unsplash.com/photo-1493962853295-0fd70327578a?q=80&w=1470&auto=format&fit=crop"  // Naples street scene
   ],
   "Palermo": [
     "https://images.unsplash.com/photo-1523365280197-f1783db9bbf7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80", // Palermo Cathedral
