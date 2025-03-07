@@ -13,4 +13,15 @@ export interface Destination {
     description: string;
     type: string;
   }[];
+  restaurants?: {
+    name: string;
+    description: string;
+    type: string;
+    cuisine?: string;
+  }[];
+  accommodations?: {
+    name: string;
+    description: string;
+    type: string;
+  }[];
 }
