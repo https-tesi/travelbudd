@@ -1,4 +1,3 @@
-
 import { Destination } from "@/types/destination";
 
 export const americasDestinations: Destination[] = [
@@ -79,6 +78,86 @@ export const americasDestinations: Destination[] = [
         name: "Times Square",
         description: "Bustling intersection known for its billboards and theaters",
         type: "Entertainment"
+      }
+    ]
+  },
+  {
+    id: 18,
+    name: "Rio de Janeiro, Brazil",
+    description: "Vibrant coastal city known for its beaches, mountains, and lively carnival celebrations.",
+    imageUrl: "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?q=80&w=1470&auto=format&fit=crop",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1591468069248-2dd5e9368494?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80",
+      "https://images.unsplash.com/photo-1564659907532-6b5f98c8e70f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80",
+      "https://images.unsplash.com/photo-1554168848-228452c09d60?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+    ],
+    score: 93,
+    tags: ["Beach", "Cultural", "Scenic"],
+    attractions: [
+      {
+        name: "Christ the Redeemer",
+        description: "Iconic Art Deco statue atop Corcovado Mountain",
+        type: "Landmark"
+      },
+      {
+        name: "Copacabana Beach",
+        description: "Famous beach with a distinctive wave-pattern promenade",
+        type: "Beach"
+      },
+      {
+        name: "Sugarloaf Mountain",
+        description: "Peak reached by cable car with panoramic city views",
+        type: "Natural"
+      },
+      {
+        name: "Tijuca National Park",
+        description: "Urban rainforest with hiking trails and waterfalls",
+        type: "Nature"
+      },
+      {
+        name: "Maracanã Stadium",
+        description: "Legendary football stadium that has hosted World Cup finals",
+        type: "Sports"
+      }
+    ]
+  },
+  {
+    id: 19,
+    name: "Mexico City, Mexico",
+    description: "Sprawling capital with ancient Aztec ruins, colonial architecture, and vibrant contemporary culture.",
+    imageUrl: "https://images.unsplash.com/photo-1518659526054-190340b15735?q=80&w=1470&auto=format&fit=crop",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1585464231875-d9ef1f5ad396?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1629227071576-e58d921c62b4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1594152862028-7bb73d5a9af3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+    ],
+    score: 92,
+    tags: ["Historical", "Cultural", "Food"],
+    attractions: [
+      {
+        name: "National Museum of Anthropology",
+        description: "Premier museum of pre-Columbian Mesoamerican artifacts",
+        type: "Museum"
+      },
+      {
+        name: "Zócalo (Plaza de la Constitución)",
+        description: "Main square in the historic center of the city",
+        type: "Cultural"
+      },
+      {
+        name: "Frida Kahlo Museum",
+        description: "Historic house where the famous artist lived",
+        type: "Museum"
+      },
+      {
+        name: "Chapultepec Castle",
+        description: "Historic castle on a hill with panoramic city views",
+        type: "Historical"
+      },
+      {
+        name: "Templo Mayor",
+        description: "Archaeological site of Aztec temple in downtown",
+        type: "Historical"
       }
     ]
   }

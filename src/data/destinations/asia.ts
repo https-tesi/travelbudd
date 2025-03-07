@@ -1,4 +1,3 @@
-
 import { Destination } from "@/types/destination";
 
 export const asiaDestinations: Destination[] = [
@@ -119,6 +118,86 @@ export const asiaDestinations: Destination[] = [
         name: "Tsukiji Outer Market",
         description: "Famous market with fresh seafood and food stalls",
         type: "Food"
+      }
+    ]
+  },
+  {
+    id: 16,
+    name: "Istanbul, Turkey",
+    description: "Transcontinental city straddling Europe and Asia with rich Byzantine and Ottoman heritage.",
+    imageUrl: "https://images.unsplash.com/photo-1602137968838-8bbd25b13511?q=80&w=1470&auto=format&fit=crop",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1589561454226-796a8aa89b05?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1636111805795-3992cfd9a094?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1638376776402-9a4b75fe21bb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+    ],
+    score: 94,
+    tags: ["Historical", "Cultural", "Food"],
+    attractions: [
+      {
+        name: "Hagia Sophia",
+        description: "Iconic Byzantine church turned museum turned mosque",
+        type: "Historical"
+      },
+      {
+        name: "Blue Mosque",
+        description: "Historic mosque known for its blue tile interior",
+        type: "Religious"
+      },
+      {
+        name: "Grand Bazaar",
+        description: "One of the world's oldest and largest covered markets",
+        type: "Shopping"
+      },
+      {
+        name: "Topkapi Palace",
+        description: "Former residence of Ottoman sultans with important historical artifacts",
+        type: "Historical"
+      },
+      {
+        name: "Bosphorus Strait",
+        description: "Waterway connecting Europe and Asia with scenic cruises",
+        type: "Scenic"
+      }
+    ]
+  },
+  {
+    id: 17,
+    name: "Bangkok, Thailand",
+    description: "Vibrant capital with ornate temples, floating markets, and world-renowned street food.",
+    imageUrl: "https://images.unsplash.com/photo-1563492065599-3520f775eeed?q=80&w=1470&auto=format&fit=crop",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1508009603885-50cf7c8dd0d5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1596422846543-75c6fc197f11?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80",
+      "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1439&q=80"
+    ],
+    score: 93,
+    tags: ["Cultural", "Food", "Shopping"],
+    attractions: [
+      {
+        name: "Grand Palace",
+        description: "Former royal residence with ornate architectural details",
+        type: "Historical"
+      },
+      {
+        name: "Wat Arun",
+        description: "Temple of Dawn on the Chao Phraya River with distinctive spires",
+        type: "Religious"
+      },
+      {
+        name: "Chatuchak Weekend Market",
+        description: "Massive weekend market with thousands of vendors",
+        type: "Shopping"
+      },
+      {
+        name: "Chinatown (Yaowarat)",
+        description: "Bustling district known for exceptional street food",
+        type: "Food"
+      },
+      {
+        name: "Jim Thompson House",
+        description: "Museum in the former home of American businessman",
+        type: "Cultural"
       }
     ]
   }

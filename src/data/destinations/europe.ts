@@ -1,4 +1,3 @@
-
 import { Destination } from "@/types/destination";
 
 export const europeDestinations: Destination[] = [
@@ -279,6 +278,46 @@ export const europeDestinations: Destination[] = [
         name: "The Shard",
         description: "Tallest building in the UK with viewing gallery",
         type: "Landmark"
+      }
+    ]
+  },
+  {
+    id: 20,
+    name: "Prague, Czech Republic",
+    description: "Fairy-tale city with medieval architecture, charming bridges, and rich cultural heritage.",
+    imageUrl: "https://images.unsplash.com/photo-1592906209472-a36b1f3782ef?q=80&w=1470&auto=format&fit=crop",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1541849546-216549ae216d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1458150945447-7fb764c11a92?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1519677100203-a0e668c92439?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+    ],
+    score: 93,
+    tags: ["Historical", "Cultural", "Scenic"],
+    attractions: [
+      {
+        name: "Prague Castle",
+        description: "Largest ancient castle complex in the world",
+        type: "Historical"
+      },
+      {
+        name: "Charles Bridge",
+        description: "Historic bridge lined with statues crossing the Vltava River",
+        type: "Landmark"
+      },
+      {
+        name: "Old Town Square",
+        description: "Historic square with the Astronomical Clock and Gothic churches",
+        type: "Cultural"
+      },
+      {
+        name: "St. Vitus Cathedral",
+        description: "Gothic cathedral within Prague Castle complex",
+        type: "Religious"
+      },
+      {
+        name: "Jewish Quarter (Josefov)",
+        description: "Historic Jewish quarter with several synagogues and cemetery",
+        type: "Cultural"
       }
     ]
   }
