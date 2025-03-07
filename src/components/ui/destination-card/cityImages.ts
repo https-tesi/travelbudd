@@ -15,7 +15,7 @@ export const citySpecificImages: Record<string, string[]> = {
   
   // Belgium
   "Brussels": [
-    "https://images.unsplash.com/photo-1581112293329-d55c874527e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+    "https://images.unsplash.com/photo-1559113513-d5e09c78b9dd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
     "https://images.unsplash.com/photo-1587110876426-4432f5088405?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
     "https://images.unsplash.com/photo-1559113202-7ea0a3c6a06a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
   ],

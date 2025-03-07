@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { ImageOff, Star, Heart } from "lucide-react";
 import { toast } from "sonner";
