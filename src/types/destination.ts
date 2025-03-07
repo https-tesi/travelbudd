@@ -8,6 +8,7 @@ export interface Destination {
   score: number;
   tags: string[];
   averageTemp?: number;
+  costEstimate?: string;
   attractions: {
     name: string;
     description: string;

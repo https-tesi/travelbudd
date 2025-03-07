@@ -14,6 +14,8 @@ export const oceaniaDestinations: Destination[] = [
     ],
     score: 95,
     tags: ["Beach", "Urban", "Scenic"],
+    averageTemp: 22,
+    costEstimate: "$1800-$3200",
     attractions: [
       {
         name: "Sydney Opera House",

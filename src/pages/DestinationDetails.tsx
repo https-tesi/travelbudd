@@ -133,6 +133,38 @@ const getDestinationInfo = (destinationName: string) => {
   };
 };
 
+const COST_ESTIMATES = {
+  "Kyoto, Japan": "$1500-$2800",
+  "Tokyo, Japan": "$1600-$3000",
+  "Paris, France": "$1400-$2600",
+  "Rome, Italy": "$1300-$2500", 
+  "Venice, Italy": "$1400-$2700",
+  "Florence, Italy": "$1200-$2400",
+  "Barcelona, Spain": "$1200-$2300",
+  "Santorini, Greece": "$1300-$2600",
+  "New York City, USA": "$1800-$3200",
+  "London, UK": "$1500-$3000",
+  "Amsterdam, Netherlands": "$1400-$2700",
+  "Prague, Czech Republic": "$1000-$2100",
+  "Vienna, Austria": "$1200-$2500",
+  "Dubrovnik, Croatia": "$1100-$2300",
+  "Istanbul, Turkey": "$900-$1900",
+  "Bangkok, Thailand": "$900-$1800",
+  "Bali, Indonesia": "$1000-$2000",
+  "Sydney, Australia": "$1800-$3200",
+  "Cape Town, South Africa": "$1200-$2400",
+  "Marrakech, Morocco": "$900-$1800",
+  "Rio de Janeiro, Brazil": "$1300-$2500",
+  "Machu Picchu, Peru": "$1400-$2700",
+  "Mexico City, Mexico": "$900-$1800",
+  "Dubai, UAE": "$1600-$3000",
+  "Maldives": "$2500-$5000"
+};
+
+const getDestinationCost = (destinationName: string): string => {
+  return COST_ESTIMATES[destinationName as keyof typeof COST_ESTIMATES] || "$1000-$2500";
+};
+
 const DestinationDetails = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -148,6 +180,7 @@ const DestinationDetails = () => {
   const [imageError, setImageError] = useState(false);
   const [failedImageIndexes, setFailedImageIndexes] = useState<Set<number>>(new Set());
   const [destinationTemp, setDestinationTemp] = useState<number | undefined>(undefined);
+  const [costEstimate, setCostEstimate] = useState<string | undefined>(undefined);
   
   const getDestinationFallbackImages = (destinationName: string): string[] => {
     for (const [key, images] of Object.entries(STATIC_FALLBACK_IMAGES)) {
@@ -201,6 +234,7 @@ const DestinationDetails = () => {
       const images = generateGalleryImages(foundDestination);
       setGalleryImages(images);
       setActiveImage(foundDestination.imageUrl || images[0]);
+      setCostEstimate(foundDestination.costEstimate || getDestinationCost(foundDestination.name));
     }
     
     setLoading(false);
@@ -346,481 +380,4 @@ const DestinationDetails = () => {
                   <Thermometer className="h-4 w-4" />
                   <span>Weather: {destinationTemp}°C</span>
                 </div>
-                <div className="flex items-center gap-1 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">
-                  <Calendar className="h-4 w-4" />
-                  <span>Best: {['Spring', 'Summer', 'Fall', 'Winter'][Math.floor(Math.random() * 4)]}</span>
-                </div>
-                <div className="flex items-center gap-1 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">
-                  <DollarSign className="h-4 w-4" />
-                  <span>~${Math.floor(Math.random() * 1500) + 1000}-${Math.floor(Math.random() * 2000) + 2000}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div className="container mx-auto px-4 -mt-6 md:-mt-10 relative z-10">
-          {galleryImages.length > 0 && (
-            <div className="flex gap-2 overflow-x-auto pb-4 md:pb-6 px-2 md:px-0">
-              <div 
-                className={`h-16 md:h-20 aspect-video rounded-lg overflow-hidden cursor-pointer border-2 ${activeImage === destination.imageUrl ? 'border-primary' : 'border-transparent'}`}
-                onClick={() => setActiveImage(destination.imageUrl)}
-              >
-                <img 
-                  src={destination.imageUrl}
-                  alt={`Main image of ${destination.name}`} 
-                  className="w-full h-full object-cover"
-                  onError={() => handleImageError(0)}
-                />
-              </div>
-              
-              {galleryImages.map((imageUrl, index) => (
-                <div 
-                  key={index}
-                  className={`h-16 md:h-20 aspect-video rounded-lg overflow-hidden cursor-pointer border-2 ${activeImage === imageUrl ? 'border-primary' : 'border-transparent'}`}
-                  onClick={() => setActiveImage(imageUrl)}
-                >
-                  <img 
-                    src={imageUrl}
-                    alt={`Gallery image of ${destination.name}`} 
-                    className="w-full h-full object-cover"
-                    onError={() => handleImageError(index)}
-                  />
-                </div>
-              ))}
-              
-              {imageError && galleryImages.length < 1 && (
-                <div className="flex flex-col items-center justify-center h-16 md:h-20 aspect-video bg-gray-100 rounded-lg">
-                  <ImageOff className="h-6 w-6 text-gray-400" />
-                  <span className="text-xs text-gray-500 mt-1">No images</span>
-                </div>
-              )}
-            </div>
-          )}
-          
-          <Card className="mb-6">
-            <CardContent className="p-4">
-              <div className="flex justify-between items-center mb-3">
-                <h3 className="text-lg font-semibold flex items-center">
-                  <Plane className="h-5 w-5 mr-2 text-blue-500" />
-                  Find Flights to {destination.name.split(',')[0]}
-                </h3>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setShowFlightSearch(!showFlightSearch)}
-                >
-                  {showFlightSearch ? "Hide" : "Show"}
-                </Button>
-              </div>
-
-              {showFlightSearch && (
-                <form onSubmit={handleFlightSearch} className="mt-4">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="space-y-1">
-                      <label htmlFor="departure" className="text-sm font-medium text-gray-700">From</label>
-                      <Input 
-                        id="departure"
-                        value={nearestAirport || ""}
-                        className="bg-gray-50"
-                        placeholder="Departure airport"
-                        disabled
-                      />
-                      {userLocation && (
-                        <p className="text-xs text-gray-500 mt-1">Based on your location: {userLocation}</p>
-                      )}
-                    </div>
-                    
-                    <div className="space-y-1">
-                      <label htmlFor="departureDate" className="text-sm font-medium text-gray-700">Departure</label>
-                      <Input 
-                        id="departureDate"
-                        type="date"
-                        value={departureDate}
-                        onChange={(e) => setDepartureDate(e.target.value)}
-                        min={new Date().toISOString().split('T')[0]}
-                        required
-                      />
-                    </div>
-                    
-                    <div className="space-y-1">
-                      <label htmlFor="returnDate" className="text-sm font-medium text-gray-700">Return (optional)</label>
-                      <Input 
-                        id="returnDate"
-                        type="date"
-                        value={returnDate}
-                        onChange={(e) => setReturnDate(e.target.value)}
-                        min={departureDate || new Date().toISOString().split('T')[0]}
-                      />
-                    </div>
-                  </div>
-                  
-                  <Button type="submit" className="mt-4 w-full">
-                    <Plane className="h-4 w-4 mr-2" /> Find Flights to {destination.name.split(',')[0]}
-                  </Button>
-                </form>
-              )}
-            </CardContent>
-          </Card>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
-            <div className="lg:col-span-2 space-y-6">
-              <Card>
-                <CardContent className="p-6">
-                  <div className="flex justify-between items-start mb-4">
-                    <h2 className="text-2xl font-bold">About {destination.name}</h2>
-                    <div className="flex gap-2">
-                      <Button variant="outline" size="sm" className="h-9 w-9 p-0">
-                        <Bookmark className="h-5 w-5" />
-                      </Button>
-                      <Button variant="outline" size="sm" className="h-9 w-9 p-0">
-                        <Share className="h-5 w-5" />
-                      </Button>
-                    </div>
-                  </div>
-                  <p className="text-gray-600 mb-6">
-                    {destination.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2 mb-2">
-                    {destination.tags.map((tag, index) => (
-                      <span 
-                        key={index} 
-                        className="text-sm bg-blue-50 text-blue-600 px-3 py-1 rounded-full"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-              
-              <Tabs defaultValue="attractions">
-                <TabsList className="w-full justify-start bg-transparent border-b rounded-none h-auto p-0 mb-6">
-                  <TabsTrigger 
-                    value="attractions" 
-                    className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary px-6 py-3"
-                  >
-                    Attractions
-                  </TabsTrigger>
-                  <TabsTrigger 
-                    value="restaurants" 
-                    className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary px-6 py-3"
-                  >
-                    Restaurants
-                  </TabsTrigger>
-                  <TabsTrigger 
-                    value="accommodations" 
-                    className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary px-6 py-3"
-                  >
-                    Accommodations
-                  </TabsTrigger>
-                </TabsList>
-                
-                <TabsContent value="attractions" className="mt-0">
-                  <Card>
-                    <CardContent className="p-6">
-                      <div className="space-y-6">
-                        {destination?.attractions ? (
-                          destination.attractions.map((attraction, index) => (
-                            <div key={index} className="flex gap-4">
-                              <div className="h-12 w-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
-                                <Camera className="h-6 w-6" />
-                              </div>
-                              <div>
-                                <h3 className="text-lg font-medium mb-1">{attraction.name}</h3>
-                                <p className="text-gray-600 text-sm mb-2">{attraction.description}</p>
-                                <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
-                                  {attraction.type}
-                                </span>
-                              </div>
-                            </div>
-                          ))
-                        ) : (
-                          Array.from({ length: 5 }).map((_, index) => {
-                            const locationName = destination?.name.split(',')[0] || "";
-                            const attractions = [
-                              {name: `${locationName} Cathedral`, description: "Historic cathedral with stunning architecture", type: "Historical"},
-                              {name: `${locationName} Museum`, description: "World-class museum with extensive collections", type: "Cultural"},
-                              {name: `${locationName} Park`, description: "Beautiful urban park perfect for relaxation", type: "Nature"},
-                              {name: `${locationName} Market`, description: "Traditional market with local products and crafts", type: "Shopping"},
-                              {name: `${locationName} Tower`, description: "Iconic tower with panoramic city views", type: "Landmark"}
-                            ];
-                            
-                            return (
-                              <div key={index} className="flex gap-4">
-                                <div className="h-12 w-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
-                                  <Camera className="h-6 w-6" />
-                                </div>
-                                <div>
-                                  <h3 className="text-lg font-medium mb-1">{attractions[index % attractions.length].name}</h3>
-                                  <p className="text-gray-600 text-sm mb-2">{attractions[index % attractions.length].description}</p>
-                                  <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
-                                    {attractions[index % attractions.length].type}
-                                  </span>
-                                </div>
-                              </div>
-                            );
-                          })
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-                
-                <TabsContent value="restaurants" className="mt-0">
-                  <Card>
-                    <CardContent className="p-6">
-                      <div className="space-y-6">
-                        {destination?.restaurants ? (
-                          destination.restaurants.map((restaurant, index) => (
-                            <div key={index} className="flex gap-4">
-                              <div className="h-12 w-12 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center shrink-0">
-                                <Utensils className="h-6 w-6" />
-                              </div>
-                              <div>
-                                <h3 className="text-lg font-medium mb-1">{restaurant.name}</h3>
-                                <p className="text-gray-600 text-sm mb-2">{restaurant.description}</p>
-                                <div className="flex flex-wrap gap-2">
-                                  <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
-                                    {restaurant.type}
-                                  </span>
-                                  {restaurant.cuisine && (
-                                    <span className="text-xs bg-orange-50 text-orange-600 px-2 py-1 rounded-full">
-                                      {restaurant.cuisine}
-                                    </span>
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                          ))
-                        ) : (
-                          Array.from({ length: 4 }).map((_, index) => {
-                            const locationName = destination?.name.split(',')[0] || "";
-                            const restaurants = [
-                              {
-                                name: `Authentic ${locationName} Cuisine`,
-                                description: "Traditional local dishes in a cozy atmosphere",
-                                type: "Local",
-                                cuisine: destination.name.includes('Japan') ? 'Japanese' : 
-                                  destination.name.includes('Italy') ? 'Northern Italian' :
-                                  destination.name.includes('Greece') ? 'Modern Greek' :
-                                  destination.name.includes('Peru') ? 'Novo Andean' :
-                                  destination.name.includes('Czech') ? 'Modern European' :
-                                  'Gourmet'
-                              },
-                              {
-                                name: `${locationName} Fine Dining`,
-                                description: "Upscale restaurant with gourmet specialties",
-                                type: "Fine Dining",
-                                cuisine: destination.name.includes('Japan') ? 'Kaiseki' : 
-                                  destination.name.includes('Italy') ? 'Northern Italian' :
-                                  destination.name.includes('Greece') ? 'Modern Greek' :
-                                  destination.name.includes('Peru') ? 'Novo Andean' :
-                                  destination.name.includes('Czech') ? 'Modern European' :
-                                  'Gourmet'
-                              },
-                              {
-                                name: `${locationName} Street Food`,
-                                description: "Casual spot with delicious street food options",
-                                type: "Casual",
-                                cuisine: destination.name.includes('Japan') ? 'Izakaya' : 
-                                  destination.name.includes('Italy') ? 'Roman Street Food' :
-                                  destination.name.includes('Greece') ? 'Meze & Souvlaki' :
-                                  destination.name.includes('Peru') ? 'Cevicheria' :
-                                  destination.name.includes('Czech') ? 'Pub Food' :
-                                  'Street Food'
-                              },
-                              {
-                                name: `${locationName} Café`,
-                                description: "Charming café with coffee and pastries",
-                                type: "Café",
-                                cuisine: destination.name.includes('Japan') ? 'Japanese Patisserie' : 
-                                  destination.name.includes('Italy') ? 'Italian Pastries' :
-                                  destination.name.includes('Greece') ? 'Greek Bakery' :
-                                  destination.name.includes('Peru') ? 'Coffee & Dulces' :
-                                  destination.name.includes('Czech') ? 'Central European Pastries' :
-                                  'Pastries & Coffee'
-                              }
-                            ];
-                            
-                            return (
-                              <div key={index} className="flex gap-4">
-                                <div className="h-12 w-12 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center shrink-0">
-                                  <Utensils className="h-6 w-6" />
-                                </div>
-                                <div>
-                                  <h3 className="text-lg font-medium mb-1">{restaurants[index].name}</h3>
-                                  <p className="text-gray-600 text-sm mb-2">{restaurants[index].description}</p>
-                                  <div className="flex flex-wrap gap-2">
-                                    <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
-                                      {restaurants[index].type}
-                                    </span>
-                                    <span className="text-xs bg-orange-50 text-orange-600 px-2 py-1 rounded-full">
-                                      {restaurants[index].cuisine}
-                                    </span>
-                                  </div>
-                                </div>
-                              </div>
-                            );
-                          })
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-                
-                <TabsContent value="accommodations" className="mt-0">
-                  <Card>
-                    <CardContent className="p-6">
-                      <div className="space-y-6">
-                        {destination?.accommodations ? (
-                          destination.accommodations.map((accommodation, index) => (
-                            <div key={index} className="flex gap-4">
-                              <div className="h-12 w-12 rounded-full bg-green-100 text-green-600 flex items-center justify-center shrink-0">
-                                <Hotel className="h-6 w-6" />
-                              </div>
-                              <div>
-                                <h3 className="text-lg font-medium mb-1">{accommodation.name}</h3>
-                                <p className="text-gray-600 text-sm mb-2">{accommodation.description}</p>
-                                <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
-                                  {accommodation.type}
-                                </span>
-                              </div>
-                            </div>
-                          ))
-                        ) : (
-                          Array.from({ length: 3 }).map((_, index) => {
-                            const locationName = destination?.name.split(',')[0] || "";
-                            const accommodations = [
-                              {name: `${locationName} Luxury Hotel`, description: "5-star hotel with exceptional amenities", type: "Luxury"},
-                              {name: `${locationName} Boutique Inn`, description: "Charming boutique accommodation with unique character", type: "Boutique"},
-                              {name: `${locationName} Budget Hostel`, description: "Affordable option for budget-conscious travelers", type: "Budget"}
-                            ];
-                            
-                            return (
-                              <div key={index} className="flex gap-4">
-                                <div className="h-12 w-12 rounded-full bg-green-100 text-green-600 flex items-center justify-center shrink-0">
-                                  <Hotel className="h-6 w-6" />
-                                </div>
-                                <div>
-                                  <h3 className="text-lg font-medium mb-1">{accommodations[index].name}</h3>
-                                  <p className="text-gray-600 text-sm mb-2">{accommodations[index].description}</p>
-                                  <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
-                                    {accommodations[index].type}
-                                  </span>
-                                </div>
-                              </div>
-                            );
-                          })
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-              </Tabs>
-            </div>
-            
-            <div className="space-y-6">
-              <Card>
-                <CardContent className="p-6">
-                  <h3 className="text-lg font-semibold mb-4">Travel Information</h3>
-                  <div className="space-y-4">
-                    <div className="flex items-start gap-3">
-                      <Globe className="h-5 w-5 text-blue-500 mt-0.5" />
-                      <div>
-                        <h4 className="font-medium">Local Language</h4>
-                        <p className="text-sm text-gray-600">
-                          {destination ? getDestinationInfo(destination.name).language : "Local language"}
-                        </p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start gap-3">
-                      <Clock className="h-5 w-5 text-blue-500 mt-0.5" />
-                      <div>
-                        <h4 className="font-medium">Best Time to Visit</h4>
-                        <p className="text-sm text-gray-600">
-                          {destination.name.includes('Japan') ? 'Spring (March-May) and Fall (September-November)' : 
-                            destination.name.includes('Greece') ? 'Late spring to early fall (May-September)' :
-                            destination.name.includes('Peru') ? 'Dry season (May-October)' :
-                            destination.name.includes('Italy') ? 'Spring (April-June) and Fall (September-October)' :
-                            destination.name.includes('Netherlands') ? 'Spring (April-May) for tulips, Summer for festivals' :
-                            destination.name.includes('Czech') ? 'Spring and early Fall (May-June, September-October)' :
-                            'Spring or Fall for mild weather'}
-                        </p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start gap-3">
-                      <DollarSign className="h-5 w-5 text-blue-500 mt-0.5" />
-                      <div>
-                        <h4 className="font-medium">Currency</h4>
-                        <p className="text-sm text-gray-600">
-                          {destination ? getDestinationInfo(destination.name).currency : "Local currency"}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              
-              <Card>
-                <CardContent className="p-6">
-                  <h3 className="text-lg font-semibold mb-4">Travel Tips</h3>
-                  <ul className="space-y-3 text-sm">
-                    <li className="flex items-start gap-2">
-                      <div className="h-5 w-5 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0 mt-0.5">
-                        <span className="text-xs">1</span>
-                      </div>
-                      <p>
-                        {destination.name.includes('Japan') ? 'Respect local customs and remove shoes when entering homes or certain establishments.' : 
-                          destination.name.includes('Greece') ? 'Wear comfortable shoes for walking on cobblestone streets and archaeological sites.' :
-                          destination.name.includes('Peru') ? 'Acclimate to the altitude gradually if visiting Machu Picchu.' :
-                          destination.name.includes('Italy') ? 'Many attractions require covered shoulders and knees for entry.' :
-                          destination.name.includes('Netherlands') ? 'Bike rentals are the best way to explore like a local.' :
-                          destination.name.includes('Czech') ? 'Exchange money at banks for better rates than street vendors.' :
-                          'Research local customs before your trip.'}
-                      </p>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="h-5 w-5 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0 mt-0.5">
-                        <span className="text-xs">2</span>
-                      </div>
-                      <p>
-                        {destination.name.includes('Japan') ? 'Purchase a rail pass if you plan to travel between cities.' : 
-                          destination.name.includes('Greece') ? 'Ferry schedules between islands can change frequently - confirm before travel.' :
-                          destination.name.includes('Peru') ? 'Book Machu Picchu tickets well in advance as they limit daily visitors.' :
-                          destination.name.includes('Italy') ? 'Make restaurant reservations to avoid long waits during peak seasons.' :
-                          destination.name.includes('Netherlands') ? 'Purchase museum passes if you plan to visit multiple attractions.' :
-                          destination.name.includes('Czech') ? 'Public transportation is excellent and inexpensive - get a transit pass.' :
-                          'Check if you need any special permits for attractions.'}
-                      </p>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="h-5 w-5 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0 mt-0.5">
-                        <span className="text-xs">3</span>
-                      </div>
-                      <p>
-                        {destination.name.includes('Japan') ? 'Tipping is not customary and may even be considered rude.' : 
-                          destination.name.includes('Greece') ? 'Sunscreen is essential even during shoulder seasons.' :
-                          destination.name.includes('Peru') ? 'Keep valuables secure and be aware of your surroundings in crowded areas.' :
-                          destination.name.includes('Italy') ? 'Water fountains throughout cities provide safe drinking water.' :
-                          destination.name.includes('Netherlands') ? 'Be careful taking photos of the Red Light District.' :
-                          destination.name.includes('Czech') ? 'Tipping 10% is customary for good service in restaurants.' :
-                          'Learn a few basic phrases in the local language.'}
-                      </p>
-                    </li>
-                  </ul>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </main>
-      
-      <Footer />
-    </div>
-  );
-};
-
-export default DestinationDetails;
+                <div className="flex items-center gap-1 bg-white/20 backdrop-blur-sm px-3 py-1
