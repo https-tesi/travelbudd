@@ -5,6 +5,7 @@ import DestinationFinder from "@/components/sections/DestinationFinder";
 import HowItWorks from "@/components/sections/HowItWorks";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { Toaster } from "@/components/ui/sonner";
 
 const Index = () => {
   return (
@@ -18,6 +19,7 @@ const Index = () => {
         <HowItWorks />
       </main>
       <Footer />
+      <Toaster position="bottom-right" />
     </div>
   );
 };

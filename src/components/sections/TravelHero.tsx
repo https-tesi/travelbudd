@@ -52,16 +52,33 @@ const TravelHero = () => {
       return;
     }
 
+    // Pass search parameters through URL query params to filter destinations
+    const searchParams = new URLSearchParams();
+    if (destination) searchParams.set("destination", destination);
+    if (when) searchParams.set("when", when);
+    if (budget) searchParams.set("budget", budget);
+    
+    // Update URL with search parameters (could be used for filtering in a real application)
+    const currentUrl = new URL(window.location.href);
+    currentUrl.search = searchParams.toString();
+    window.history.pushState({}, '', currentUrl);
+
     toast({
       title: "Planning your trip to " + destination,
       description: `When: ${when || "Anytime"}, Budget: ${budget || "Flexible"}`,
       variant: "default",
     });
 
-    // Scroll to destination finder
+    // Scroll to destination finder and filter results based on search
     if (destinationFinderRef.current) {
       destinationFinderRef.current.scrollIntoView({ behavior: "smooth" });
     }
+
+    // Dispatch a custom event that DestinationFinder component can listen to
+    const searchEvent = new CustomEvent('travelSearch', { 
+      detail: { destination, when, budget } 
+    });
+    document.dispatchEvent(searchEvent);
   };
 
   const scrollToDestinations = () => {
@@ -92,7 +109,7 @@ const TravelHero = () => {
             <Button 
               size="lg" 
               variant="outline" 
-              className="border-white text-white hover:bg-white/20 bg-purple-500 hover:bg-purple-600"
+              className="border-white text-white hover:bg-white/20 bg-purple-600 hover:bg-purple-700"
               onClick={scrollToDestinations}
             >
               Explore Destinations
@@ -100,63 +117,70 @@ const TravelHero = () => {
           </div>
         </div>
 
-        {/* Search box */}
+        {/* Search box - Repositioned with prominent search button */}
         <div className="bg-white rounded-xl shadow-xl max-w-4xl mx-auto overflow-hidden transform translate-y-12">
           <div className="p-6">
-            <div className="flex flex-col lg:flex-row gap-4">
-              <div className="flex-1 relative">
-                <div className="flex items-center border border-gray-200 rounded-lg p-3 focus-within:border-primary">
-                  <Search className="h-5 w-5 text-gray-400 mr-2" />
-                  <Input 
-                    type="text" 
-                    placeholder="Where do you want to go?" 
-                    className="w-full outline-none text-gray-700 border-0 p-0 focus-visible:ring-0"
-                    value={destination}
-                    onChange={handleDestinationChange}
-                    onFocus={() => destination && suggestions.length > 0 && setShowSuggestions(true)}
-                    onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-                  />
-                </div>
-                
-                {/* Destination suggestions dropdown */}
-                {showSuggestions && (
-                  <div className="absolute z-20 bg-white border border-gray-200 shadow-lg rounded-md w-full mt-1 max-h-60 overflow-auto">
-                    {suggestions.map((suggestion, index) => (
-                      <div 
-                        key={index}
-                        className="px-4 py-2 hover:bg-blue-50 cursor-pointer text-left text-gray-700"
-                        onMouseDown={() => handleSuggestionClick(suggestion)}
-                      >
-                        {suggestion}
-                      </div>
-                    ))}
+            <div className="flex flex-col space-y-4">
+              {/* Search button now at the top for better visibility */}
+              <Button 
+                className="w-full py-6 text-lg font-semibold bg-blue-600 hover:bg-blue-700" 
+                onClick={handleSearch}
+              >
+                <Search className="h-5 w-5 mr-2" /> Search for Travel Deals
+              </Button>
+              
+              <div className="flex flex-col lg:flex-row gap-4">
+                <div className="flex-1 relative">
+                  <div className="flex items-center border border-gray-200 rounded-lg p-3 focus-within:border-primary">
+                    <Search className="h-5 w-5 text-gray-400 mr-2" />
+                    <Input 
+                      type="text" 
+                      placeholder="Where do you want to go?" 
+                      className="w-full outline-none text-gray-700 border-0 p-0 focus-visible:ring-0"
+                      value={destination}
+                      onChange={handleDestinationChange}
+                      onFocus={() => destination && suggestions.length > 0 && setShowSuggestions(true)}
+                      onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+                    />
                   </div>
-                )}
-              </div>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <div className="flex items-center border border-gray-200 rounded-lg p-3 focus-within:border-primary">
-                  <Calendar className="h-5 w-5 text-gray-400 mr-2" />
-                  <Input 
-                    type="text" 
-                    placeholder="When?" 
-                    className="w-full outline-none text-gray-700 border-0 p-0 focus-visible:ring-0"
-                    value={when}
-                    onChange={(e) => setWhen(e.target.value)}
-                  />
+                  
+                  {/* Destination suggestions dropdown */}
+                  {showSuggestions && (
+                    <div className="absolute z-20 bg-white border border-gray-200 shadow-lg rounded-md w-full mt-1 max-h-60 overflow-auto">
+                      {suggestions.map((suggestion, index) => (
+                        <div 
+                          key={index}
+                          className="px-4 py-2 hover:bg-blue-50 cursor-pointer text-left text-gray-700"
+                          onMouseDown={() => handleSuggestionClick(suggestion)}
+                        >
+                          {suggestion}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
-                <div className="flex items-center border border-gray-200 rounded-lg p-3 focus-within:border-primary">
-                  <DollarSign className="h-5 w-5 text-gray-400 mr-2" />
-                  <Input 
-                    type="text" 
-                    placeholder="Budget" 
-                    className="w-full outline-none text-gray-700 border-0 p-0 focus-visible:ring-0"
-                    value={budget}
-                    onChange={(e) => setBudget(e.target.value)}
-                  />
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <div className="flex items-center border border-gray-200 rounded-lg p-3 focus-within:border-primary">
+                    <Calendar className="h-5 w-5 text-gray-400 mr-2" />
+                    <Input 
+                      type="text" 
+                      placeholder="When? (Any format: Jun, 2023, Summer...)" 
+                      className="w-full outline-none text-gray-700 border-0 p-0 focus-visible:ring-0"
+                      value={when}
+                      onChange={(e) => setWhen(e.target.value)}
+                    />
+                  </div>
+                  <div className="flex items-center border border-gray-200 rounded-lg p-3 focus-within:border-primary">
+                    <DollarSign className="h-5 w-5 text-gray-400 mr-2" />
+                    <Input 
+                      type="text" 
+                      placeholder="Budget" 
+                      className="w-full outline-none text-gray-700 border-0 p-0 focus-visible:ring-0"
+                      value={budget}
+                      onChange={(e) => setBudget(e.target.value)}
+                    />
+                  </div>
                 </div>
-                <Button className="px-6" onClick={handleSearch}>
-                  Search
-                </Button>
               </div>
             </div>
           </div>
