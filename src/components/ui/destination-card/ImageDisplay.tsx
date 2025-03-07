@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { ImageOff, Star, Heart } from "lucide-react";
 import { toast } from "sonner";
@@ -12,12 +13,11 @@ interface ImageDisplayProps {
 
 export const ImageDisplay = ({ destination, isFavorite, setIsFavorite }: ImageDisplayProps) => {
   const [imageError, setImageError] = useState(false);
-  const [imageSrc, setImageSrc] = useState(destination.imageUrl);
+  const [imageSrc, setImageSrc] = useState("");
   
   useEffect(() => {
     // Reset image state when destination changes
     setImageError(false);
-    setImageSrc(destination.imageUrl);
     
     // Extract the city name from the destination
     const cityName = destination.name.split(',')[0].trim();
@@ -26,8 +26,11 @@ export const ImageDisplay = ({ destination, isFavorite, setIsFavorite }: ImageDi
     if (citySpecificImages[cityName]) {
       // Use the primary image for the city (first in the array)
       setImageSrc(citySpecificImages[cityName][0]);
+    } else {
+      // If no city-specific image, use the default from the destination
+      setImageSrc(destination.imageUrl);
     }
-  }, [destination.name, destination.imageUrl]);
+  }, [destination.name, destination.imageUrl, destination.id]);
 
   // Enhanced image error handling with specific city image loading
   const handleImageError = () => {
@@ -95,6 +98,7 @@ export const ImageDisplay = ({ destination, isFavorite, setIsFavorite }: ImageDi
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           onError={handleImageError}
           data-destination-id={destination.id}
+          key={`img-${destination.id}-${imageSrc}`} // Add key to force re-render when the image source changes
         />
       ) : (
         <div className="w-full h-full flex items-center justify-center bg-gray-100">

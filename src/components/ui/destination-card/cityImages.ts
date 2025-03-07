@@ -41,7 +41,7 @@ export const citySpecificImages: Record<string, string[]> = {
   "Moscow": [
     "https://images.unsplash.com/photo-1513326738677-b964603b136d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
     "https://images.unsplash.com/photo-1547448415-e9f5b28e570d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-    "https://images.unsplash.com/photo-1520106212299-d99c443e4568?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+    "https://images.unsplash.com/photo-1578312014018-c12b8e502df3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
   ],
   "St. Petersburg": [
     "https://images.unsplash.com/photo-1548834925-e48f8a27ae36?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
@@ -93,6 +93,20 @@ export const citySpecificImages: Record<string, string[]> = {
     "https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
     "https://images.unsplash.com/photo-1569515090028-111e8301be36?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
     "https://images.unsplash.com/photo-1592461876279-b2b39e0cc258?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+  ],
+  "Istanbul": [
+    "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?ixlib=rb-4.0.3&auto=format&fit=crop&w=1471&q=80",
+    "https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+    "https://images.unsplash.com/photo-1527838832700-5059252407fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+  ],
+  "Cape Town": [
+    "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+    "https://images.unsplash.com/photo-1595274459742-4a779cb9a1b4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+    "https://images.unsplash.com/photo-1585061528750-3bae0f7049c1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+  ],
+  "Marrakech": [
+    "https://images.unsplash.com/photo-1597212618440-806262de4f6b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+    "https://images.unsplash.com/photo-1551471824-87889a4e214c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+    "https://images.unsplash.com/photo-1548774211-1a75f9e7f7c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
   ]
 };
-
